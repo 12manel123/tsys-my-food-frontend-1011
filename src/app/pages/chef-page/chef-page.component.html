@@ -1,1 +1,38 @@
-<p>chef-page works!</p>
+<!-- chef-page.component.html -->
+<div class="card-container">
+    @for (card of getCurrentPageCards(); track $index) {
+    <div class="card">
+        
+        <div class="card-header">
+            @if (card.id==0) {
+                <span class="header-item">ㅤ</span>}
+            @else{
+                <span class="header-item"><i class="fas fa-utensils" style="margin-right: 10px;"></i>ID: {{ card.id }}</span>
+                <span class="header-item"> <i class="fas fa-clock"></i> {{ card.time }}</span>}
+        </div>
+        <div class="card-content">
+            <ul class="dish-list">
+                @for (dish of card.dishes; track $index) {
+            <li>{{ dish.name }}</li>}
+            </ul>
+        </div>
+    </div>}
+</div>
+<footer>
+    <div class="pagination">
+        <button class="btn" (click)="previousPage()">Anterior</button>
+        <button class="btn" (click)="nextPage()">Siguiente</button>
+        <span>{{ currentPage }} / {{ totalPages }}</span>
+    </div>
+    <div class="current-time">
+        <p>{{ currentTime }}</p>
+    </div>
+    <div class="actions">
+        <button class="btn" (click)="reloadPage()">
+        <i class="fa fa-refresh"></i> Recargar
+        </button>
+        <button class="btn" (click)="closePage()">
+        <i class="fa fa-times"></i>
+        </button>
+    </div>
+</footer>
