@@ -27,6 +27,8 @@ footer {
     font-weight: bold;
 }
 
+
+
 .card-container {
     display: grid;
     grid-template-columns: repeat(4, 25vw);
@@ -81,4 +83,26 @@ footer {
 .dish-list {
     max-height: 35vh;
     overflow-y: auto;
+}
+
+.delete-button {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    background-color: #e20074;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-size: 18px;
+    margin-right: 2.3vh;
+}
+
+.delete-button:hover {
+    background-color: #c10060;
 }
