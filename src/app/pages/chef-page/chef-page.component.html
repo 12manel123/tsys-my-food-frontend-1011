@@ -15,7 +15,7 @@
                 @for (dish of card.dishes; track $index) {
             <li>{{ dish.name }}</li>}
             </ul>
-        </div>
+        </div><div class="delete-button" (click)="deleteOrder(card.id)"><i class="fas fa-check"></i></div>
     </div>}
 </div>
 <footer>

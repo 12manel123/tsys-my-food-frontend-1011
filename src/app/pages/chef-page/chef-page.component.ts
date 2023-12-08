@@ -111,4 +111,10 @@ export class ChefPageComponent implements OnInit{
   return currentPageCards;
   }
 
+  deleteOrder(orderId: number) {
+    console.log(`Eliminar orden con ID: ${orderId}`);
+    this.cards = this.cards.filter(card => card.id !== orderId);
+    this.totalPages = Math.ceil(this.cards.length / this.itemsPerPage);
+  }
+
 }
