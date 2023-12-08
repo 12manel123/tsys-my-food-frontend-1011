@@ -1,0 +1,17 @@
+body {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+}
+
+.card {
+    width: 100%;
+    max-width: 400px;
+}
+
+.card-img-top {
+    max-height: 190px;
+    max-width: 190px;
+}
