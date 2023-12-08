@@ -5,6 +5,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { HomeComponent } from './pages/landing-page/home/home.component';
 import { AboutComponent } from './pages/landing-page/about/about.component';
+import { ChefPageComponent } from './pages/chef-page/chef-page.component';
 
 
 export const routes: Routes = [
@@ -13,6 +14,7 @@ export const routes: Routes = [
         {path:'', component: HomeComponent},
         {path:'about', component: AboutComponent}
     ]},
+    { path: 'chef', component: ChefPageComponent },
     { path: 'error', component: ErrorPageComponent },
     { path: '**', redirectTo: '/error' }
 

@@ -1,0 +1,84 @@
+footer {
+    background-color: #e20074;
+    color: white;
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    font-size: 20px;
+}
+
+.pagination, .actions {
+    display: flex;
+    align-items: center;
+}
+
+.pagination button, .actions button {
+    margin-right: 10px;
+}
+
+.current-time {
+    text-align: center;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.card-container {
+    display: grid;
+    grid-template-columns: repeat(4, 25vw);
+    gap: 10px;
+    margin: 20px auto;
+}
+
+.card {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    width: 20vw;
+    max-width: 30vw;
+    max-height: 50vh;
+    height: 22vw;
+    margin: 0 2vh;
+}
+
+.card-header {
+    background-color: #e20074;
+    color: white;
+    padding: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
+}
+
+.header-item {
+    margin-right: 10px;
+    font-size: 16px;
+}
+
+.card-content {
+    padding: 10px;
+    font-size: 20px;
+}
+
+.footer {
+    background-color: #e20074;
+    color: white;
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+.dish-list {
+    max-height: 35vh;
+    overflow-y: auto;
+}
