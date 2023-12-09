@@ -15,7 +15,7 @@ export class TableUsersComponent {
   selectedUserId: number | undefined;
   newRole = '';
   currentPage: number = 1;
-  itemsPerPage: number = 20;
+  itemsPerPage: number = 10;
 
   constructor(private userDbService: UserDbService) {}
 
