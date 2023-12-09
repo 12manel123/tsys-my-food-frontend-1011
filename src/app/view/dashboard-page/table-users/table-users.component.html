@@ -1,1 +1,32 @@
-<p>table-users works!</p>
+<div>
+    <h2>Listado de Usuarios</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Rol</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (user of users; track $index) {
+            <tr>
+            <td>{{ user.id }}</td>
+            <td>{{ user.username }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.role }}</td>
+            <td>
+                <button class="btn btn-info btn-sm ml-2" (click)="updateRole(user.id)">Actualizar Rol</button> |
+                <button class="btn btn-danger btn-sm" (click)="deleteUser(user.id)">Eliminar</button>
+            </td>
+            </tr>}
+        </tbody>
+    </table>
+    <div>
+        <button class="btn btn-primary" (click)="prevPage()">Página anterior</button>
+        <span>Página {{ currentPage }}</span>
+        <button class="btn btn-primary" (click)="nextPage()">Página siguiente</button>
+    </div>
+</div>

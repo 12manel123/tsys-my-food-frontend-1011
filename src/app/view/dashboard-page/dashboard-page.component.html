@@ -1,1 +1,27 @@
-<p>dashboard-page works!</p>
+<div class="dashboard-container">
+    <div class="sidebar">
+        <h2 class="mb-4">My FOOD</h2>
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link btn btn-light rounded-pill mb-2" routerLink="/admin/users">USERS</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link btn btn-light rounded-pill mb-2" routerLink="/admin/slots">SLOTS</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link btn btn-light rounded-pill mb-2" routerLink="/admin/orders">ORDERS</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link btn btn-light rounded-pill mb-2" routerLink="/admin/dishes">DISHES</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link btn btn-light rounded-pill mb-2" routerLink="/admin/menus">MENUS</a>
+            </li>
+        </ul>
+        <button class="btn btn-danger mt-4 rounded-pill mb-2" (click)="logOut()">Logout</button>
+    </div>
+
+    <div class="content">
+        <router-outlet></router-outlet>
+    </div>
+</div>
