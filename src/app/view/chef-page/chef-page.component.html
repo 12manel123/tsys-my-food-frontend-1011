@@ -1,4 +1,3 @@
-<!-- chef-page.component.html -->
 <div class="card-container">
     @for (card of getCurrentPageCards(); track $index) {
     <div class="card">
@@ -15,7 +14,8 @@
                 @for (dish of card.dishes; track $index) {
             <li>{{ dish.name }}</li>}
             </ul>
-        </div><div class="delete-button" (click)="deleteOrder(card.id)"><i class="fas fa-check"></i></div>
+        </div>
+        @if (card.id!=0) {<div class="delete-button" (click)="deleteOrder(card.id)"><i class="fas fa-check"></i></div>}
     </div>}
 </div>
 <footer>
