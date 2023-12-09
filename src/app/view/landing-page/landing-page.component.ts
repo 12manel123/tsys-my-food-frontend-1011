@@ -3,6 +3,8 @@ import { RouterLink, RouterOutlet } from '@angular/router';
 import { NavComponent } from './nav/nav.component';
 import { HomeComponent } from './home/home.component';
 import { FooterComponent } from './footer/footer.component';
+
+
 @Component({
   selector: 'app-landing-page',
   standalone: true,
@@ -10,6 +12,8 @@ import { FooterComponent } from './footer/footer.component';
   templateUrl: './landing-page.component.html',
   styleUrl: './landing-page.component.css'
 })
-export class LandingPageComponent {
+export class LandingPageComponent  {
+
 
 }
+
