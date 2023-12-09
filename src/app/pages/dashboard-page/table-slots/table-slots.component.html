@@ -1,1 +1,22 @@
-<p>table-slots works!</p>
+<div>
+    <h2>Listado de Slots</h2>
+    <table class="table">
+        <thead>
+            <tr>
+            <th>ID</th>
+            <th>Hora</th>
+            <th>Límite de Slots</th>
+            <th>Actual</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (slot of slots; track $index) {
+            <tr>
+            <td>{{ slot.id }}</td>
+            <td>{{ slot.time }}</td>
+            <td>{{ slot.limit_slot }} | <button class="btn btn-info btn-sm" (click)="editLimitSlot(slot.id)">Edit</button></td>
+            <td>{{ slot.actual }}</td>
+            </tr>}
+        </tbody>
+    </table>
+</div>

@@ -14,6 +14,9 @@ export class TableUsersComponent {
   selectedUser: User | undefined;
   selectedUserId: number | undefined;
   newRole = '';
+  currentPage: number = 1;
+  itemsPerPage: number = 20;
+
   constructor(private userDbService: UserDbService) {}
 
   ngOnInit(): void {
@@ -21,8 +24,11 @@ export class TableUsersComponent {
   }
 
   loadUsers(): void {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = this.currentPage * this.itemsPerPage;
+
     this.userDbService.getUsers().subscribe(users => {
-      this.users = users;
+      this.users = users.slice(startIndex, endIndex);
     });
   }
 
@@ -32,6 +38,7 @@ export class TableUsersComponent {
         this.loadUsers();
       });
     }
+    this.loadUsers();
   }
 
   closeRoleModal(): void {
@@ -45,5 +52,21 @@ export class TableUsersComponent {
     this.userDbService.updateRole(userId).subscribe(() => {
       this.loadUsers();
     });
+  }
+
+  nextPage(): void {
+    const startIndex = this.currentPage * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
+    if (startIndex < this.userDbService.getTotalUsersCount()) {
+      this.currentPage++;
+      this.loadUsers();
+    }
+  }
+
+  prevPage(): void {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.loadUsers();
+    }
   }
 }

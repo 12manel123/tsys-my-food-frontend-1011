@@ -18,10 +18,15 @@
             <td>{{ user.email }}</td>
             <td>{{ user.role }}</td>
             <td>
-                <button class="btn btn-info btn-sm ml-2" (click)="updateRole(user.id)">Actualizar Rol</button>
+                <button class="btn btn-info btn-sm ml-2" (click)="updateRole(user.id)">Actualizar Rol</button> |
                 <button class="btn btn-danger btn-sm" (click)="deleteUser(user.id)">Eliminar</button>
             </td>
             </tr>}
         </tbody>
     </table>
+    <div>
+        <button class="btn btn-primary" (click)="prevPage()">Página anterior</button>
+        <span>Página {{ currentPage }}</span>
+        <button class="btn btn-primary" (click)="nextPage()">Página siguiente</button>
+    </div>
 </div>
