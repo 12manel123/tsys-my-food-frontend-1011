@@ -1,0 +1,14 @@
+.image-container {
+    position: relative;
+    overflow: hidden;
+}
+
+.dish-image {
+    height: 50px;
+    width: 50px;
+    transition: transform 0.3s ease-out;
+}
+
+.image-container:hover .dish-image {
+    transform: scale(1.2);
+}
