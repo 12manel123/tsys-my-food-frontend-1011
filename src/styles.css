@@ -1,1 +1,29 @@
-/* You can add global styles to this file, and also import other style files */
+:root {
+    --primary-100: #61DAFB;
+    --primary-200: #39bcdc;
+    --primary-300: #007997;
+    --accent-100: #FF4081;
+    --accent-200: #ffe4ff;
+    --text-100: #FFFFFF;
+    --text-200: #e0e0e0;
+    --bg-100: #282C34;
+    --bg-200: #383c44;
+    --bg-300: #50555e;
+}
+
+body.night-mode {
+    --primary-100: #FF4081;
+    --primary-200: #ff79b0;
+    --primary-300: #ffe4ff;
+    --accent-100: #00E5FF;
+    --accent-200: #00829b;
+    --text-100: #333333;
+    --text-200: #5c5c5c;
+    --bg-100: #F5F5F5;
+    --bg-200: #ebebeb;
+    --bg-300: #c2c2c2;
+}
+
+*{
+    font-family: 'Open Sans', sans-serif;
+}
