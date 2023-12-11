@@ -14,6 +14,8 @@ import { TableMenuComponent } from './view/dashboard-page/table-menu/table-menu.
 import { TableSlotsComponent } from './view/dashboard-page/table-slots/table-slots.component';
 import { ChefPageComponent } from './view/chef-page/chef-page.component';
 import { ErrorPageComponent } from './view/error-page/error-page.component';
+import { LoginComponent } from './view/landing-page/login/login.component';
+import { RegisterComponent } from './view/landing-page/register/register.component';
 
 
 export const routes: Routes = [
@@ -29,7 +31,10 @@ export const routes: Routes = [
         {path:'listorder', component: TableListOrderComponent},
         {path:'menus', component: TableMenuComponent},
         {path:'slots', component: TableSlotsComponent},
-    ]},
+  ]
+  },
+  { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
     { path: 'chef', component: ChefPageComponent },
     { path: 'error', component: ErrorPageComponent },
     { path: '**', redirectTo: '/error' }
