@@ -1,0 +1,20 @@
+.logo-card{
+  background: #959595;
+  background: linear-gradient(to right, #302f2f 0%, #0D0D0D 46%, #010101 50%, #0A0A0A 53%, #333333 76%, #383838 87%, #1B1B1B 100%);
+
+  width: 100%;
+  height: 100%;
+  padding: 8px;
+  padding-left: 10px;
+  padding-right: 10px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  -ms-border-radius: 8px;
+  -o-border-radius: 8px;
+}
