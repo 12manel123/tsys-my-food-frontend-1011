@@ -4,12 +4,12 @@
       <a class="navbar-brand" [routerLink]="['/']" routerLinkActive="router-link-active">
         <img src="assets/img/Logo.png" alt="Descripción del logo" style="max-height: 40px;">
       </a>
-  
+
       <!-- Botón de hamburguesa para pantallas pequeñas -->
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-  
+
       <!-- Elementos de la derecha -->
       <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
         <ul class="navbar-nav">
@@ -17,13 +17,12 @@
             <a class="nav-link" [routerLink]="['/about']" routerLinkActive="router-link-active">About</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#login">Login</a>
+            <a class="nav-link" [routerLink]="['/login']" routerLinkActive="router-link">Login</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#register">Register</a>
+            <a class="nav-link" [routerLink]="['/register']" routerLinkActive="router-link-active">Register</a>
           </li>
         </ul>
       </div>
     </div>
   </nav>
-  

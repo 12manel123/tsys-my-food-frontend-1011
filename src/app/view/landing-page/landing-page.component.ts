@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { NavComponent } from './nav/nav.component';
 import { HomeComponent } from './home/home.component';
@@ -13,6 +13,8 @@ import { FooterComponent } from './footer/footer.component';
   styleUrl: './landing-page.component.css'
 })
 export class LandingPageComponent  {
+
+
 
 
 }

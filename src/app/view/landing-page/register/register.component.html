@@ -1,1 +1,110 @@
-<p>register works!</p>
+<div  class="container">
+
+  <div id="tarjeta" class="animate__animated animate__fadeInDown card  col-md-5 m-auto mt-5 p-3">
+    <!-- <app-logo></app-logo> -->
+    <!-- <hr> -->
+    <form [formGroup]="registerForm" (submit)="add()" class='row g-3'>
+      <div class="col-md-6">
+
+          <label for="Imputname" class="form-label">Nombre</label>
+          <input
+            type="text"
+            formControlName="username"
+            class="form-control"
+            id="name"
+            placeholder="Campo obligatorio"
+            autofocus
+            required
+          />
+      <div class="col-md-6">
+        <label for="inputEmail" class="form-label">Email</label>
+        <input type="email" class="form-control" formControlName="email" id="email" required />
+        <div id="emailHelp" class="form-text">
+          Nunca compartiremos su datos con nadie más.
+        </div>
+      </div>
+      <div class="col-md-6">
+        <label for="inputPassword" class="form-label">Password</label>
+        <input
+          type="password"
+          formControlName="password"
+          id="password"
+          class="form-control"
+          aria-describedby="passwordHelpBlock"
+          minlength="8"
+          maxlength="20"
+          required
+        />
+        <div id="passwordHelpBlock" class="form-text">
+          Debe tener 8-20 caracteres de largo.
+        </div>
+        <label for="inputPassword" class="form-label">Repita su password</label>
+        <input
+          type="password"
+          formControlName="password"
+          id="password"
+          class="form-control"
+          aria-describedby="passwordHelpBlock"
+          minlength="8"
+          maxlength="20"
+          required
+        />
+      </div>
+      <div id="passwordHelpBlock" class="form-text">
+        Debe tener 8-20 caracteres de largo.
+      </div>
+      <div class="col-12 mt-3">
+        <div class="form-check">
+          <input
+          formControlName="checkbox"
+            class="form-check-input"
+            type="checkbox"
+            value=""
+            id="invalidCheck"
+            required
+          />
+          <label class="form-check-label" for="invalidCheck">
+            <a
+            data-bs-toggle="modal"
+            data-bs-target="#staticBackdrop"
+            href="#">Aceptar términos y condiciones</a>
+          </label>
+          <div class="invalid-feedback">
+            Debe estar de acuerdo antes de enviar.
+          </div>
+        </div>
+      </div>
+      <div class="col-12">
+         <button class="btn btn-primary mt-3" href="http://localhost:4200/" [disabled]="registerForm.invalid"  [formNoValidate]="btnValited()" [className]="stylebtn" type="submit">Enviar</button>  <p class="mensaje">{{rta}}</p>
+      </div>
+  </div>
+  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">Politica de Privacidad</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>Bla bla bla bla</p>
+          <br>
+          <p class="susi">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque vel perferendis provident id ullam cum sunt incidunt quas ipsa enim doloremque, iusto pariatur nulla consequuntur error dignissimos voluptatem porro dolorem Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque vel perferendis provident id ullam cum sunt incidunt quas ipsa enim doloremque, iusto pariatur nulla consequuntur error dignissimos voluptatem porro dolorem Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque vel perferendis provident id ullam cum sunt incidunt quas ipsa enim doloremque, iusto pariatur nulla consequuntur error dignissimos voluptatem porro dolorem Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque vel perferendis provident id ullam cum sunt incidunt quas ipsa enim doloremque, iusto pariatur nulla consequuntur error dignissimos voluptatem porro dolorem Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque vel perferendis provident id ullam cum sunt incidunt quas ipsa enim doloremque, iusto pariatur nulla consequuntur error dignissimos voluptatem porro dolorem Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+
+        <p class="susi">Eaque vel perferendis provident id ullam cum sunt incidunt quas ipsa enim doloremque, iusto pariatur nulla consequuntur error dignissimos voluptatem porro dolorem Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque vel perferendis provident id ullam cum sunt incidunt quas ipsa enim doloremque, iusto pariatur nulla consequuntur error dignissimos voluptatem porro dolorem Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque vel perferendis provident id ullam cum sunt incidunt quas ipsa enim doloremque, iusto pariatur nulla consequuntur error dignissimos voluptatem porro dolorem Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque vel perferendis provident id ullam cum sunt incidunt quas ipsa enim doloremque</p>
+
+        <p class="susi">Tiusto pariatur nulla consequuntur error dignissimos voluptatem porro dolorem Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque vel perferendis provident id ullam cum sunt incidunt quas ipsa enim doloremque, iusto pariatur nulla consequuntur error dignissimos voluptatem porro dolorem Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque vel perferendis provident id ullam cum sunt incidunt quas ipsa enim doloremque, iusto pariatur nulla consequuntur error dignissimos voluptatem porro dolorem Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque vel perferendis provident id ullam cum sunt incidunt quas ipsa enim doloremque, iusto pariatur nulla consequuntur error dignissimos voluptatem porro dolorem</p>
+
+        <br>
+        <p>Porque somos unos..máquinas 😛</p>
+        <p>Three Elements ™</p>
+
+        </div>
+        <div class="modal-footer">
+        <button type="button" class="btn btn-primary btn-sm" data-bs-dismiss="modal" >Aceptar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
