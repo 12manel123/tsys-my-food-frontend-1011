@@ -1,27 +1,37 @@
-# TsysMyFoodFrontend1011
+<p align="center"><img src="https://i.imgur.com/lRmkSwE.png" alt="Elements"></p>
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.0.5.
+# MyFood Frontend Documentation
+This project is the frontend for MyFood, an application for food reservation.
+Here is the [URL](https://dev.d188cfs70v7rq4.amplifyapp.com/).
+## Routes
 
-## Development server
+### Home Page
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+- **/**: Home page.
+- **/about**: Information page about the [Team](https://dev.d188cfs70v7rq4.amplifyapp.com/about).
+- **/login**: Login page.
+- **/register**: Registration page.
 
-## Code scaffolding
+### User Page
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- **/user**: Page dedicated to registered users to create orders.
 
-## Build
+### Chef Page
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+- **/chef**: Page dedicated to the chef with the orders to make.
 
-## Running unit tests
+### Dashboard Page (Admin)
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+- **/admin**
+  - Administration panel with sub-routes:
+    - **/users**: User management.
+    - **/orders**: Order management.
+    - **/dishes**: Dish management.
+    - **/listorder**: List of orders.
+    - **/menus**: Menu management.
+    - **/slots**: Time slot management.
 
-## Running end-to-end tests
+## API Usage
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+This frontend communicates with the MyFood API to perform operations such as user management, order management, dish management, menu management, and more. Ensure you have access to the API and adjust the connection settings as needed. Here's the [API](https://github.com/12manel123/tsys-my-food-api-1011)
 
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
