@@ -1,1 +1,50 @@
-<p>table-dishes works!</p>
+<div>
+    <h2>Listado de Platos</h2>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>Descripción</th>
+          <th>Imagen</th>
+          <th>Precio</th>
+          <th>Categoría</th>
+          <th>Atributos</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (dish of getDisplayedDishes(); track $index) {
+        <tr>
+          <td>{{ dish.id }}</td>
+          <td>{{ dish.name }}</td>
+          <td>{{ dish.description }}</td>
+          <td><div class="image-container">
+            <img class="dish-image" src="{{dish.image}}" alt="{{ dish.name }}">
+          </div></td>
+          <td>{{ dish.price }}</td>
+          <td>{{ dish.category }}</td>
+          <td>
+            <ul>
+                @for (attribute of dish.attributes; track $index) {
+              <li>{{ attribute }}</li>}
+            </ul>
+          </td>
+          <td>
+            <button class="btn btn-info btn-sm ml-2" (click)="editDish(dish)">Editar</button>
+            <button class="btn btn-danger btn-sm" (click)="deleteDish(dish.id)">Eliminar</button>
+          </td>
+        </tr>}
+      </tbody>
+    </table>
+    <div>
+      <button class="btn btn-primary" (click)="addDish()">Agregar Plato</button>
+    </div>
+  </div>
+  <div>
+    <!-- ... Resto del código HTML -->
+    <button class="btn btn-primary" (click)="prevPage()">Página anterior</button>
+    <span>Página {{ currentPage }}</span>
+    <button class="btn btn-primary" (click)="nextPage()">Página siguiente</button>
+  </div>
+  
