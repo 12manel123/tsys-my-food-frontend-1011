@@ -11,5 +11,5 @@ import { User } from '../../../models/user';
   styleUrl: './header-user.component.css'
 })
 export class HeaderUserComponent {
-  username:string = 'Pepe123';
+  username:string = 'Manel Castellví';
 }

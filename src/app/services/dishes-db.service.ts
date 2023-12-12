@@ -29,7 +29,7 @@ export class DishesDbService {
       id: 3,
       name: 'Mushroom Risotto',
       description: 'Creamy mushroom risotto with Arborio rice.',
-      image: 'https://example.com/mushroom-risotto.jpg',
+      image: 'https://chefmunne.com/wp-content/uploads/2020/06/riso-micro.jpg',
       price: 14.99,
       category: 'first',
       attributes: ['vegetarian'],
@@ -38,7 +38,7 @@ export class DishesDbService {
       id: 4,
       name: 'BBQ Chicken Pizza',
       description: 'Pizza topped with BBQ chicken, red onions, and cilantro.',
-      image: 'https://example.com/bbq-chicken-pizza.jpg',
+      image: 'https://th.bing.com/th/id/OIP._txd9Hwain8m1-so-mkBhwAAAA?rs=1&pid=ImgDetMain',
       price: 16.99,
       category: 'second',
       attributes: [],
@@ -47,7 +47,7 @@ export class DishesDbService {
       id: 5,
       name: 'Chocolate Fondue',
       description: 'Rich chocolate fondue served with strawberries and marshmallows.',
-      image: 'https://example.com/chocolate-fondue.jpg',
+      image: 'https://th.bing.com/th/id/OIP._txd9Hwain8m1-so-mkBhwAAAA?rs=1&pid=ImgDetMain',
       price: 12.99,
       category: 'dessert',
       attributes: ['nuts'],
@@ -56,7 +56,7 @@ export class DishesDbService {
       id: 6,
       name: 'Shrimp Scampi',
       description: 'Shrimp sautéed in garlic and white wine sauce, served over linguine.',
-      image: 'https://example.com/shrimp-scampi.jpg',
+      image: 'https://th.bing.com/th/id/OIP._txd9Hwain8m1-so-mkBhwAAAA?rs=1&pid=ImgDetMain',
       price: 20.99,
       category: 'second',
       attributes: [],
@@ -65,7 +65,7 @@ export class DishesDbService {
       id: 7,
       name: 'Vegetable Stir-Fry',
       description: 'Assorted vegetables stir-fried in a savory sauce, served with rice.',
-      image: 'https://example.com/vegetable-stir-fry.jpg',
+      image: 'https://th.bing.com/th/id/OIP._txd9Hwain8m1-so-mkBhwAAAA?rs=1&pid=ImgDetMain',
       price: 15.99,
       category: 'second',
       attributes: ['vegan', 'vegetarian'],
@@ -74,7 +74,7 @@ export class DishesDbService {
       id: 8,
       name: 'Key Lime Pie',
       description: 'Refreshing key lime pie with a graham cracker crust.',
-      image: 'https://example.com/key-lime-pie.jpg',
+      image: 'https://th.bing.com/th/id/OIP._txd9Hwain8m1-so-mkBhwAAAA?rs=1&pid=ImgDetMain',
       price: 8.99,
       category: 'dessert',
       attributes: ['vegetarian'],
@@ -83,7 +83,7 @@ export class DishesDbService {
       id: 9,
       name: 'Crispy Calamari',
       description: 'Crispy fried calamari rings served with marinara sauce.',
-      image: 'https://example.com/crispy-calamari.jpg',
+      image: 'https://th.bing.com/th/id/OIP._txd9Hwain8m1-so-mkBhwAAAA?rs=1&pid=ImgDetMain',
       price: 13.99,
       category: 'appetizer',
       attributes: [],
@@ -92,7 +92,7 @@ export class DishesDbService {
       id: 10,
       name: 'Beef Tacos',
       description: 'Spicy beef tacos with shredded lettuce, cheese, and salsa.',
-      image: 'https://example.com/beef-tacos.jpg',
+      image: 'https://th.bing.com/th/id/OIP._txd9Hwain8m1-so-mkBhwAAAA?rs=1&pid=ImgDetMain',
       price: 11.99,
       category: 'first',
       attributes: [],
@@ -101,7 +101,7 @@ export class DishesDbService {
       id: 11,
       name: 'Lemon Sorbet',
       description: 'Light and tangy lemon sorbet served in a chilled bowl.',
-      image: 'https://example.com/lemon-sorbet.jpg',
+      image: 'https://th.bing.com/th/id/OIP._txd9Hwain8m1-so-mkBhwAAAA?rs=1&pid=ImgDetMain',
       price: 7.99,
       category: 'dessert',
       attributes: ['vegan', 'vegetarian'],
@@ -109,10 +109,11 @@ export class DishesDbService {
   ];
   private dishesSubject = new BehaviorSubject<DishAdmin[]>(this.dishes);
   private lastId = this.dishes.length > 0 ? Math.max(...this.dishes.map((dish) => dish.id)) : 0;
+  
   getDishes() {
     return this.dishesSubject.asObservable();
   }
-  
+
 
   addDish(dish: DishAdmin) {
     dish.id = ++this.lastId;
@@ -136,7 +137,7 @@ export class DishesDbService {
     const dish = this.dishes.find((d) => d.id === dishId);
     return dish ? of(dish.name) : of('Plato no encontrado');
   }
-  
+
 
   getDishDetailsByIds(dishIds: number[]): DishAdmin[] {
     return this.dishes.filter((dish) => dishIds.includes(dish.id));
@@ -146,10 +147,10 @@ export class DishesDbService {
     const dish = this.dishes.find((d) => d.id === dishId);
     return of(dish ? [dish] : []);
   }
-  
-  
-  
-  
-  
-  
+
+
+
+
+
+
 }

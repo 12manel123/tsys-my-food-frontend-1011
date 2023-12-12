@@ -45,7 +45,7 @@ export class TableMenuComponent {
       this.dishes = dishes;
     });
   }
-  
+
   nextPage(): void {
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
     const endIndex = this.currentPage * this.itemsPerPage;
@@ -92,7 +92,7 @@ export class TableMenuComponent {
           categoryDessert: this.newMenu.categoryDessert,
           visible: true,
         };
-  
+
         this.menusService.addMenu(newMenu);
       }
       this.resetNewMenu();
@@ -104,7 +104,7 @@ export class TableMenuComponent {
       alert('Por favor, complete todos los campos del formulario.');
     }
   }
-  
+
   validateNewMenu(): boolean {
     return (
       this.newMenu.categoryAppetizer > 0 &&
@@ -137,7 +137,7 @@ export class TableMenuComponent {
   getDishesFirst(): Observable<DishAdmin[]> {
     return this.getDishesCategory("first");
   }
-  
+
   getDishesSecond(): Observable<DishAdmin[]> {
     return this.getDishesCategory("second");
   }
