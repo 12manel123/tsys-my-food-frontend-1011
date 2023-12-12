@@ -1,1 +1,41 @@
-<p>order works!</p>
+@if (order) {
+    <div class="container mt-4">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <h2 class="text-center mb-4">Orden {{ order.id }}</h2>
+                <div class="my-4">
+                    <h3>Platos en la orden:</h3>
+                    <ul class="list-group">
+                    @for (dish of order.dishes; track $index) {
+                    <li class="list-group-item">{{ dish.name }}</li>}
+                    </ul>
+                </div>
+                <div class="my-4">
+                    <h3>Precio Total:</h3>
+                    <p class="lead">{{ calculateTotalPrice() | currency:'USD':'symbol':'1.2-2' }}</p>
+                </div>
+                @if (availableSlots && availableSlots.length > 0) {
+                <div class="my-4">
+                    <h3>Slots Disponibles:</h3>
+                    <select class="form-select" [(ngModel)]="selectedSlotId">
+                        @for (slot of availableSlots; track $index) {
+                            <option [value]="slot.id">{{ slot.time }} - Actual: {{ slot.actual }} / Límite: {{ slot.limit_slot }}</option>}
+                    </select>
+                    <button class="btn btn-primary mt-2" (click)="onEditOrder()">
+                        <i class="fas fa-check"></i> Confirmar Orden
+                    </button>
+                </div>}
+            </div>
+        </div>
+    </div>
+}
+
+@if (!order) {
+    <div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+        <p class="lead text-center">No se encontró la orden.</p>
+        </div>
+    </div>
+    </div>
+}
