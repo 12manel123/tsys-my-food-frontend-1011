@@ -3,27 +3,34 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { UserReg } from '../../../models/user';
 import { RegisterService } from '../../../services/register.service';
 import { LogoComponent } from '../../../shared/logo/logo.component';
+import { LoginService } from '../../../services/login.service';
+import { Router} from '@angular/router';
+
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [ ReactiveFormsModule, LogoComponent],
+  imports: [ ReactiveFormsModule, LogoComponent ],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })
 export class RegisterComponent {
 
-
   rta: string = '';
   stylebtn: String = '';
 
-  user: UserReg[] = [];
-  public registerForm: FormGroup;
+  user: UserReg = {
+    username: '',
+    email: '',
+    password: '',
+  };
 
+  public registerForm: FormGroup;
 
   private fb = inject(FormBuilder)
   private registerService = inject(RegisterService)
-
+  private loginService = inject(LoginService)
+  private router= inject(Router) ;
   constructor( ) {
 
     this.registerForm = this.fb.group({
@@ -39,10 +46,8 @@ export class RegisterComponent {
 
     this.registerForm = this.fb.group({
       username: ['', Validators.required],
-      email: ['', Validators.email],
+      email: ['', Validators.email ,  Validators.required],
       password: ['', Validators.minLength(8) && Validators.maxLength(20), Validators.required],
-      password2: ['', Validators.minLength(8) && Validators.maxLength(20), Validators.required],
-
     })
 
   };
@@ -55,15 +60,26 @@ export class RegisterComponent {
   }
 
   add() {
-      //   const { username, email, password } = this.registerForm.getRawValue();
-  //   this.registerForm.reset();
-  //   this.registerService.addNewUser(username, email, password).subscribe((result: { toString: () => string; })=>{
-  //     if (result) {
-  //       this.rta = result.toString();
-  //       console.log(result);
-  //     }
-  //   })
+    const { username, email, password } = this.registerForm.getRawValue();
+    this.registerForm.reset();
+
+    this.registerService. addNewUser(new UserReg (username, email, password) ).subscribe((result: { toString: () => string; })=>{
+      if (result) {
+        this.loginService.loginUser({ username, password }).subscribe((rta: { toString: () => string; }) => {
+          if (rta) {
+            this.rta = rta.toString();
+            console.log(result);
+
+            alert("Usuario " + username + " creado con exito ");
+
+            console.log(rta);
+            this.router.navigate(['/user'])
+          }
+         })
+      }
+    })
 
     }
-
 }
+
+

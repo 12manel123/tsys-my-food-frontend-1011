@@ -54,12 +54,12 @@ export class TableMenuComponent {
     console.log(dishId);
     return this.dishesService.getDishById(dishId);
   }
-  
-  
 
-  
-  
-  
+
+
+
+
+
   ngOnInit() {
     this.dishesService.getDishes().subscribe((dishes) => {
       this.dishes = dishes;
@@ -76,7 +76,7 @@ export class TableMenuComponent {
       }
     );
   }
-  
+
   editMenu(menu: Menu) {
     this.editingMenu = { ...menu };
     this.addingMenu = true;
@@ -110,7 +110,7 @@ export class TableMenuComponent {
           categoryDessert: this.newMenu.categoryDessert,
           visible: true,
         };
-  
+
         this.menusService.addMenu(newMenu);
       }
       this.resetNewMenu();
@@ -121,17 +121,17 @@ export class TableMenuComponent {
       this.menusService.getMenus().subscribe((menus) => {
         this.menus = menus;
       });
-      
+
     } else {
       alert('Por favor, complete todos los campos del formulario.');
     }
   }
-  
-  
+
+
   reloadPage() {
     location.reload();
   }
-  
+
 
   private validateNewMenu(): boolean {
     return (

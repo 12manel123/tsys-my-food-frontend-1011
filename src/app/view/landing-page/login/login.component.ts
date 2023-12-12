@@ -1,7 +1,5 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, inject } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { Component  } from '@angular/core';
+import { ReactiveFormsModule , FormGroup} from '@angular/forms';
 import { LogoComponent } from '../../../shared/logo/logo.component';
 
 @Component({
@@ -12,27 +10,9 @@ import { LogoComponent } from '../../../shared/logo/logo.component';
   styleUrl: './login.component.css',
 })
 export class LoginComponent {
-
-
-  rta: any;
-  stylebtn: any;
-  registerForm: any;
-
-
-
-  http = inject(HttpClient);
-
-  urlProd = 'https://myfood.up.railway.app/auth/register';
-
-  registerUser(): Observable<any> {
-
-    const userData = {
-      email: 'test8@hotmail.com',
-      password: '12345678',
-      username: 'test8',
-    };
-    return this.http.post(`${this.urlProd}`, userData);
-  }
+registerForm: FormGroup<any> = new FormGroup({});
+stylebtn: any;
+rta: any;
 
   add() {
     throw new Error('Method not implemented.');
@@ -44,13 +24,5 @@ export class LoginComponent {
 
   ngOnInit(): void {
 
-    this.registerUser().subscribe(
-      (res) => {
-        console.log(res);
-      },
-      (err) => {
-        console.log(err);
-      }
-    );
   }
 }

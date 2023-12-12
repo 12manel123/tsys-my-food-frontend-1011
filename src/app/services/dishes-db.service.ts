@@ -112,7 +112,7 @@ export class DishesDbService {
   getDishes() {
     return this.dishesSubject.asObservable();
   }
-  
+
 
   addDish(dish: DishAdmin) {
     dish.id = ++this.lastId;
@@ -136,7 +136,7 @@ export class DishesDbService {
     const dish = this.dishes.find((d) => d.id === dishId);
     return dish ? of(dish.name) : of('Plato no encontrado');
   }
-  
+
 
   getDishDetailsByIds(dishIds: number[]): DishAdmin[] {
     return this.dishes.filter((dish) => dishIds.includes(dish.id));
@@ -146,10 +146,10 @@ export class DishesDbService {
     const dish = this.dishes.find((d) => d.id === dishId);
     return of(dish ? [dish] : []);
   }
-  
-  
-  
-  
-  
-  
+
+
+
+
+
+
 }

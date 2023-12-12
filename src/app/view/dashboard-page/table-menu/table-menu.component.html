@@ -45,28 +45,28 @@
                 <option [value]="dish.id">{{dish.id}}: {{ dish.name }}</option>
             }
             </select>
-        
+
             <label for="categoryFirst">First:</label>
             <select id="categoryFirst" name="categoryFirst" required [(ngModel)]="newMenu.categoryFirst">
             @for (dish of (getDishesFirst() | async); track $index) {
                 <option [value]="dish.id">{{dish.id}}: {{ dish.name }}</option>
             }
             </select>
-        
+
             <label for="categorySecond">Second:</label>
             <select id="categorySecond" name="categorySecond" required [(ngModel)]="newMenu.categorySecond">
             @for (dish of (getDishesSecond() | async); track $index) {
                 <option [value]="dish.id">{{dish.id}}: {{ dish.name }}</option>
             }
             </select>
-        
+
             <label for="categoryDessert">Dessert:</label>
             <select id="categoryDessert" name="categoryDessert" required [(ngModel)]="newMenu.categoryDessert">
             @for (dish of (getDishesDessert() | async); track $index) {
                 <option [value]="dish.id">{{dish.id}}: {{ dish.name }}</option>
             }
             </select>
-        
+
             <button type="submit" class="btn btn-primary">{{ editingMenu ? 'Editar Menú' : 'Agregar Menú' }}</button>
         </form>
     </div>}
