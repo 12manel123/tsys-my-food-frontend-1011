@@ -1,4 +1,5 @@
 <div>
+<<<<<<< HEAD
     <h2>Listado de Menús</h2>
     <table class="table">
       <thead>
@@ -70,4 +71,104 @@
             <button type="submit" class="btn btn-primary">{{ editingMenu ? 'Editar Menú' : 'Agregar Menú' }}</button>
         </form>
     </div>}
+=======
+  <h2>Menu Listㅤ ㅤ
+    <button class="btn btn-secondary" (click)="prevPage()">Previous Page</button>
+    {{currentPage}} / {{totalPages}}
+    <button class="btn btn-secondary" (click)="nextPage()">Next Page</button>ㅤ
+    <button class="btn btn-primary" (click)="addMenu()">Add Menu</button>
+  </h2>
+  @if (addingMenu || editingMenu) {
+  <div>
+    <h2>{{ editingMenu ? 'Edit Menu' : 'Add Menu' }}</h2>
+      <form (ngSubmit)="submitMenuForm()" #menuForm="ngForm">
+        <label for="categoryAppetizer">Appetizer:</label>
+        <select id="categoryAppetizer" name="categoryAppetizer" required [(ngModel)]="newMenu.categoryAppetizer">
+          @for (dish of (getDishesAppetizer() | async); track $index) {
+            <option [value]="dish.id">{{dish.id}}: {{ dish.name }}</option>
+          }
+        </select>
+
+        <label for="categoryFirst">First:</label>
+        <select id="categoryFirst" name="categoryFirst" required [(ngModel)]="newMenu.categoryFirst">
+          @for (dish of (getDishesFirst() | async); track $index) {
+            <option [value]="dish.id">{{dish.id}}: {{ dish.name }}</option>
+          }
+        </select>
+
+        <label for="categorySecond">Second:</label>
+        <select id="categorySecond" name="categorySecond" required [(ngModel)]="newMenu.categorySecond">
+          @for (dish of (getDishesSecond() | async); track $index) {
+            <option [value]="dish.id">{{dish.id}}: {{ dish.name }}</option>
+          }
+        </select>
+
+        <label for="categoryDessert">Dessert:</label>
+        <select id="categoryDessert" name="categoryDessert" required [(ngModel)]="newMenu.categoryDessert">
+          @for (dish of (getDishesDessert() | async); track $index) {
+            <option [value]="dish.id">{{dish.id}}: {{ dish.name }}</option>
+          }
+        </select>
+
+        <button type="submit" class="btn btn-primary">{{ editingMenu ? 'Edit Menu' : 'Add Menu' }}</button>
+      </form>
+  </div>}
+  <table class="table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Dishes</th>
+        <th>Visible</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (menu of menus; track $index) {
+      <tr>
+        <td>{{ menu.id }}</td>
+        <td>
+          <ul>
+            @for (dish of getDishDetailsByIds(menu.categoryAppetizer) | async; track $index) {
+              <li>
+                {{ dish.id }}: {{ dish.name }} | {{ dish.category }} | Method 2
+              </li>}
+            @for (dish of getDishDetailsByIds(menu.categoryFirst) | async; track $index) {
+              <li>
+                {{ dish.id }}: {{ dish.name }} | {{ dish.category }} | Method 2
+              </li>}
+            @for (dish of getDishDetailsByIds(menu.categorySecond) | async; track $index) {
+              <li>
+                {{ dish.id }}: {{ dish.name }} | {{ dish.category }} | Method 2
+              </li>}
+            @for (dish of getDishDetailsByIds(menu.categoryDessert) | async; track $index) {
+              <li>
+                {{ dish.id }}: {{ dish.name }} | {{ dish.category }} | Method 2
+              </li>}
+          </ul>
+          <ul>
+            <li>{{ menu.categoryAppetizer }}: {{ getDishNameById(menu.categoryAppetizer) |async }} | Appetizer | Method 1</li>
+            <li>{{ menu.categoryFirst }}: {{ getDishNameById(menu.categoryFirst) |async  }} | First Method 1</li>
+            <li>{{ menu.categorySecond }}: {{ getDishNameById(menu.categorySecond) |async  }} | Second Method 1</li>
+            <li>{{ menu.categoryDessert }}: {{ getDishNameById(menu.categoryDessert) |async  }} | Dessert Method 1</li>
+          </ul>
+          <ul>
+
+            <li>{{ menu.categoryAppetizer }} | Appetizer</li>
+            <li>{{ menu.categoryFirst }} | First</li>
+            <li>{{ menu.categorySecond }} | Second</li>
+            <li>{{ menu.categoryDessert }} | Dessert</li>
+          </ul>
+        </td>
+        <td>{{ menu.visible ? 'Yes' : 'No' }}</td>
+        <td>
+          <button class="btn btn-info btn-sm ml-2" (click)="editMenu(menu)">Edit</button>ㅤ
+          <button class="btn btn-danger btn-sm" (click)="deleteMenu(menu.id)">Delete</button>ㅤ
+          <button class="btn btn-primary btn-sm" (click)="toggleVisibility(menu)">
+            {{ menu.visible ? 'Hide' : 'Show' }}
+          </button>
+        </td>
+      </tr>}
+    </tbody>
+  </table>
+>>>>>>> fae178774423a6e43f022873febb9d62ca1a33e7
 </div>
