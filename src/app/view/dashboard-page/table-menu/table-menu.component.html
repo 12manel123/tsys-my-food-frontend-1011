@@ -1,77 +1,4 @@
 <div>
-<<<<<<< HEAD
-    <h2>Listado de Menús</h2>
-    <table class="table">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Platos</th>
-          <th>Visible</th>
-          <th>Acciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        @for (menu of menus; track $index) {
-        <tr>
-          <td>{{ menu.id }}</td>
-          <td>
-            <ul>
-              <li>{{ menu.categoryAppetizer }} | Appetizer</li>
-              <li>{{ menu.categoryFirst }} | First</li>
-              <li>{{ menu.categorySecond }} | Second</li>
-              <li>{{ menu.categoryDessert }} | Dessert</li>
-            </ul>
-          </td>
-          <td>{{ menu.visible ? 'Sí' : 'No' }}</td>
-          <td>
-            <button class="btn btn-info btn-sm ml-2" (click)="editMenu(menu)">Editar</button>
-            <button class="btn btn-danger btn-sm" (click)="deleteMenu(menu.id)">Eliminar</button>
-            <button class="btn btn-primary btn-sm" (click)="toggleVisibility(menu)">
-              {{ menu.visible ? 'Ocultar' : 'Mostrar' }}
-            </button>
-          </td>
-        </tr>}
-      </tbody>
-    </table>
-    <div>
-      <button class="btn btn-primary" (click)="addMenu()">Agregar Menú</button>
-    </div>
-    @if (addingMenu || editingMenu) {
-    <div>
-        <h2>{{ editingMenu ? 'Editar Menú' : 'Agregar Menú' }}</h2>
-            <form (ngSubmit)="submitMenuForm()" #menuForm="ngForm">
-            <label for="categoryAppetizer">Appetizer:</label>
-            <select id="categoryAppetizer" name="categoryAppetizer" required [(ngModel)]="newMenu.categoryAppetizer">
-            @for (dish of (getDishesAppetizer() | async); track $index) {
-                <option [value]="dish.id">{{dish.id}}: {{ dish.name }}</option>
-            }
-            </select>
-
-            <label for="categoryFirst">First:</label>
-            <select id="categoryFirst" name="categoryFirst" required [(ngModel)]="newMenu.categoryFirst">
-            @for (dish of (getDishesFirst() | async); track $index) {
-                <option [value]="dish.id">{{dish.id}}: {{ dish.name }}</option>
-            }
-            </select>
-
-            <label for="categorySecond">Second:</label>
-            <select id="categorySecond" name="categorySecond" required [(ngModel)]="newMenu.categorySecond">
-            @for (dish of (getDishesSecond() | async); track $index) {
-                <option [value]="dish.id">{{dish.id}}: {{ dish.name }}</option>
-            }
-            </select>
-
-            <label for="categoryDessert">Dessert:</label>
-            <select id="categoryDessert" name="categoryDessert" required [(ngModel)]="newMenu.categoryDessert">
-            @for (dish of (getDishesDessert() | async); track $index) {
-                <option [value]="dish.id">{{dish.id}}: {{ dish.name }}</option>
-            }
-            </select>
-
-            <button type="submit" class="btn btn-primary">{{ editingMenu ? 'Editar Menú' : 'Agregar Menú' }}</button>
-        </form>
-    </div>}
-=======
   <h2>Menu Listㅤ ㅤ
     <button class="btn btn-secondary" (click)="prevPage()">Previous Page</button>
     {{currentPage}} / {{totalPages}}
@@ -170,5 +97,4 @@
       </tr>}
     </tbody>
   </table>
->>>>>>> fae178774423a6e43f022873febb9d62ca1a33e7
 </div>
