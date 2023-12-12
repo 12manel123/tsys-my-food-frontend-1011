@@ -16,6 +16,7 @@ export class TableUsersComponent {
   newRole = '';
   currentPage: number = 1;
   itemsPerPage: number = 10;
+  totalPages: number = 0;
 
   constructor(private userDbService: UserDbService) {}
 
@@ -29,6 +30,7 @@ export class TableUsersComponent {
 
     this.userDbService.getUsers().subscribe(users => {
       this.users = users.slice(startIndex, endIndex);
+      this.totalPages = Math.ceil(this.userDbService.getTotalUsersCount() / this.itemsPerPage);
     });
   }
 
@@ -36,6 +38,7 @@ export class TableUsersComponent {
     if (confirm('¿Estás seguro de que deseas eliminar este usuario con ID: '+ userId+"?")) {
       this.userDbService.deleteUser(userId).subscribe(() => {
         this.loadUsers();
+        this.totalPages = Math.ceil(this.userDbService.getTotalUsersCount() / this.itemsPerPage);
       });
     }
     this.loadUsers();
@@ -56,7 +59,6 @@ export class TableUsersComponent {
 
   nextPage(): void {
     const startIndex = this.currentPage * this.itemsPerPage;
-    const endIndex = startIndex + this.itemsPerPage;
     if (startIndex < this.userDbService.getTotalUsersCount()) {
       this.currentPage++;
       this.loadUsers();

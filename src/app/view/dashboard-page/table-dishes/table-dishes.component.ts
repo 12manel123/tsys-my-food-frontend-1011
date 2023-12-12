@@ -13,16 +13,22 @@ export class TableDishesComponent implements OnInit {
   newDish: Dish = { id: 0, name: '', description: '', image: '', price: 0, category: '', attributes: [] };
   currentPage = 1;
   itemsPerPage = 5;
+  totalPages = 0;
 
   constructor(private dishesService: DishesDbService) {}
 
   ngOnInit() {
     this.dishesService.getDishes().subscribe((dishes) => {
       this.dishes = dishes;
+      this.calculateTotalPages();
       this.currentPage = 1;
     });
   }
 
+  calculateTotalPages() {
+    this.totalPages = Math.ceil(this.dishes.length / this.itemsPerPage);
+  }
+  
   getDisplayedDishes(): Dish[] {
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
     const endIndex = startIndex + this.itemsPerPage;

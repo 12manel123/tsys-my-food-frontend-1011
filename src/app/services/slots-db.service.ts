@@ -1,11 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-export interface Slot {
-  id: number;
-  time: string;
-  limit_slot: number;
-  actual: number;
-}
+import { Slot } from '../models/slots-admin';
+
 @Injectable({
   providedIn: 'root'
 })
