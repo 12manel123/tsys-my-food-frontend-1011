@@ -1,1 +1,22 @@
-<p>header-user works!</p>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container">
+      <!-- Logo a la izquierda -->
+      <a class="navbar-brand" [routerLink]="['/']" routerLinkActive="router-link-active">
+         <app-logo-card></app-logo-card>
+      </a>
+
+      <!-- Botón de hamburguesa para pantallas pequeñas -->
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <!-- Elementos de la derecha -->
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link">Hi {{username}}</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>

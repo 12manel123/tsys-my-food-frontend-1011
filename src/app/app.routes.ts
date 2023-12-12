@@ -16,6 +16,8 @@ import { ChefPageComponent } from './view/chef-page/chef-page.component';
 import { ErrorPageComponent } from './view/error-page/error-page.component';
 import { LoginComponent } from './view/landing-page/login/login.component';
 import { RegisterComponent } from './view/landing-page/register/register.component';
+import { UserPageComponent } from './view/user-page/user-page.component';
+import { InitialComponent } from './view/user-page/initial/initial.component';
 
 
 export const routes: Routes = [
@@ -33,8 +35,12 @@ export const routes: Routes = [
         {path:'listorder', component: TableListOrderComponent},
         {path:'menus', component: TableMenuComponent},
         {path:'slots', component: TableSlotsComponent},
-  ]
-  },
+      ]
+    },
+    { path: 'user', component: UserPageComponent ,children: [
+      {path:'initial', component: InitialComponent },
+      ]
+    },
 
     { path: 'chef', component: ChefPageComponent },
     { path: 'error', component: ErrorPageComponent },
