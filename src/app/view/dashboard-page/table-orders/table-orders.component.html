@@ -1,1 +1,45 @@
-<p>table-orders works!</p>
+<div>
+    <h2>Order List
+        <button class="btn btn-secondary" (click)="prevPage()">Previous Page</button>
+        {{currentPage}} / {{totalPages}}
+        <button class="btn btn-secondary" (click)="nextPage()">Next Page</button>
+    </h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Maked</th>
+                <th>Slot</th>
+                <th>Price</th>
+                <th>Date and Time</th>
+                <th>Dishes</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (order of orders; track $index) {
+            <tr>
+                <td>{{ order.id }}</td>
+                <td>{{ order.maked }}</td>
+                <td>{{ order.slot.time }}</td>
+                <td>{{ order.price }}</td>
+                <td>{{ order.datetime | date }}</td>
+                <td>
+                    <ul>
+                        @for (dish of order.dishes; track $index) {
+                        <li>
+                            {{ dish.name }}
+                            <button class="btn btn-danger btn-sm" (click)="removeDishFromOrder(order.id, dish.id)">Remove Dish</button>
+                            
+                        </li>}
+                    </ul>
+                </td>
+                <td>
+                    <button class="btn btn-primary btn-sm" (click)="addDishToOrderWithAlert(order.id)">Add Dish</button>
+                    <button class="btn btn-danger btn-sm" (click)="removeOrder(order.id)">Remove Order</button>
+                </td>
+            </tr>}
+        </tbody>
+    </table>
+    
+</div>
