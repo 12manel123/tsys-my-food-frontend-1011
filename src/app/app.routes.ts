@@ -18,6 +18,7 @@ import { LoginComponent } from './view/landing-page/login/login.component';
 import { RegisterComponent } from './view/landing-page/register/register.component';
 import { UserPageComponent } from './view/user-page/user-page.component';
 import { InitialComponent } from './view/user-page/initial/initial.component';
+import { OrderComponent } from './view/user-page/order/order.component';
 
 
 export const routes: Routes = [
@@ -39,6 +40,7 @@ export const routes: Routes = [
     },
     { path: 'user', component: UserPageComponent ,children: [
       {path:'initial', component: InitialComponent },
+      {path:'order', component: OrderComponent },
       ]
     },
 
