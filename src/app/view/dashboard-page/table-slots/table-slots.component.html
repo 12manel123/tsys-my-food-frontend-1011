@@ -1,21 +1,21 @@
 <div>
-    <h2>Listado de Slots</h2>
+    <h2>Slots List</h2>
     <table class="table">
         <thead>
             <tr>
-            <th>ID</th>
-            <th>Hora</th>
-            <th>Límite de Slots</th>
-            <th>Actual</th>
+                <th>ID</th>
+                <th>Time</th>
+                <th>Limit Orders</th>
+                <th>Actual Orders</th>
             </tr>
         </thead>
         <tbody>
             @for (slot of slots; track $index) {
             <tr>
-            <td>{{ slot.id }}</td>
-            <td>{{ slot.time }}</td>
-            <td>{{ slot.limit_slot }} | <button class="btn btn-info btn-sm" (click)="editLimitSlot(slot.id)">Edit</button></td>
-            <td>{{ slot.actual }}</td>
+                <td>{{ slot.id }}</td>
+                <td>{{ slot.time }}</td>
+                <td>{{ slot.limit_slot }} | <button class="btn btn-info btn-sm" (click)="editLimitSlot(slot.id)">Edit</button></td>
+                <td>{{ slot.actual }}</td>
             </tr>}
         </tbody>
     </table>

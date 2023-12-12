@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { Slot, SlotsDbService } from '../../../services/slots-db.service';
+import { SlotsDbService } from '../../../services/slots-db.service';
+import { Slot } from '../../../models/slots-admin';
 
 @Component({
   selector: 'app-table-slots',
