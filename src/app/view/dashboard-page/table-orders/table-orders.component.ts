@@ -76,7 +76,7 @@ export class TableOrdersComponent implements OnInit {
         this.dishesDbService.getDishById(dishId).subscribe(
           (selectedDish) => {
             if (selectedDish && selectedDish.length > 0) {
-              // Agregar el plato a la orden
+              this.ordersDbService.addDishToOrder(orderId, selectedDish[0]);
               alert("Plato agregado a la orden");
             } else {
               alert("Plato no encontrado");
