@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
 import { DishAdmin } from '../models/dish-admin';
 
+
 @Injectable({
   providedIn: 'root',
 })
@@ -38,7 +39,7 @@ export class DishesDbService {
       id: 4,
       name: 'BBQ Chicken Pizza',
       description: 'Pizza topped with BBQ chicken, red onions, and cilantro.',
-      image: 'https://th.bing.com/th/id/OIP._txd9Hwain8m1-so-mkBhwAAAA?rs=1&pid=ImgDetMain',
+      image: 'https://thecozycook.com/wp-content/uploads/2019/08/BBQ-Chicken-Pizza-.jpg',
       price: 16.99,
       category: 'second',
       attributes: [],
@@ -109,7 +110,7 @@ export class DishesDbService {
   ];
   private dishesSubject = new BehaviorSubject<DishAdmin[]>(this.dishes);
   private lastId = this.dishes.length > 0 ? Math.max(...this.dishes.map((dish) => dish.id)) : 0;
-  
+
   getDishes() {
     return this.dishesSubject.asObservable();
   }
