@@ -16,6 +16,7 @@ export class DishesUserService {
       price: 9.99,
       category: 'appetizer',
       attributes: ['vegetarian'],
+      visible: false
     },
     {
       id: 2,
@@ -25,6 +26,7 @@ export class DishesUserService {
       price: 18.99,
       category: 'first',
       attributes: ['lactose'],
+      visible: true
     },
     {
       id: 3,
@@ -34,6 +36,7 @@ export class DishesUserService {
       price: 14.99,
       category: 'first',
       attributes: ['vegetarian'],
+      visible: false
     },
     {
       id: 4,
@@ -43,6 +46,7 @@ export class DishesUserService {
       price: 16.99,
       category: 'second',
       attributes: [],
+      visible: false
     },
     {
       id: 5,
@@ -52,6 +56,7 @@ export class DishesUserService {
       price: 12.99,
       category: 'dessert',
       attributes: ['nuts'],
+      visible: false
     },
     {
       id: 6,
@@ -61,6 +66,7 @@ export class DishesUserService {
       price: 20.99,
       category: 'second',
       attributes: [],
+      visible: false
     },
     {
       id: 7,
@@ -70,6 +76,7 @@ export class DishesUserService {
       price: 15.99,
       category: 'second',
       attributes: ['vegan', 'vegetarian'],
+      visible: false
     },
     {
       id: 8,
@@ -79,6 +86,7 @@ export class DishesUserService {
       price: 8.99,
       category: 'dessert',
       attributes: ['vegetarian'],
+      visible: true
     },
     {
       id: 9,
@@ -88,6 +96,7 @@ export class DishesUserService {
       price: 13.99,
       category: 'appetizer',
       attributes: [],
+      visible: true
     },
     {
       id: 10,
@@ -97,6 +106,7 @@ export class DishesUserService {
       price: 11.99,
       category: 'first',
       attributes: [],
+      visible: true
     },
     {
       id: 11,
@@ -106,6 +116,7 @@ export class DishesUserService {
       price: 7.99,
       category: 'dessert',
       attributes: ['vegan', 'vegetarian'],
+      visible: true
     },
   ];
   private dishesSubject = new BehaviorSubject<DishAdmin[]>(this.dishes);

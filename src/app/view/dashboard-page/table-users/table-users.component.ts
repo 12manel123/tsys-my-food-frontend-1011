@@ -1,44 +1,59 @@
 import { Component } from '@angular/core';
 import { User, UserDbService } from '../../../services/user-db.service';
-
+import { MatCardModule } from '@angular/material/card';
+import {MatIconModule} from '@angular/material/icon';
+import {MatButtonModule} from '@angular/material/button';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import {MatMenuModule} from '@angular/material/menu';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatPaginatorModule } from '@angular/material/paginator';
 @Component({
   selector: 'app-table-users',
   standalone: true,
-  imports: [],
+  imports: [    MatCardModule,
+    MatIconModule,
+    MatButtonModule,
+    MatToolbarModule,
+    MatMenuModule,
+    MatTableModule,
+    MatPaginatorModule
+  ],
   templateUrl: './table-users.component.html',
   styleUrl: './table-users.component.css'
 })
 export class TableUsersComponent {
+  displayedColumns: string[] = ['id', 'username', 'email', 'role', 'actions'];
   users: User[] = [];
   showRoleModal = false;
   selectedUser: User | undefined;
   selectedUserId: number | undefined;
   newRole = '';
   currentPage: number = 1;
-  itemsPerPage: number = 10;
   totalPages: number = 0;
+  public selectedPageSize: number = 10;
 
-  constructor(private userDbService: UserDbService) {}
+  constructor(public userDbService: UserDbService) {}
 
   ngOnInit(): void {
     this.loadUsers();
   }
 
   loadUsers(): void {
-    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
-    const endIndex = this.currentPage * this.itemsPerPage;
-
+    const startIndex = (this.currentPage - 1) * this.selectedPageSize;
+    const endIndex = this.currentPage * this.selectedPageSize;
+  
     this.userDbService.getUsers().subscribe(users => {
       this.users = users.slice(startIndex, endIndex);
-      this.totalPages = Math.ceil(this.userDbService.getTotalUsersCount() / this.itemsPerPage);
+      this.totalPages = Math.ceil(this.userDbService.getTotalUsersCount() / this.selectedPageSize);
     });
   }
-
+  
   deleteUser(userId: number): void {
     if (confirm('¿Estás seguro de que deseas eliminar este usuario con ID: '+ userId+"?")) {
       this.userDbService.deleteUser(userId).subscribe(() => {
         this.loadUsers();
-        this.totalPages = Math.ceil(this.userDbService.getTotalUsersCount() / this.itemsPerPage);
+        this.totalPages = Math.ceil(this.userDbService.getTotalUsersCount() / this.selectedPageSize);
       });
     }
     this.loadUsers();
@@ -57,18 +72,11 @@ export class TableUsersComponent {
     });
   }
 
-  nextPage(): void {
-    const startIndex = this.currentPage * this.itemsPerPage;
-    if (startIndex < this.userDbService.getTotalUsersCount()) {
-      this.currentPage++;
-      this.loadUsers();
-    }
-  }
-
-  prevPage(): void {
-    if (this.currentPage > 1) {
-      this.currentPage--;
-      this.loadUsers();
-    }
+  onChange(event: any): void {
+    this.selectedPageSize = event.pageSize;
+    this.currentPage = 1;
+    this.loadUsers();
+    this.currentPage = event.pageIndex + 1;
+    this.loadUsers();
   }
 }
