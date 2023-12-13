@@ -1,31 +1,48 @@
 <div>
-    <h2>User List
-        <button class="btn btn-secondary" (click)="prevPage()">Previous Page</button>
-        {{currentPage}} / {{totalPages}}
-        <button class="btn btn-secondary" (click)="nextPage()">Next Page</button>ㅤ
-    </h2>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Username</th>
-                <th>Email</th>
-                <th>Role</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @for (user of users; track $index) {
-            <tr>
-                <td>{{ user.id }}</td>
-                <td>{{ user.username }}</td>
-                <td>{{ user.email }}</td>
-                <td>{{ user.role }}</td>
-                <td>
-                    <button class="btn btn-info btn-sm ml-2" (click)="updateRole(user.id)">Update Role</button> |
-                    <button class="btn btn-danger btn-sm" (click)="deleteUser(user.id)">Delete</button>
-                </td>
-            </tr>}
-        </tbody>
-    </table>
-</div>
+    <h2>Users List
+    <mat-paginator
+    [pageSize]="selectedPageSize"
+    [pageIndex]="currentPage - 1"
+    [length]="userDbService.getTotalUsersCount()"
+    [pageSizeOptions]="[10, 20, 30]"
+    aria-label="Select page"
+    (page)="onChange($event)"
+  ></mat-paginator></h2>
+    <mat-table [dataSource]="users" class="mat-elevation-z8">
+      <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef>ID</mat-header-cell>
+        <mat-cell *matCellDef="let user">{{ user.id }}</mat-cell>
+      </ng-container>
+  
+      <ng-container matColumnDef="username">
+        <mat-header-cell *matHeaderCellDef>Username</mat-header-cell>
+        <mat-cell *matCellDef="let user">{{ user.username }}</mat-cell>
+      </ng-container>
+  
+      <ng-container matColumnDef="email">
+        <mat-header-cell *matHeaderCellDef>Email</mat-header-cell>
+        <mat-cell *matCellDef="let user">{{ user.email }}</mat-cell>
+      </ng-container>
+  
+      <ng-container matColumnDef="role">
+        <mat-header-cell *matHeaderCellDef>Role</mat-header-cell>
+        <mat-cell *matCellDef="let user">{{ user.role }}</mat-cell>
+      </ng-container>
+  
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
+        <mat-cell *matCellDef="let user">
+          <button class="button" mat-raised-button color="primary" (click)="updateRole(user.id)">Update Role</button>
+          <button mat-raised-button color="warn" (click)="deleteUser(user.id)">Delete</button>
+        </mat-cell>
+      </ng-container>
+  
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+    </mat-table>
+  
+
+  
+
+  </div>
+  

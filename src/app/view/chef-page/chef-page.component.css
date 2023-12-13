@@ -27,13 +27,10 @@ footer {
     font-weight: bold;
 }
 
-
-
 .card-container {
     display: grid;
     grid-template-columns: repeat(4, 25vw);
     gap: 10px;
-    margin: 20px auto;
 }
 
 .card {
@@ -78,11 +75,17 @@ footer {
     position: fixed;
     bottom: 0;
     width: 100%;
+    position: static;
 }
 
 .dish-list {
     max-height: 35vh;
     overflow-y: auto;
+    margin-bottom: 10px;
+}
+
+.dish-list li {
+    margin-bottom: 5px; 
 }
 
 .delete-button {

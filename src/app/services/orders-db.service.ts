@@ -25,6 +25,7 @@ export class OrdersDbService {
           price: 14.99,
           category: 'first',
           attributes: ['vegetarian'],
+          visible: true,
         },
         {
           id: 4,
@@ -34,6 +35,7 @@ export class OrdersDbService {
           price: 16.99,
           category: 'second',
           attributes: [],
+          visible: true,
         }
       ]
     },
@@ -52,6 +54,7 @@ export class OrdersDbService {
           price: 14.99,
           category: 'first',
           attributes: ['vegetarian'],
+          visible: true,
         },
         {
           id: 4,
@@ -61,6 +64,7 @@ export class OrdersDbService {
           price: 16.99,
           category: 'second',
           attributes: [],
+          visible: true,
         }
       ]
     },
@@ -79,6 +83,7 @@ export class OrdersDbService {
           price: 9.99,
           category: 'appetizer',
           attributes: ['vegetarian'],
+          visible: true,
         },
         {
           id: 2,
@@ -88,6 +93,7 @@ export class OrdersDbService {
           price: 18.99,
           category: 'first',
           attributes: ['lactose'],
+          visible: false,
         }
       ]
     }
