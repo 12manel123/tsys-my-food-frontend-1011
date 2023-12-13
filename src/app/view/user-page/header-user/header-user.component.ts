@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { LogoCardComponent } from '../../../shared/logo-card/logo-card.component';
+import { AuthService } from '../../../services/auth.service';
 
 
 @Component({
@@ -11,5 +12,7 @@ import { LogoCardComponent } from '../../../shared/logo-card/logo-card.component
   styleUrl: './header-user.component.css'
 })
 export class HeaderUserComponent {
-  username:string = 'David Maza';
+
+  servAuth = inject(AuthService)
+  username:string = this.servAuth.username();
 }

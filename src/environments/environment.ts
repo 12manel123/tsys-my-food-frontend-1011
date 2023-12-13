@@ -1,4 +1,4 @@
 export const environment = {
-  apiUrl: '', // Aqui irá la ruta de la API deplegada en Raliway
+  apiUrl: 'https://myfood.up.railway.app',
   production: false,
 };
