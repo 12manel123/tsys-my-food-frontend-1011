@@ -6,7 +6,8 @@ export const apiFoodInterceptor: HttpInterceptorFn = (req, next) => {
     return next(req);
   }
 
-  const token = localStorage.getItem('token');
+  console.log(sessionStorage.getItem('token'));
+  const token = sessionStorage.getItem('token');
   const newReq = req.clone({
     setHeaders: {
       Authorization: `Bearer ${token}`
