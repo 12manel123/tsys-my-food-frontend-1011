@@ -1,27 +1,58 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { DishesDbService } from '../../../services/dishes-db.service';
-
+import { DishAdmin } from '../../../models/dish-admin';
+import { MatCardModule } from '@angular/material/card';
+import {MatIconModule} from '@angular/material/icon';
+import {MatButtonModule} from '@angular/material/button';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import {MatMenuModule} from '@angular/material/menu';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatPaginatorModule } from '@angular/material/paginator';
 @Component({
   selector: 'app-table-dishes',
   standalone: true,
-  imports: [],
+  imports: [MatCardModule,
+    MatIconModule,
+    MatButtonModule,
+    MatToolbarModule,
+    MatMenuModule,
+    MatTableModule,
+    MatPaginatorModule],
   templateUrl: './table-dishes.component.html',
   styleUrl: './table-dishes.component.css'
 })
 export class TableDishesComponent implements OnInit {
-  dishes: Dish[] = [];
-  newDish: Dish = { id: 0, name: '', description: '', image: '', price: 0, category: '', attributes: [] };
-  currentPage = 1;
-  itemsPerPage = 5;
-  totalPages = 0;
+  dishes: DishAdmin[] = [];
+  newDish: DishAdmin = { id: 0, name: '', description: '', image: '', price: 0, category: '', attributes: [],visible: false};
+  currentPage: number = 1;
+  itemsPerPage: number = 5
+  totalPages: number = 0;
+  displayedColumns: string[] = ['id', 'name', 'description', 'image', 'price', 'category', 'attributes', 'visible', 'actions'];
+  dataSource: MatTableDataSource<DishAdmin> = new MatTableDataSource<DishAdmin>([]);
 
-  constructor(private dishesService: DishesDbService) {}
+  constructor(public dishesService: DishesDbService) {}
 
-  ngOnInit() {
-    this.dishesService.getDishes().subscribe((dishes) => {
+  ngOnInit(): void {
+    this.loadDishes();
+    /*this.calculateTotalPages();
+    this.dataSource.data = this.getDisplayedDishes();
+    this.dataSource.paginator = this.paginator;
+    this.currentPage = 1;*/
+    /*this.dishesService.getDishes().subscribe((dishes) => {
       this.dishes = dishes;
       this.calculateTotalPages();
       this.currentPage = 1;
+    });*/
+  }
+
+  loadDishes(): void {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = this.currentPage * this.itemsPerPage;
+
+    this.dishesService.getDishes().subscribe(dishes => {
+      this.dishes = dishes.slice(startIndex, endIndex);
+      this.totalPages = Math.ceil(this.dishesService.getTotalDishesCount() / this.itemsPerPage);
     });
   }
 
@@ -29,26 +60,39 @@ export class TableDishesComponent implements OnInit {
     this.totalPages = Math.ceil(this.dishes.length / this.itemsPerPage);
   }
   
-  getDisplayedDishes(): Dish[] {
+  getDisplayedDishes(): DishAdmin[] {
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
     const endIndex = startIndex + this.itemsPerPage;
     return this.dishes.slice(startIndex, endIndex);
   }
   prevPage() {
+    alert("test");
     if (this.currentPage > 1) {
       this.currentPage--;
     }
   }
 
   nextPage() {
-    const totalPages = Math.ceil(this.dishes.length / this.itemsPerPage);
-    if (this.currentPage < totalPages) {
+    alert("test2");
+    this.calculateTotalPages();
+    alert(this.totalPages);
+    if (this.currentPage < this.totalPages) {
+      alert(this.currentPage);
       this.currentPage++;
     }
   }
 
+  onChange(event: any): void {
+    this.itemsPerPage = event.pageSize;
+    this.currentPage = 1;
+    this.loadDishes();
+    this.currentPage = event.pageIndex + 1;
+    this.loadDishes();
+  }
+
+
   addDish() {
-    const newDish: Dish = { ...this.newDish }; // Create a copy to avoid modifying the original newDish directly
+    const newDish: DishAdmin = { ...this.newDish }; // Create a copy to avoid modifying the original newDish directly
 
     // Request user input through alerts
     newDish.name = prompt('Nombre del nuevo plato') || '';
@@ -56,7 +100,7 @@ export class TableDishesComponent implements OnInit {
     newDish.image = prompt('URL de la imagen del nuevo plato') || '';
     newDish.price = parseFloat(prompt('Precio del nuevo plato') || '0');
     newDish.category = prompt('Nueva categoría, solo (appetizer, first, second, dessert)') || '';
-
+    newDish.visible= confirm('Visible?');
     // Request user input for attributes, limiting to celiac, nuts, vegan, vegetarian, lactose
     const attributesInput = prompt(
       'Atributos del nuevo plato (opcional, separados por comas): celiac, nuts, vegan, vegetarian, lactose'
@@ -72,7 +116,7 @@ export class TableDishesComponent implements OnInit {
     }
   }
 
-  editDish(dish: Dish) {
+  editDish(dish: DishAdmin) {
     const updatedDish = { ...dish }; // Create a copy to avoid modifying the original dish directly
 
     updatedDish.name = prompt('Nuevo nombre', dish.name) || dish.name;
@@ -80,6 +124,7 @@ export class TableDishesComponent implements OnInit {
     updatedDish.image = prompt('Nueva imagen', dish.image) || dish.image;
     updatedDish.price = parseFloat(prompt('Nuevo precio', dish.price.toString()) || dish.price.toString());
     updatedDish.category = prompt('Nueva categoría, solo (appetizer, first, second, dessert)', dish.category) || dish.category;
+    updatedDish.visible= confirm('Visible?');
 
     const attributesInput = prompt(
       'Nuevos atributos (separados por comas): celiac, nuts, vegan, vegetarian, lactose',
@@ -102,7 +147,7 @@ export class TableDishesComponent implements OnInit {
     return attributes.filter((attr) => allowedAttributes.includes(attr));
   }
 
-  private validateDish(dish: Dish): boolean {
+  private validateDish(dish: DishAdmin): boolean {
     const allowedCategories = ['appetizer', 'first', 'second', 'dessert'];
     return (
       dish.name.trim() !== '' &&
@@ -115,7 +160,7 @@ export class TableDishesComponent implements OnInit {
   }
 
   private resetNewDish() {
-    this.newDish = { id: 0, name: '', description: '', image: '', price: 0, category: '', attributes: [] };
+    this.newDish = { id: 0, name: '', description: '', image: '', price: 0, category: '', attributes: [],visible: false };
   }
 
 
@@ -123,14 +168,4 @@ export class TableDishesComponent implements OnInit {
   deleteDish(dishId: number) {
     this.dishesService.deleteDish(dishId);
   }
-}
-
-interface Dish {
-  id: number;
-  name: string;
-  description: string;
-  image: string;
-  price: number;
-  category: string;
-  attributes: string[];
 }

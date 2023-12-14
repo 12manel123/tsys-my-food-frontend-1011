@@ -6,4 +6,5 @@ export interface DishAdmin {
     price: number;
     category: string;
     attributes: string[];
+    visible : boolean;
 }

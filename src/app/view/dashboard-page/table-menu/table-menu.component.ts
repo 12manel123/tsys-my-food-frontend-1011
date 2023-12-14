@@ -6,10 +6,26 @@ import { AsyncPipe,SlicePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Observable, map } from 'rxjs';
 import { Menu } from '../../../models/menu-admin';
+import { MatCardModule } from '@angular/material/card';
+import {MatIconModule} from '@angular/material/icon';
+import {MatButtonModule} from '@angular/material/button';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import {MatMenuModule} from '@angular/material/menu';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatOptionModule } from '@angular/material/core';
 @Component({
   selector: 'app-table-menu',
   standalone: true,
-  imports: [FormsModule,AsyncPipe,SlicePipe],
+  imports: [FormsModule,AsyncPipe,SlicePipe,MatCardModule,
+    MatIconModule,
+    MatButtonModule,
+    MatToolbarModule,
+    MatMenuModule,
+    MatTableModule,
+    MatPaginatorModule,MatFormFieldModule,MatOptionModule],
   templateUrl: './table-menu.component.html',
   styleUrl: './table-menu.component.css'
 })
@@ -22,12 +38,14 @@ export class TableMenuComponent {
   addingMenu: boolean = false;
   editingMenuId: number | null = null;
   editingMenu: Menu | null = null;
+  dataSource: MatTableDataSource<Menu> = new MatTableDataSource<Menu>([]);
+  displayedColumns: string[] = ['id', 'dishes', 'visible', 'actions'];
 
   currentPage: number = 1;
   itemsPerPage: number = 2;
   totalPages: number = 0;
 
-  constructor(private menusService: MenusDbService, private dishesService: DishesDbService) {}
+  constructor(public menusService: MenusDbService, private dishesService: DishesDbService) {}
 
   ngOnInit() {
     this.loadMenus();
@@ -121,6 +139,14 @@ export class TableMenuComponent {
   toggleVisibility(menu: Menu) {
     menu.visible = !menu.visible;
     this.menusService.updateMenu(menu);
+  }
+
+  onChange(event: any): void {
+    this.itemsPerPage = event.pageSize;
+    this.currentPage = 1;
+    this.loadMenus();
+    this.currentPage = event.pageIndex + 1;
+    this.loadMenus();
   }
 
 

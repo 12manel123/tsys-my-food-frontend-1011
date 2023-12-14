@@ -1,0 +1,28 @@
+.mat-column-id,
+.mat-column-maked,
+.mat-column-slot,
+.mat-column-price {
+    width: 80px;
+    max-width: 80px;
+    min-width: 80px;
+}
+
+.mat-column-date{
+    width: 130px;
+    max-width: 130px;
+    min-width: 130px;
+}
+
+.small-button {
+    font-size: 16px;
+}
+
+.button {
+    margin-right: 8px;
+}
+
+.mdc-data-table__table{
+    max-width: 99% !important;
+    min-width: 99% !important;
+    margin-bottom: 50px;
+}
