@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { UserReg } from '../../../models/user';
 import { LogoComponent } from '../../../shared/logo/logo.component';
 import { Router} from '@angular/router';
@@ -16,6 +16,10 @@ import { TokenStorageService } from '../../../services/token-storage.service';
 })
 export class RegisterComponent {
 
+  private authService  = inject(AuthService)
+  private tokenStServ = inject(TokenStorageService)
+  private router= inject(Router) ;
+
   rta: string = '';
 
   user: UserReg = {
@@ -25,34 +29,26 @@ export class RegisterComponent {
   };
 
 
+  public registerForm: FormGroup<any> = new FormGroup<any>({
 
-  public registerForm: FormGroup;
+    username: new FormControl('',[
+      Validators.required,
+      Validators.minLength(10),
+      Validators.maxLength(60),]),
 
-  private fb = inject(FormBuilder)
-  private authService  = inject(AuthService)
-  private tokenStServ = inject(TokenStorageService)
-  private router= inject(Router) ;
-  constructor( ) {
+    email: new FormControl('', [
+      Validators.required,
+      Validators.email,
+     Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,3}$'),]),
+    password: new FormControl('', [
+      Validators.required,
+      Validators.minLength(8) && Validators.maxLength(20),
+      Validators.pattern('^(?=.*[A-Z])(?=.*[a-zA-Z0-9]).+$'),
+    ]),
 
-    this.registerForm = this.fb.group({
-      username: '',
-      email: '',
-      password: '',
-    })
+    checkbox :  new FormControl(false, Validators.requiredTrue),
 
-  }
-
-
-  ngOnInit(): void {
-
-    this.registerForm = this.fb.group({
-      username: ['', Validators.required],
-      email: ['', Validators.email ,  Validators.required],
-      password: ['', Validators.minLength(8) && Validators.maxLength(20), Validators.required],
-    })
-
-  };
-
+  })
 
 
   add() {
@@ -83,7 +79,12 @@ export class RegisterComponent {
       }
     })
 
-    }
+  }
+
+  accept() {
+    this.registerForm.value.checkbox = true;
+    console.log( this.registerForm.value.checkbox);
+  }
 }
 
 

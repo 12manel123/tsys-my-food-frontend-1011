@@ -46,7 +46,7 @@ export const routes: Routes = [
       ]
     },
 
-    { path: 'chef', component: ChefPageComponent , canActivate : [chefGuard ]},
+    { path: 'chef', component: ChefPageComponent , canActivate : [chefGuard]},
     { path: 'error', component: ErrorPageComponent },
     { path: '**', redirectTo: '/error' }
 
