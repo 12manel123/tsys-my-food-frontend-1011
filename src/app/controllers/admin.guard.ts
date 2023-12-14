@@ -8,7 +8,6 @@ export const adminGuard: CanActivateFn = (route, state) => {
     redirect.navigate(['/']);
     return false;
   }
-
   return sessionStorage.getItem('role') === 'ROLE_ADMIN';
 
 };
