@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DishesDbService } from '../../../services/dishes-db.service';
+import { DishAdmin } from '../../../models/dish-admin';
 
 @Component({
   selector: 'app-table-dishes',
@@ -9,8 +10,8 @@ import { DishesDbService } from '../../../services/dishes-db.service';
   styleUrl: './table-dishes.component.css'
 })
 export class TableDishesComponent implements OnInit {
-  dishes: Dish[] = [];
-  newDish: Dish = { id: 0, name: '', description: '', image: '', price: 0, category: '', attributes: [] };
+  dishes: DishAdmin[] = [];
+  newDish: DishAdmin = { id: 0, name: '', description: '', image: '', price: 0, category: '', attributes: [],visible: false};
   currentPage = 1;
   itemsPerPage = 5;
   totalPages = 0;
@@ -29,7 +30,7 @@ export class TableDishesComponent implements OnInit {
     this.totalPages = Math.ceil(this.dishes.length / this.itemsPerPage);
   }
   
-  getDisplayedDishes(): Dish[] {
+  getDisplayedDishes(): DishAdmin[] {
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
     const endIndex = startIndex + this.itemsPerPage;
     return this.dishes.slice(startIndex, endIndex);
@@ -48,7 +49,7 @@ export class TableDishesComponent implements OnInit {
   }
 
   addDish() {
-    const newDish: Dish = { ...this.newDish }; // Create a copy to avoid modifying the original newDish directly
+    const newDish: DishAdmin = { ...this.newDish }; // Create a copy to avoid modifying the original newDish directly
 
     // Request user input through alerts
     newDish.name = prompt('Nombre del nuevo plato') || '';
@@ -56,7 +57,7 @@ export class TableDishesComponent implements OnInit {
     newDish.image = prompt('URL de la imagen del nuevo plato') || '';
     newDish.price = parseFloat(prompt('Precio del nuevo plato') || '0');
     newDish.category = prompt('Nueva categoría, solo (appetizer, first, second, dessert)') || '';
-
+    newDish.visible= confirm('Visible?');
     // Request user input for attributes, limiting to celiac, nuts, vegan, vegetarian, lactose
     const attributesInput = prompt(
       'Atributos del nuevo plato (opcional, separados por comas): celiac, nuts, vegan, vegetarian, lactose'
@@ -72,7 +73,7 @@ export class TableDishesComponent implements OnInit {
     }
   }
 
-  editDish(dish: Dish) {
+  editDish(dish: DishAdmin) {
     const updatedDish = { ...dish }; // Create a copy to avoid modifying the original dish directly
 
     updatedDish.name = prompt('Nuevo nombre', dish.name) || dish.name;
@@ -102,7 +103,7 @@ export class TableDishesComponent implements OnInit {
     return attributes.filter((attr) => allowedAttributes.includes(attr));
   }
 
-  private validateDish(dish: Dish): boolean {
+  private validateDish(dish: DishAdmin): boolean {
     const allowedCategories = ['appetizer', 'first', 'second', 'dessert'];
     return (
       dish.name.trim() !== '' &&
@@ -115,7 +116,7 @@ export class TableDishesComponent implements OnInit {
   }
 
   private resetNewDish() {
-    this.newDish = { id: 0, name: '', description: '', image: '', price: 0, category: '', attributes: [] };
+    this.newDish = { id: 0, name: '', description: '', image: '', price: 0, category: '', attributes: [],visible: false };
   }
 
 
@@ -123,14 +124,4 @@ export class TableDishesComponent implements OnInit {
   deleteDish(dishId: number) {
     this.dishesService.deleteDish(dishId);
   }
-}
-
-interface Dish {
-  id: number;
-  name: string;
-  description: string;
-  image: string;
-  price: number;
-  category: string;
-  attributes: string[];
 }

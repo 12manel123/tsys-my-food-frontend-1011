@@ -21,7 +21,37 @@ export class ChefService {
         dishes: [
           { name: 'Plato 1' },
           { name: 'Plato 2' },
-          { name: 'Plato 1' }        ]
+          { name: 'Plato 1' },
+          { name: 'Plato 2' },
+          { name: 'Plato 1' },
+          { name: 'Plato 2' },
+          { name: 'Plato 1' },
+          { name: 'Plato 2' },
+          { name: 'Plato 1' },
+          { name: 'Plato 2' },
+          { name: 'Plato 1' },
+          { name: 'Plato 2' },
+          { name: 'Plato 1' },
+          { name: 'Plato 2' },
+          { name: 'Plato 1' },
+          { name: 'Plato 2' },
+          { name: 'Plato 1' },
+          { name: 'Plato 2' },
+          { name: 'Plato 1' },
+          { name: 'Plato 2' },
+          { name: 'Plato 1' },
+          { name: 'Plato 2' },
+          { name: 'Plato 1' },
+          { name: 'Plato 2' },
+          { name: 'Plato 1' },
+          { name: 'Plato 2' },
+          { name: 'Plato 1' },
+          { name: 'Plato 2' },
+          { name: 'Plato 1' },
+          { name: 'Plato 2' },
+          { name: 'Plato 1' },
+          { name: 'Plato 2' },
+          { name: 'Plato 1' }                      ]
       });
     }
   }
