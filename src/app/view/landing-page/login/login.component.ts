@@ -40,10 +40,7 @@ export class LoginComponent {
       ] ),
     });
 
-
-
   rta: string = "";
-
 
 
   login() {
