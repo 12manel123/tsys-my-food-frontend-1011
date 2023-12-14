@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, map, of, throwError } from 'rxjs';
 import { DishAdmin } from '../models/dish-admin';
 
 
@@ -155,16 +155,20 @@ export class DishesDbService {
     return this.dishes.filter((dish) => dishIds.includes(dish.id));
   }
 
-  getDishById(dishId: number): Observable<DishAdmin[]> {
+  getDishById(dishId: number): Observable<DishAdmin | null> {
     const dish = this.dishes.find((d) => d.id === dishId);
-    return of(dish ? [dish] : []);
+    return of(dish ? dish : null);
   }
 
   getTotalDishesCount(): number {
     return this.dishes.length;
   }
 
-
+  getDishesCategoryIds(categoryType: string): Observable<number[]> {
+    return this.dishesSubject.asObservable().pipe(
+      map(dishes => dishes.filter(dish => dish.category === categoryType).map(dish => dish.id))
+    );
+  }
 
 
 

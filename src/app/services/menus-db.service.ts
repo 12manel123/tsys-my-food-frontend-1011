@@ -7,10 +7,94 @@ import { Menu } from '../models/menu-admin';
 })
 export class MenusDbService {
   private menus: Menu[] = [
-    { id: 1, categoryAppetizer: 1, categoryFirst: 2, categorySecond: 4, categoryDessert: 5, visible: true },
-    { id: 2, categoryAppetizer: 9, categoryFirst: 3, categorySecond: 6, categoryDessert: 8, visible: true },
-    { id: 3, categoryAppetizer: 9, categoryFirst: 2, categorySecond: 6, categoryDessert: 8, visible: false },
-    { id: 4, categoryAppetizer: 9, categoryFirst: 3, categorySecond: 4, categoryDessert: 8, visible: false }
+    { 
+      id: 1,
+      categoryAppetizer: {
+        id: 1,
+        name: 'Caesar Salad',
+        description: 'Classic Caesar salad with romaine lettuce, croutons, and parmesan cheese.',
+        image: 'https://itsavegworldafterall.com/wp-content/uploads/2023/04/Avocado-Caesar-Salad-FI.jpg',
+        price: 9.99,
+        category: 'appetizer',
+        attributes: ['vegetarian'],
+        visible: false
+      }, 
+      categoryFirst: {
+        id: 2,
+        name: 'Grilled Salmon',
+        description: 'Grilled salmon fillet served with lemon butter sauce.',
+        image: 'https://www.thecookierookie.com/wp-content/uploads/2023/05/featured-grilled-salmon-recipe.jpg',
+        price: 18.99,
+        category: 'first',
+        attributes: ['lactose'],
+        visible: true
+      }, 
+      categorySecond: {
+        id: 4,
+        name: 'BBQ Chicken Pizza',
+        description: 'Pizza topped with BBQ chicken, red onions, and cilantro.',
+        image: 'https://thecozycook.com/wp-content/uploads/2019/08/BBQ-Chicken-Pizza-.jpg',
+        price: 16.99,
+        category: 'second',
+        attributes: [],
+        visible: false
+      }, 
+      categoryDessert: {
+        id: 5,
+        name: 'Chocolate Fondue',
+        description: 'Rich chocolate fondue served with strawberries and marshmallows.',
+        image: 'https://th.bing.com/th/id/OIP._txd9Hwain8m1-so-mkBhwAAAA?rs=1&pid=ImgDetMain',
+        price: 12.99,
+        category: 'dessert',
+        attributes: ['nuts'],
+        visible: false
+      }, 
+      visible: true 
+    },
+    { 
+      id: 2,
+      categoryAppetizer: {
+        id: 1,
+        name: 'Caesar Salad',
+        description: 'Classic Caesar salad with romaine lettuce, croutons, and parmesan cheese.',
+        image: 'https://itsavegworldafterall.com/wp-content/uploads/2023/04/Avocado-Caesar-Salad-FI.jpg',
+        price: 9.99,
+        category: 'appetizer',
+        attributes: ['vegetarian'],
+        visible: false
+      }, 
+      categoryFirst: {
+        id: 2,
+        name: 'Grilled Salmon',
+        description: 'Grilled salmon fillet served with lemon butter sauce.',
+        image: 'https://www.thecookierookie.com/wp-content/uploads/2023/05/featured-grilled-salmon-recipe.jpg',
+        price: 18.99,
+        category: 'first',
+        attributes: ['lactose'],
+        visible: true
+      }, 
+      categorySecond: {
+        id: 6,
+        name: 'Shrimp Scampi',
+        description: 'Shrimp sautéed in garlic and white wine sauce, served over linguine.',
+        image: 'https://th.bing.com/th/id/OIP._txd9Hwain8m1-so-mkBhwAAAA?rs=1&pid=ImgDetMain',
+        price: 20.99,
+        category: 'second',
+        attributes: [],
+        visible: false
+      }, 
+      categoryDessert: {
+        id: 5,
+        name: 'Chocolate Fondue',
+        description: 'Rich chocolate fondue served with strawberries and marshmallows.',
+        image: 'https://th.bing.com/th/id/OIP._txd9Hwain8m1-so-mkBhwAAAA?rs=1&pid=ImgDetMain',
+        price: 12.99,
+        category: 'dessert',
+        attributes: ['nuts'],
+        visible: false
+      }, 
+      visible: true 
+    },
 
   ];
   private menusSubject = new BehaviorSubject<Menu[]>(this.menus);

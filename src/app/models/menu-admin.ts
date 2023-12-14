@@ -1,8 +1,10 @@
+import { DishAdmin } from "./dish-admin";
+
 export interface Menu {
     id: number;
-    categoryAppetizer: number;
-    categoryFirst: number;
-    categorySecond: number;
-    categoryDessert: number;
+    categoryAppetizer: DishAdmin;
+    categoryFirst: DishAdmin;
+    categorySecond: DishAdmin;
+    categoryDessert: DishAdmin;
     visible: boolean;
 }

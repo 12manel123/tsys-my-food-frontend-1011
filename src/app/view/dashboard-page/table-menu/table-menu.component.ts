@@ -4,7 +4,7 @@ import { DishesDbService } from '../../../services/dishes-db.service';
 import { DishAdmin } from '../../../models/dish-admin';
 import { AsyncPipe,SlicePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Observable, map } from 'rxjs';
+import { Observable, catchError, forkJoin, map, of } from 'rxjs';
 import { Menu } from '../../../models/menu-admin';
 import { MatCardModule } from '@angular/material/card';
 import {MatIconModule} from '@angular/material/icon';
@@ -16,10 +16,11 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatOptionModule } from '@angular/material/core';
+import { JsonPipe } from '@angular/common';
 @Component({
   selector: 'app-table-menu',
   standalone: true,
-  imports: [FormsModule,AsyncPipe,SlicePipe,MatCardModule,
+  imports: [JsonPipe,FormsModule,AsyncPipe,SlicePipe,MatCardModule,
     MatIconModule,
     MatButtonModule,
     MatToolbarModule,
@@ -31,9 +32,38 @@ import { MatOptionModule } from '@angular/material/core';
 })
 export class TableMenuComponent {
   menus: Menu[] = [];
-  newMenu: Menu = { id: 0, categoryAppetizer: 0, categoryFirst: 0, categorySecond: 0, categoryDessert: 0, visible: true };
+  newMenuIds: {
+    categoryAppetizer: number | null,
+    categoryFirst: number | null,
+    categorySecond: number | null,
+    categoryDessert: number | null
+  } = {
+    categoryAppetizer: null,
+    categoryFirst: null,
+    categorySecond: null,
+    categoryDessert: null
+  };
+  
+  newMenu: {
+    categoryAppetizer: DishAdmin | null,
+    categoryFirst: DishAdmin | null,
+    categorySecond: DishAdmin | null,
+    categoryDessert: DishAdmin | null
+  } = {
+    categoryAppetizer: null,
+    categoryFirst: null,
+    categorySecond: null,
+    categoryDessert: null
+  };
+
+  appetizers$: Observable<DishAdmin[]> = this.getDishesCategory('appetizer');
+  firstDishes$: Observable<DishAdmin[]> = this.getDishesCategory('first');
+  secondDishes$: Observable<DishAdmin[]> = this.getDishesCategory('second');
+  dessertDishes$: Observable<DishAdmin[]> = this.getDishesCategory('dessert');
+  
+  appetizertest: any={};
+
   dishes: DishAdmin[] = [];
-  dishNames: { [key: number]: string } = {};
   dishCategories: string[] = [];
   addingMenu: boolean = false;
   editingMenuId: number | null = null;
@@ -41,8 +71,13 @@ export class TableMenuComponent {
   dataSource: MatTableDataSource<Menu> = new MatTableDataSource<Menu>([]);
   displayedColumns: string[] = ['id', 'dishes', 'visible', 'actions'];
 
+  firstDishes: number[] = [];
+  secondDishes: number[] = [];
+  appetizerDishes: number[] = [];
+  dessertDishes: number[] = [];
+
   currentPage: number = 1;
-  itemsPerPage: number = 2;
+  itemsPerPage: number = 5;
   totalPages: number = 0;
 
   constructor(public menusService: MenusDbService, private dishesService: DishesDbService) {}
@@ -56,7 +91,6 @@ export class TableMenuComponent {
     const endIndex = this.currentPage * this.itemsPerPage;
     this.menusService.getMenus().subscribe((menus) => {
       this.menus = menus.slice(startIndex, endIndex);
-      this.loadDishNames();
       this.totalPages = Math.ceil(this.menusService.getTotalMenus() / this.itemsPerPage);
     });
     this.dishesService.getDishes().subscribe((dishes) => {
@@ -81,60 +115,72 @@ export class TableMenuComponent {
   }
 
   editMenu(menu: Menu) {
-    this.editingMenu = { ...menu };
-    this.addingMenu = true;
+
   }
+
+  addMenu() {
+    
+    const appetizer$ = this.getDishById(this.newMenuIds.categoryAppetizer)
+    console.log(appetizer$)
+    alert (appetizer$)
+    const first$ = this.getDishById(this.newMenuIds.categoryFirst);
+    const second$ = this.getDishById(this.newMenuIds.categorySecond);
+    const dessert$ = this.getDishById(this.newMenuIds.categoryDessert);
+
+    forkJoin([appetizer$, first$, second$, dessert$]).subscribe(
+      ([appetizer, first, second, dessert]) => {
+        console.log(appetizer);
+        if (appetizer && first && second && dessert) {
+          const newMenu: Menu = {
+            id: 0,
+            categoryAppetizer: appetizer,
+            categoryFirst: first,
+            categorySecond: second,
+            categoryDessert: dessert,
+            visible: true
+          };
+
+          this.menusService.addMenu(newMenu);
+
+          this.newMenuIds = {
+            categoryAppetizer: null,
+            categoryFirst: null,
+            categorySecond: null,
+            categoryDessert: null
+          };
+
+          this.loadMenus();
+        } else {
+          console.error('No se pudieron obtener todos los platos seleccionados.');
+        }
+      }
+    );
+  }
+
+  
+
+  private getDishById(dishId: number | null): Observable<DishAdmin | null> {
+    if (dishId === null) {
+      return of(null);
+    }
+    return this.dishesService.getDishById(dishId).pipe(
+      catchError(() => of(null))
+    );
+  }
+  
+  
+  
 
   deleteMenu(menuId: number) {
     this.menusService.deleteMenu(menuId);
   }
 
-  addMenu() {
-    this.addingMenu = true;
-  }
-
-  submitMenuForm() {
-    if (this.validateNewMenu()) {
-      if (this.editingMenu) {
-        this.editingMenu.categoryAppetizer = this.newMenu.categoryAppetizer;
-        this.editingMenu.categoryFirst = this.newMenu.categoryFirst;
-        this.editingMenu.categorySecond = this.newMenu.categorySecond;
-        this.editingMenu.categoryDessert = this.newMenu.categoryDessert;
-        this.menusService.updateMenu(this.editingMenu);
-      } else {
-        const newMenu: Menu = {
-          id: 0,
-          categoryAppetizer: this.newMenu.categoryAppetizer,
-          categoryFirst: this.newMenu.categoryFirst,
-          categorySecond: this.newMenu.categorySecond,
-          categoryDessert: this.newMenu.categoryDessert,
-          visible: true,
-        };
-
-        this.menusService.addMenu(newMenu);
-      }
-      this.resetNewMenu();
-      this.addingMenu = false;
-      this.editingMenu = null;
-      alert('Menú guardado exitosamente.');
-      this.loadMenus();
-    } else {
-      alert('Por favor, complete todos los campos del formulario.');
-    }
-  }
-
-  validateNewMenu(): boolean {
-    return (
-      this.newMenu.categoryAppetizer > 0 &&
-      this.newMenu.categoryFirst > 0 &&
-      this.newMenu.categorySecond > 0 &&
-      this.newMenu.categoryDessert > 0
+  getDishesCategory(categoryType: string): Observable<DishAdmin[]> {
+    return this.dishesService.getDishes().pipe(
+      map(dishes => dishes.filter(dish => dish.category === categoryType))
     );
   }
 
-  resetNewMenu() {
-    this.newMenu = { id: 0, categoryAppetizer: 0, categoryFirst: 0, categorySecond: 0, categoryDessert: 0, visible: true };
-  }
 
   toggleVisibility(menu: Menu) {
     menu.visible = !menu.visible;
@@ -149,66 +195,4 @@ export class TableMenuComponent {
     this.loadMenus();
   }
 
-
-  //For search the name of menu:
-
-  getMenuItemsDetails(itemIds: number[]): DishAdmin[] {
-    return this.dishesService.getDishDetailsByIds(itemIds);
-  }
-
-  getDishesAppetizer(): Observable<DishAdmin[]> {
-    return this.getDishesCategory("appetizer");
-  }
-
-  getDishesFirst(): Observable<DishAdmin[]> {
-    return this.getDishesCategory("first");
-  }
-
-  getDishesSecond(): Observable<DishAdmin[]> {
-    return this.getDishesCategory("second");
-  }
-
-  getDishesDessert(): Observable<DishAdmin[]> {
-    return this.getDishesCategory("dessert");
-  }
-
-  getDishesCategory(categoryType: string): Observable<DishAdmin[]> {
-    return this.dishesService.getDishes().pipe(
-      map(dishes => dishes.filter(dish => dish.category === categoryType))
-    );
-  }
-
-  getDishName(dishId: number): string {
-    return this.dishNames[dishId] || 'Nombre no encontrado';
-  }
-
-  loadDishNames() {
-    for (const menu of this.menus) {
-      this.getDishNameById(menu.categoryAppetizer).subscribe(name => {
-        this.dishNames[menu.categoryAppetizer] = name;
-      });
-
-      this.getDishNameById(menu.categoryFirst).subscribe(name => {
-        this.dishNames[menu.categoryFirst] = name;
-      });
-
-      this.getDishNameById(menu.categorySecond).subscribe(name => {
-        this.dishNames[menu.categorySecond] = name;
-      });
-
-      this.getDishNameById(menu.categoryDessert).subscribe(name => {
-        this.dishNames[menu.categoryDessert] = name;
-      });
-    }
-  }
-
-  getDishNameById(dishId: number): Observable<string> {
-    return this.dishesService.getDishNameById(dishId);
-  }
-
-
-  getDishDetailsByIds(dishId: number): Observable<DishAdmin[]> {
-    console.log(dishId);
-    return this.dishesService.getDishById(dishId);
-  }
 }

@@ -9,48 +9,61 @@
         [pageSize]="itemsPerPage"
         [pageIndex]="currentPage - 1"
         [length]="menusService.getTotalMenus()"
-        [pageSizeOptions]="[2, 5, 10]"
+        [pageSizeOptions]="[5,8, 10]"
         (page)="onChange($event)">
       </mat-paginator>
       </div>
   </div>
+  <div class="row mt-3">
+    <div class="col">
+      <label for="categoryAppetizer">Appetizer ID:</label>
+      <input type="number" id="categoryAppetizer" [(ngModel)]="newMenuIds.categoryAppetizer" />
+    </div>
+    <div class="col">
+      <label for="categoryFirst">First ID:</label>
+      <input type="number" id="categoryFirst" [(ngModel)]="newMenuIds.categoryFirst" />
+    </div>
+    <div class="col">
+      <label for="categorySecond">Second ID:</label>
+      <input type="number" id="categorySecond" [(ngModel)]="newMenuIds.categorySecond" />
+    </div>
+    <div class="col">
+      <label for="categoryDessert">Dessert ID:</label>
+      <input type="number" id="categoryDessert" [(ngModel)]="newMenuIds.categoryDessert" />
+    </div>
+  </div>
 
-
-  @if (addingMenu || editingMenu) {
-    <div>
-      <h2>{{ editingMenu ? 'Edit Menu' : 'Add Menu' }}</h2>
-        <form (ngSubmit)="submitMenuForm()" #menuForm="ngForm">
-          <label for="categoryAppetizer">Appetizer:</label>
-          <select id="categoryAppetizer" name="categoryAppetizer" required [(ngModel)]="newMenu.categoryAppetizer">
-            @for (dish of (getDishesAppetizer() | async); track $index) {
-              <option [value]="dish.id">{{dish.id}}: {{ dish.name }}</option>
-            }
-          </select>
+  <div class="col">
+    <label for="categoryAppetizer">Appetizer:</label>
+    <select id="categoryAppetizer" [(ngModel)]="newMenu.categoryAppetizer">
+      @for (dish of appetizers$ | async; track $index) {
+      <option [value]="dish">
+        {{ dish.name }}
+      </option>}
+    </select>
+    <label for="categoryAppetizer">First:</label>
+    <select id="categoryAppetizer" [(ngModel)]="newMenu.categoryFirst">
+      @for (dish of firstDishes$ | async; track $index) {
+      <option [value]="dish">
+        {{ dish.name }}
+      </option>}
+    </select>
+    <label for="categoryAppetizer">Second:</label>
+    <select id="categoryAppetizer" [(ngModel)]="newMenu.categorySecond">
+      @for (dish of secondDishes$ | async; track $index) {
+      <option [value]="dish">
+        {{ dish.name }}
+      </option>}
+    </select>
+    <label for="categoryAppetizer">Dessert:</label>
+    <select id="categoryAppetizer" [(ngModel)]="newMenu.categoryDessert">
+      @for (dish of dessertDishes$ | async; track $index) {
+      <option [value]="dish">
+        {{ dish.name }}
+      </option>}
+    </select>
+  </div>
   
-          <label for="categoryFirst">First:</label>
-          <select id="categoryFirst" name="categoryFirst" required [(ngModel)]="newMenu.categoryFirst">
-            @for (dish of (getDishesFirst() | async); track $index) {
-              <option [value]="dish.id">{{dish.id}}: {{ dish.name }}</option>
-            }
-          </select>
-  
-          <label for="categorySecond">Second:</label>
-          <select id="categorySecond" name="categorySecond" required [(ngModel)]="newMenu.categorySecond">
-            @for (dish of (getDishesSecond() | async); track $index) {
-              <option [value]="dish.id">{{dish.id}}: {{ dish.name }}</option>
-            }
-          </select>
-  
-          <label for="categoryDessert">Dessert:</label>
-          <select id="categoryDessert" name="categoryDessert" required [(ngModel)]="newMenu.categoryDessert">
-            @for (dish of (getDishesDessert() | async); track $index) {
-              <option [value]="dish.id">{{dish.id}}: {{ dish.name }}</option>
-            }
-          </select>
-          <button class="buttonnav" mat-raised-button color="primary"><mat-icon class="mx-2" aria-hidden="false"  fontIcon="{{ editingMenu ? 'edit' : 'add' }}"></mat-icon></button>
-        </form>
-    </div>}
-
   <mat-table [dataSource]="menus" class="mat-elevation-z8">
     <ng-container matColumnDef="id">
       <mat-header-cell *matHeaderCellDef>ID</mat-header-cell>
@@ -61,10 +74,10 @@
       <mat-header-cell *matHeaderCellDef>Dishes</mat-header-cell>
       <mat-cell *matCellDef="let menu">
         <ul>
-          <li>{{ menu.categoryAppetizer }} | Appetizer</li>
-          <li>{{ menu.categoryFirst }} | First</li>
-          <li>{{ menu.categorySecond }} | Second</li>
-          <li>{{ menu.categoryDessert }} | Dessert</li>
+          <li>{{ menu.categoryAppetizer.name  }} | Appetizer</li>
+          <li>{{ menu.categoryFirst.name  }} | First</li>
+          <li>{{ menu.categorySecond.name  }} | Second</li>
+          <li>{{ menu.categoryDessert.name }} | Dessert</li>
         </ul>
       </mat-cell>
     </ng-container>
