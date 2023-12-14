@@ -3,7 +3,7 @@
     <div class="col-12 mx-auto mb-3">
       <app-logo></app-logo>
     </div>
-    <form [formGroup]="registerForm" (submit)="add()" class="row g-3">
+    <form [formGroup]="registerForm" (submit)="login()" class="row g-3">
       <div class="col-md-12">
         <label for="Imputname" class="form-label">Nombre</label>
         <input
@@ -34,9 +34,7 @@
 
           <div class="col-12">
            <button
-              class="btn btn-primary mt-4"
               [disabled]="registerForm.invalid"
-              [formNoValidate]="btnValited()"
               [className]="stylebtn"
               type="submit"
             >

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { User, UserDbService } from '../../../services/user-db.service';
+import { UserforAdmin, UserDbService } from '../../../services/user-db.service';
 
 @Component({
   selector: 'app-table-users',
@@ -9,9 +9,9 @@ import { User, UserDbService } from '../../../services/user-db.service';
   styleUrl: './table-users.component.css'
 })
 export class TableUsersComponent {
-  users: User[] = [];
+  users: UserforAdmin[] = [];
   showRoleModal = false;
-  selectedUser: User | undefined;
+  selectedUser: UserforAdmin | undefined;
   selectedUserId: number | undefined;
   newRole = '';
   currentPage: number = 1;
