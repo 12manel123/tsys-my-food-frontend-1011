@@ -8,6 +8,8 @@ import {MatMenuModule} from '@angular/material/menu';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { JsonPipe } from '@angular/common';
+import { UserDTO } from '../../../models/user';
 
 @Component({
   selector: 'app-table-users',
@@ -18,7 +20,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     MatToolbarModule,
     MatMenuModule,
     MatTableModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    JsonPipe
   ],
   templateUrl: './table-users.component.html',
   styleUrl: './table-users.component.css'
@@ -27,14 +30,14 @@ export class TableUsersComponent {
 
   users: UserforAdmin[] = [];
   displayedColumns: string[] = ['id', 'username', 'email', 'role', 'actions'];
- 
 
   showRoleModal = false;
   selectedUser: UserforAdmin | undefined;
   selectedUserId: number | undefined;
   newRole = '';
-  currentPage: number = 1;
+  currentPage: number = 0;
   totalPages: number = 0;
+  totalEntities: number = 0;
   public selectedPageSize: number = 10;
 
   constructor(public userDbService: UserDbService) {}
@@ -44,12 +47,14 @@ export class TableUsersComponent {
   }
 
   loadUsers(): void {
-    const startIndex = (this.currentPage - 1) * this.selectedPageSize;
-    const endIndex = this.currentPage * this.selectedPageSize;
-  
-    this.userDbService.getUsers().subscribe(users => {
-      this.users = users.slice(startIndex, endIndex);
-      this.totalPages = Math.ceil(this.userDbService.getTotalUsersCount() / this.selectedPageSize);
+    const startIndex = this.currentPage - 1;
+    const endIndex = this.selectedPageSize;
+    this.userDbService.getUsers(startIndex,endIndex).subscribe((users:any) => {
+      const {totalElements,totalPages,content,size}=users;
+      this.totalPages = totalPages;
+      this.totalEntities=totalElements;
+      this.selectedPageSize=size
+      this.users = content;
     });
   }
   
@@ -57,7 +62,7 @@ export class TableUsersComponent {
     if (confirm('¿Estás seguro de que deseas eliminar este usuario con ID: '+ userId+"?")) {
       this.userDbService.deleteUser(userId).subscribe(() => {
         this.loadUsers();
-        this.totalPages = Math.ceil(this.userDbService.getTotalUsersCount() / this.selectedPageSize);
+        this.totalPages = Math.ceil(this.totalEntities / this.selectedPageSize);
       });
     }
     this.loadUsers();
@@ -69,18 +74,20 @@ export class TableUsersComponent {
     this.newRole = '';
   }
 
-  updateRole(userId: number): void {
+  updateRole(userId: number,user: UserDTO): void {
     this.selectedUserId = userId;
-    this.userDbService.updateRole(userId).subscribe(() => {
+    this.userDbService.updateUser(userId,user).subscribe(() => {
       this.loadUsers();
     });
   }
 
   onChange(event: any): void {
     this.selectedPageSize = event.pageSize;
-    this.currentPage = 1;
-    this.loadUsers();
     this.currentPage = event.pageIndex + 1;
     this.loadUsers();
+  }
+
+  getTotalUsersCount():any{
+    return this.userDbService.getTotalUsersCount();
   }
 }

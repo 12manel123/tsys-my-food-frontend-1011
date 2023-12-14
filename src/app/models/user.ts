@@ -27,7 +27,7 @@ export class UserDTO implements User {
   email: string;
   username: String;
   password: String;
-  role?: {
+  role: {
     id: number,
     name: string
   }
