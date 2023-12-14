@@ -46,12 +46,28 @@ export class RegisterComponent {
       Validators.pattern('^(?=.*[A-Z])(?=.*[a-zA-Z0-9]).+$'),
     ]),
 
+    confirmPassword: new FormControl('', [ Validators.required,
+      Validators.minLength(8) && Validators.maxLength(20),
+      Validators.pattern('^(?=.*[A-Z])(?=.*[a-zA-Z0-9]).+$'),
+    ]),
+
     checkbox :  new FormControl(false, Validators.requiredTrue),
 
   })
 
+  passwordMatchValidator() {
+    return  this.registerForm.get('password')?.value ===  this.registerForm.get('confirmPassword')?.value
+  }
+
 
   add() {
+
+
+    if (!this.passwordMatchValidator()) {
+      alert('Las contraseñas no coinciden');
+      return;
+    }
+
     const { username, email, password } = this.registerForm.getRawValue();
     this.registerForm.reset();
 
@@ -82,7 +98,7 @@ export class RegisterComponent {
   }
 
   accept() {
-    this.registerForm.value.checkbox = true;
+    this
     console.log( this.registerForm.value.checkbox);
   }
 }
