@@ -17,7 +17,6 @@ import { TokenStorageService } from '../../../services/token-storage.service';
 export class RegisterComponent {
 
   rta: string = '';
-  stylebtn: String = '';
 
   user: UserReg = {
     username: '',
@@ -54,12 +53,7 @@ export class RegisterComponent {
 
   };
 
-  btnValited(): void {
-    this.stylebtn = 'btn btn-secondary btn-sm mt-4'
-    if (this.registerForm.valid) {
-      this.stylebtn = 'btn btn-success btn-sm mt-4';
-    }
-  }
+
 
   add() {
     const { username, email, password } = this.registerForm.getRawValue();

@@ -32,7 +32,7 @@ export class LoginComponent {
     });
 
 
-  stylebtn = 'btn btn-secondary btn-sm mt-4';
+
   rta: string = "";
 
 
@@ -41,7 +41,6 @@ export class LoginComponent {
 
     if (this.registerForm.valid) {
 
-      this.stylebtn = 'btn btn-success btn-sm mt-4';
 
       this.user.username = this.registerForm.get('username')?.value;
       this.user.password = this.registerForm.get('password')?.value;
