@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { User, UserDbService } from '../../../services/user-db.service';
+import { UserforAdmin, UserDbService } from '../../../services/user-db.service';
 import { MatCardModule } from '@angular/material/card';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
@@ -8,6 +8,7 @@ import {MatMenuModule} from '@angular/material/menu';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatPaginatorModule } from '@angular/material/paginator';
+
 @Component({
   selector: 'app-table-users',
   standalone: true,
@@ -23,10 +24,13 @@ import { MatPaginatorModule } from '@angular/material/paginator';
   styleUrl: './table-users.component.css'
 })
 export class TableUsersComponent {
+
+  users: UserforAdmin[] = [];
   displayedColumns: string[] = ['id', 'username', 'email', 'role', 'actions'];
-  users: User[] = [];
+ 
+
   showRoleModal = false;
-  selectedUser: User | undefined;
+  selectedUser: UserforAdmin | undefined;
   selectedUserId: number | undefined;
   newRole = '';
   currentPage: number = 1;
