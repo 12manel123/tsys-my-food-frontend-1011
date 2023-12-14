@@ -4,11 +4,10 @@ import { CanActivateFn, Router } from '@angular/router';
 export const chefGuard: CanActivateFn = (route, state) => {
 
   const redirect = inject(Router);
-  if (sessionStorage.getItem('role') !== 'ROLE_CHEF') {
+  if (sessionStorage.getItem('role') !== 'ROLE_CHEF' && sessionStorage.getItem('role') !== 'ROLE_ADMIN') {
     redirect.navigate(['/']);
     return false;
   }
 
-
-  return sessionStorage.getItem('role') === 'ROLE_CHEF';
+  return sessionStorage.getItem('role') === 'ROLE_CHEF' ||  sessionStorage.getItem('role') === 'ROLE_ADMIN';
 };
