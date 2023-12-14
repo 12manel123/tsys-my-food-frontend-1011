@@ -1,18 +1,32 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-<div class="container mt-5 text-center">
-   <div class="col-md-6 col-12 mx-auto">
-    <div class="animate__animated animate__jackInTheBox">
-            <app-logo></app-logo>
+<div class="body">
+  <div class="container text-center">
+    <br>
+    <br>
+    <div class="col-md-6 col-12 mx-auto">
+     <div class="animate__animated animate__jackInTheBox">
+             <app-logo></app-logo>
+     </div>
+
     </div>
 
-   </div>
+     <br>
 
-    <br>
+     <button mat-raised-button color="primary mb-3" [routerLink]="['/login']">Log In</button>
 
-    <button mat-raised-button color="primary mb-3" [routerLink]="['/login']">Log In</button>
+     <p class="lead fs-3 mt-3">
+         Here you can order your food and much more.
+     </p>
+     <p class="fs-5 mt-3"> Discover our delicious options and enjoy the best gastronomic experience!</p>
 
-    <p class="lead fs-3 mt-3">
-        Here you can order your food and much more.
-    </p>
-    <p class="fs-5 mt-3"> Discover our delicious options and enjoy the best gastronomic experience!</p>
+     <br>
+     <p class="mt-5">100% biodegradable packaging 🌱</p>
+     <div>
+        <p class="rotated-div fs-4 mt-3 text-success fst-italic"><b>#Green</b> </p>
+     </div>
+
+
+ </div>
+
+
 </div>
