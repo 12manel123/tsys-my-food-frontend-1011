@@ -36,6 +36,7 @@ export class LoginComponent {
   rta: string = "";
 
 
+
   login() {
 
     if (this.registerForm.valid) {
@@ -65,14 +66,34 @@ export class LoginComponent {
           this.tokenStServ.saveRole(Object.values(rta)[4]);
 
 
-          // TODO : redirecionar segun el rol
-          this.router.navigate(['/user/initial'])
+          this.rediredForRole ()
         }
       })
 
-
     }
-
   }
+
+  private rediredForRole () {
+
+    const role =  this.authService.role().toString();
+    console.log(role);
+
+     switch (role) {
+       case 'ROLE_ADMIN':
+         this.router.navigate(['/admin'])
+         break;
+       case 'ROLE_USER':
+         this.router.navigate(['/user/initial'])
+         break;
+       case 'ROLE_CHEF':
+         console.log('chef');
+           this.router.navigate(['/chef'])
+           break;
+       default:
+         this.router.navigate(['/user/initial'])
+         break;
+      }
+
+   }
 
 }
