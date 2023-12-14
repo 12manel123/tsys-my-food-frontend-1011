@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-export interface User {
+
+export interface UserforAdmin {
   id: number;
   username: string;
   email: string;
@@ -10,7 +11,7 @@ export interface User {
   providedIn: 'root'
 })
 export class UserDbService {
-  private users: User[] = [
+  private users: UserforAdmin[] = [
     { id: 1, username: 'user1', email: 'user1@example.com', role: 'user' },
     { id: 2, username: 'user2', email: 'user2@example.com', role: 'admin' },
     { id: 3, username: 'user3', email: 'user3@example.com', role: 'user' },
@@ -54,9 +55,9 @@ export class UserDbService {
     { id: 41, username: 'user41', email: 'user41@example.com', role: 'user' },
     { id: 42, username: 'user42', email: 'user42@example.com', role: 'admin' },
   ];
-  
 
-  getUsers(): Observable<User[]> {
+
+  getUsers(): Observable<UserforAdmin[]> {
     return of(this.users);
   }
 
@@ -73,7 +74,7 @@ export class UserDbService {
 
     if (index !== -1) {
       const newRole = prompt('Ingrese el nuevo rol (user, admin, chef):');
-      
+
       if (newRole && ['user', 'admin', 'chef'].includes(newRole.toLowerCase())) {
         this.users[index].role = newRole.toLowerCase();
       } else {
@@ -87,6 +88,6 @@ export class UserDbService {
   getTotalUsersCount(): number {
     return this.users.length;
   }
-  
+
   constructor() { }
 }

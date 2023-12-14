@@ -39,8 +39,14 @@
           </div>
         </div>
         <div class="col-12">
-          <button class="btn btn-secondary btn-sm mt-4" href="http://localhost:4200/" [disabled]="registerForm.invalid"
-            [formNoValidate]="btnValited()" [className]="stylebtn" type="submit">Enviar</button>
+          <button class="btn btn-secondary btn-sm mt-4"
+
+            [disabled]="registerForm.invalid"
+            class="btn btn-sm mt-2"
+            [class.btn-success]="registerForm.valid"
+            [class.btn-secondary]="!registerForm.valid"
+            type="submit"
+             type="submit">Enviar</button>
         </div>
       </div>
       <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
@@ -91,7 +97,7 @@
 
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-primary btn-sm" data-bs-dismiss="modal">Aceptar</button>
+              <button type="button" class="btn btn-primary btn-sm"  data-bs-dismiss="modal">Aceptar</button>
             </div>
           </div>
         </div>

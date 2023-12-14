@@ -1,7 +1,6 @@
 import { Routes } from '@angular/router';
 
-import { NgModule } from '@angular/core';
-import { RouterModule } from '@angular/router';
+
 import { LandingPageComponent } from './view/landing-page/landing-page.component';
 import { HomeComponent } from './view/landing-page/home/home.component';
 import { AboutComponent } from './view/landing-page/about/about.component';
@@ -18,6 +17,9 @@ import { RegisterComponent } from './view/landing-page/register/register.compone
 import { UserPageComponent } from './view/user-page/user-page.component';
 import { InitialComponent } from './view/user-page/initial/initial.component';
 import { OrderComponent } from './view/user-page/order/order.component';
+import { userGuard } from './controllers/user.guard';
+import { adminGuard } from './controllers/admin.guard';
+import { chefGuard } from './controllers/chef.guard';
 
 
 export const routes: Routes = [
@@ -28,21 +30,23 @@ export const routes: Routes = [
       { path: 'login', component: LoginComponent },
       { path: 'register', component: RegisterComponent }
     ]},
-    { path: 'admin', component: DashboardPageComponent ,children: [
-        {path:'users', component: TableUsersComponent},
-        {path:'orders', component: TableOrdersComponent},
-        {path:'dishes', component: TableDishesComponent},
-        {path:'menus', component: TableMenuComponent},
-        {path:'slots', component: TableSlotsComponent},
+
+    { path: 'admin', component: DashboardPageComponent, canActivate : [adminGuard]  ,children: [
+        {path:'users', component: TableUsersComponent ,   },
+        {path:'orders', component: TableOrdersComponent },
+        {path:'dishes', component: TableDishesComponent },
+        {path:'menus', component: TableMenuComponent },
+        {path:'slots', component: TableSlotsComponent },
+
       ]
     },
-    { path: 'user', component: UserPageComponent ,children: [
-      {path:'initial', component: InitialComponent },
+    { path: 'user', component: UserPageComponent, canActivate: [userGuard] , children: [
+      {path:'initial', component: InitialComponent  },
       {path:'order', component: OrderComponent },
       ]
     },
 
-    { path: 'chef', component: ChefPageComponent },
+    { path: 'chef', component: ChefPageComponent , canActivate : [chefGuard ]},
     { path: 'error', component: ErrorPageComponent },
     { path: '**', redirectTo: '/error' }
 

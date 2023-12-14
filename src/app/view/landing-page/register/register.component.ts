@@ -1,10 +1,10 @@
-import { Component, inject  } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { UserReg } from '../../../models/user';
-import { RegisterService } from '../../../services/register.service';
 import { LogoComponent } from '../../../shared/logo/logo.component';
-import { LoginService } from '../../../services/login.service';
 import { Router} from '@angular/router';
+import { AuthService } from '../../../services/auth.service';
+import { TokenStorageService } from '../../../services/token-storage.service';
 
 
 @Component({
@@ -17,7 +17,6 @@ import { Router} from '@angular/router';
 export class RegisterComponent {
 
   rta: string = '';
-  stylebtn: String = '';
 
   user: UserReg = {
     username: '',
@@ -25,11 +24,13 @@ export class RegisterComponent {
     password: '',
   };
 
+
+
   public registerForm: FormGroup;
 
   private fb = inject(FormBuilder)
-  private registerService = inject(RegisterService)
-  private loginService = inject(LoginService)
+  private authService  = inject(AuthService)
+  private tokenStServ = inject(TokenStorageService)
   private router= inject(Router) ;
   constructor( ) {
 
@@ -52,30 +53,33 @@ export class RegisterComponent {
 
   };
 
-  btnValited(): void {
-    this.stylebtn = 'btn btn-secondary btn-sm mt-4'
-    if (this.registerForm.valid) {
-      this.stylebtn = 'btn btn-success btn-sm mt-4';
-    }
-  }
+
 
   add() {
     const { username, email, password } = this.registerForm.getRawValue();
     this.registerForm.reset();
 
-    this.registerService. addNewUser(new UserReg (username, email, password) ).subscribe((result: { toString: () => string; })=>{
+    this.authService. register(new UserReg (username, email, password) ).subscribe((result: { toString: () => string; })=>{
       if (result) {
-        this.loginService.loginUser({ username, password }).subscribe((rta: { toString: () => string; }) => {
+        this.authService.login({ username, password }).subscribe((rta: { [key: string]: string }) => {
           if (rta) {
             this.rta = rta.toString();
-            console.log(result);
 
-            alert("Usuario " + username + " creado con exito ");
+            // Data to save in the service
+            this.authService.token.set(Object.values(rta)[0]) ;
+            this.authService.username.set(Object.values(rta)[2]);
+            this.authService.role.set(Object.values(rta)[4])
 
-            console.log(rta);
-            this.router.navigate(['/user'])
+            // Data to save in the session storage
+            this.tokenStServ.saveToken(Object.values(rta)[0]);
+            this.tokenStServ.saveUser(Object.values(rta)[2]);
+            this.tokenStServ.saveRole(Object.values(rta)[4]);
+
+            this.router.navigate(['/user/initial'])
           }
-         })
+        })
+      } else {
+        alert('Error al registrar usuario\n Por favor intente nuevamente con otro nombre de usuario o correo electrónico');
       }
     })
 
