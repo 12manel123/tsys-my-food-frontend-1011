@@ -35,7 +35,9 @@
           <div class="col-12">
            <button
               [disabled]="registerForm.invalid"
-              [className]="stylebtn"
+              class="btn btn-sm mt-2"
+              [class.btn-success]="registerForm.valid"
+              [class.btn-secondary]="!registerForm.valid"
               type="submit"
             >
               Enviar
