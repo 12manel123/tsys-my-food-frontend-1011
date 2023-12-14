@@ -5,10 +5,24 @@ import { DishAdmin } from '../../../models/dish-admin';
 import { DatePipe } from '@angular/common';
 import { DishesDbService } from '../../../services/dishes-db.service';
 import { JsonPipe } from '@angular/common';
+import { MatCardModule } from '@angular/material/card';
+import {MatIconModule} from '@angular/material/icon';
+import {MatButtonModule} from '@angular/material/button';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import {MatMenuModule} from '@angular/material/menu';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatPaginatorModule } from '@angular/material/paginator';
 @Component({
   selector: 'app-table-orders',
   standalone: true,
-  imports: [DatePipe],
+  imports: [DatePipe,MatCardModule,
+    MatIconModule,
+    MatButtonModule,
+    MatToolbarModule,
+    MatMenuModule,
+    MatTableModule,
+    MatPaginatorModule],
   templateUrl: './table-orders.component.html',
   styleUrl: './table-orders.component.css'
 })
@@ -19,8 +33,11 @@ export class TableOrdersComponent implements OnInit {
   totalPages: number = 0;
   availableDishes: DishAdmin[] = [];
   selectedOrderId: number | null = null;
+  displayedColumns: string[] = ['id', 'maked', 'slot', 'price', 'datetime', 'dishes', 'actions'];
+  dataSource: MatTableDataSource<Order> = new MatTableDataSource<Order>([]);
 
-  constructor(private ordersDbService: OrdersDbService,private dishesDbService: DishesDbService) { }
+  
+  constructor(public ordersDbService: OrdersDbService,private dishesDbService: DishesDbService) { }
 
   ngOnInit(): void {
     this.loadOrders();
@@ -50,20 +67,15 @@ export class TableOrdersComponent implements OnInit {
     }
   }
   
-  nextPage(): void {
-    const startIndex = this.currentPage * this.itemsPerPage;
-    if (startIndex < this.ordersDbService.getTotalOrdersCount()) {
-      this.currentPage++;
-      this.loadOrders();
-    }
+  onChange(event: any): void {
+    this.itemsPerPage = event.pageSize;
+    this.currentPage = 1;
+    this.loadOrders();
+    this.currentPage = event.pageIndex + 1;
+    this.loadOrders();
   }
 
-  prevPage(): void {
-    if (this.currentPage > 1) {
-      this.currentPage--;
-      this.loadOrders();
-    }
-  }
+
 
   removeOrder(orderId: number): void {
     this.ordersDbService.removeOrder(orderId);

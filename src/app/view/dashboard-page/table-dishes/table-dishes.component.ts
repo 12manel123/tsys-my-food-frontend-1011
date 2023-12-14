@@ -1,28 +1,58 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { DishesDbService } from '../../../services/dishes-db.service';
 import { DishAdmin } from '../../../models/dish-admin';
-
+import { MatCardModule } from '@angular/material/card';
+import {MatIconModule} from '@angular/material/icon';
+import {MatButtonModule} from '@angular/material/button';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import {MatMenuModule} from '@angular/material/menu';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatPaginatorModule } from '@angular/material/paginator';
 @Component({
   selector: 'app-table-dishes',
   standalone: true,
-  imports: [],
+  imports: [MatCardModule,
+    MatIconModule,
+    MatButtonModule,
+    MatToolbarModule,
+    MatMenuModule,
+    MatTableModule,
+    MatPaginatorModule],
   templateUrl: './table-dishes.component.html',
   styleUrl: './table-dishes.component.css'
 })
 export class TableDishesComponent implements OnInit {
   dishes: DishAdmin[] = [];
   newDish: DishAdmin = { id: 0, name: '', description: '', image: '', price: 0, category: '', attributes: [],visible: false};
-  currentPage = 1;
-  itemsPerPage = 5;
-  totalPages = 0;
+  currentPage: number = 1;
+  itemsPerPage: number = 5
+  totalPages: number = 0;
+  displayedColumns: string[] = ['id', 'name', 'description', 'image', 'price', 'category', 'attributes', 'visible', 'actions'];
+  dataSource: MatTableDataSource<DishAdmin> = new MatTableDataSource<DishAdmin>([]);
 
-  constructor(private dishesService: DishesDbService) {}
+  constructor(public dishesService: DishesDbService) {}
 
-  ngOnInit() {
-    this.dishesService.getDishes().subscribe((dishes) => {
+  ngOnInit(): void {
+    this.loadDishes();
+    /*this.calculateTotalPages();
+    this.dataSource.data = this.getDisplayedDishes();
+    this.dataSource.paginator = this.paginator;
+    this.currentPage = 1;*/
+    /*this.dishesService.getDishes().subscribe((dishes) => {
       this.dishes = dishes;
       this.calculateTotalPages();
       this.currentPage = 1;
+    });*/
+  }
+
+  loadDishes(): void {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = this.currentPage * this.itemsPerPage;
+
+    this.dishesService.getDishes().subscribe(dishes => {
+      this.dishes = dishes.slice(startIndex, endIndex);
+      this.totalPages = Math.ceil(this.dishesService.getTotalDishesCount() / this.itemsPerPage);
     });
   }
 
@@ -36,17 +66,30 @@ export class TableDishesComponent implements OnInit {
     return this.dishes.slice(startIndex, endIndex);
   }
   prevPage() {
+    alert("test");
     if (this.currentPage > 1) {
       this.currentPage--;
     }
   }
 
   nextPage() {
-    const totalPages = Math.ceil(this.dishes.length / this.itemsPerPage);
-    if (this.currentPage < totalPages) {
+    alert("test2");
+    this.calculateTotalPages();
+    alert(this.totalPages);
+    if (this.currentPage < this.totalPages) {
+      alert(this.currentPage);
       this.currentPage++;
     }
   }
+
+  onChange(event: any): void {
+    this.itemsPerPage = event.pageSize;
+    this.currentPage = 1;
+    this.loadDishes();
+    this.currentPage = event.pageIndex + 1;
+    this.loadDishes();
+  }
+
 
   addDish() {
     const newDish: DishAdmin = { ...this.newDish }; // Create a copy to avoid modifying the original newDish directly
@@ -81,6 +124,7 @@ export class TableDishesComponent implements OnInit {
     updatedDish.image = prompt('Nueva imagen', dish.image) || dish.image;
     updatedDish.price = parseFloat(prompt('Nuevo precio', dish.price.toString()) || dish.price.toString());
     updatedDish.category = prompt('Nueva categoría, solo (appetizer, first, second, dessert)', dish.category) || dish.category;
+    updatedDish.visible= confirm('Visible?');
 
     const attributesInput = prompt(
       'Nuevos atributos (separados por comas): celiac, nuts, vegan, vegetarian, lactose',

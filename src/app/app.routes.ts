@@ -8,7 +8,6 @@ import { DashboardPageComponent } from './view/dashboard-page/dashboard-page.com
 import { TableUsersComponent } from './view/dashboard-page/table-users/table-users.component';
 import { TableOrdersComponent } from './view/dashboard-page/table-orders/table-orders.component';
 import { TableDishesComponent } from './view/dashboard-page/table-dishes/table-dishes.component';
-import { TableListOrderComponent } from './view/dashboard-page/table-list-order/table-list-order.component';
 import { TableMenuComponent } from './view/dashboard-page/table-menu/table-menu.component';
 import { TableSlotsComponent } from './view/dashboard-page/table-slots/table-slots.component';
 import { ChefPageComponent } from './view/chef-page/chef-page.component';
@@ -31,14 +30,14 @@ export const routes: Routes = [
       { path: 'login', component: LoginComponent },
       { path: 'register', component: RegisterComponent }
     ]},
+
     { path: 'admin', component: DashboardPageComponent, canActivate : [adminGuard]  ,children: [
         {path:'users', component: TableUsersComponent ,   },
         {path:'orders', component: TableOrdersComponent },
-        {path:'orders', component: TableOrdersComponent },
         {path:'dishes', component: TableDishesComponent },
-        {path:'listorder', component: TableListOrderComponent },
         {path:'menus', component: TableMenuComponent },
         {path:'slots', component: TableSlotsComponent },
+
       ]
     },
     { path: 'user', component: UserPageComponent, canActivate: [userGuard] , children: [
