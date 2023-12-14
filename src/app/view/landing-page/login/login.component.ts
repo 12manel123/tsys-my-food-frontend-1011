@@ -27,8 +27,17 @@ export class LoginComponent {
     };
 
     registerForm: FormGroup<any> = new FormGroup<any>({
-      username: new FormControl('', Validators.required),
-      password: new FormControl('', Validators.required),
+      username: new FormControl('',[
+      Validators.minLength(10),
+      Validators.maxLength(60),
+      Validators.required]
+      ),
+      password: new FormControl('', [
+        Validators.required,
+        Validators.minLength(8),
+        Validators.maxLength(20),
+        Validators.pattern('^(?=.*[A-Z])(?=.*[a-zA-Z0-9]).+$'),
+      ] ),
     });
 
 
