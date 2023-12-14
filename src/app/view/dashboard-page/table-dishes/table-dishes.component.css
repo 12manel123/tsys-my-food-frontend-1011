@@ -12,3 +12,17 @@
 .image-container:hover .dish-image {
     transform: scale(1.2);
 }
+
+.button {
+    margin-right: 8px;
+}
+
+.mdc-data-table__table{
+    max-width: 99% !important;
+    min-width: 99% !important;
+    margin-bottom: 50px;
+}
+
+.buttonnav{
+    margin-left: 30px;
+}

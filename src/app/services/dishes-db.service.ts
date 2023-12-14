@@ -160,6 +160,10 @@ export class DishesDbService {
     return of(dish ? [dish] : []);
   }
 
+  getTotalDishesCount(): number {
+    return this.dishes.length;
+  }
+
 
 
 

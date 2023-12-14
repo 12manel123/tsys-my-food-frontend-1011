@@ -1,22 +1,37 @@
 <div>
-    <h2>Slots List</h2>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Time</th>
-                <th>Limit Orders</th>
-                <th>Actual Orders</th>
-            </tr>
-        </thead>
-        <tbody>
-            @for (slot of slots; track $index) {
-            <tr>
-                <td>{{ slot.id }}</td>
-                <td>{{ slot.time }}</td>
-                <td>{{ slot.limit_slot }} | <button class="btn btn-info btn-sm" (click)="editLimitSlot(slot.id)">Edit</button></td>
-                <td>{{ slot.actual }}</td>
-            </tr>}
-        </tbody>
-    </table>
+    <div>
+        <div class="row">
+          <div class="col">
+            <h2 class="mt-3">Slots List</h2>
+          </div>
+        </div>
+    <mat-table [dataSource]="slots" class="mat-elevation-z8">
+        <ng-container matColumnDef="id">
+            <mat-header-cell *matHeaderCellDef>ID</mat-header-cell>
+            <mat-cell *matCellDef="let slot">{{ slot.id }}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="time">
+            <mat-header-cell *matHeaderCellDef>Time</mat-header-cell>
+            <mat-cell *matCellDef="let slot">{{ slot.time }}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="limit_slot">
+            <mat-header-cell *matHeaderCellDef>Limit Orders</mat-header-cell>
+            <mat-cell *matCellDef="let slot">
+                {{ slot.limit_slot }}
+                <button mat-icon-button color="primary" (click)="editLimitSlot(slot.id)">
+                    <mat-icon aria-hidden="false" fontIcon="edit"></mat-icon>
+                </button>
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="actual">
+            <mat-header-cell *matHeaderCellDef>Actual Orders</mat-header-cell>
+            <mat-cell *matCellDef="let slot">{{ slot.actual }}</mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+    </mat-table>
 </div>
