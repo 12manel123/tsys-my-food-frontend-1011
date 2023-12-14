@@ -7,6 +7,8 @@ import { MatMenu, MatMenuModule } from '@angular/material/menu';
 import { DishesUserService } from '../../../services/dishes-user.service';
 import { CurrencyPipe, UpperCasePipe } from '@angular/common';
 import { DishAdmin } from '../../../models/dish-admin';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-initial',
@@ -25,6 +27,7 @@ import { DishAdmin } from '../../../models/dish-admin';
 })
 export class InitialComponent {
 
+  private router = inject(Router)
 
   listDishes: any[] = [];
 
@@ -45,7 +48,6 @@ export class InitialComponent {
     this.serverDishes.getDishesFromApi().subscribe((dishes: any) => {
       const { content } = dishes;
       this.listDishes = content;
-      console.log(dishes);
     });
   }
 
@@ -74,6 +76,17 @@ export class InitialComponent {
   addCard(dihs: DishAdmin) {
     this.addTotlaPrice(dihs.price )
     this.listDishesOrder.push(dihs);
-    console.log(this.listDishesOrder);
+
   }
+
+  cancelPedido() {
+    this.listDishesOrder = [];
+    this.totalPrice = 0;
+  }
+
+  aceptarOrden() {
+    alert('falta implemtar el aceptar orden');
+    this.router.navigate(['user/order']);
+
+    }
 }
