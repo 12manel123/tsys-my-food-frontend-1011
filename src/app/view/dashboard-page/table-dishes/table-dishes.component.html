@@ -1,19 +1,17 @@
-<div>
-    <div class="row">
-        <div class="col">
-            <h2  class="mt-3">Dishes List<button class="buttonnav" mat-raised-button color="primary"   (click)="addDish()"><mat-icon class="mx-2" aria-hidden="false"  fontIcon="add"></mat-icon></button></h2>
-        </div>
-        <div class="col">
-            <mat-paginator
-            [pageSize]="itemsPerPage"
-            [pageIndex]="currentPage - 1"
-            [length]="dishesService.getTotalDishesCount()"
-            [pageSizeOptions]="[2, 5, 10]"
-            aria-label="Select page"
-            (page)="onChange($event)">
-            </mat-paginator>
-        </div>
-    </div>
+
+    <div class="dish-dasboard">
+        <h2 class="mt-3">Dishes List<button class="buttonnav" mat-raised-button color="primary"   (click)="addDish()"><mat-icon class="mx-2" aria-hidden="false"  fontIcon="add"></mat-icon></button></h2>
+        
+        <mat-paginator
+        [pageSize]="selectedPageSize"
+        [pageIndex]="currentPage - 1"
+        [length]="totalEntities"
+        [pageSizeOptions]="[10, 20, 30]"
+        aria-label="Select page"
+        (page)="onChange($event)"
+        ></mat-paginator>
+    
+    
     <mat-table [dataSource]="dishes" class="mat-elevation-z8">
         <ng-container matColumnDef="id">
             <mat-header-cell *matHeaderCellDef>ID</mat-header-cell>
@@ -31,7 +29,7 @@
             <mat-header-cell *matHeaderCellDef>Image</mat-header-cell>
             <mat-cell *matCellDef="let dish">
                 <div class="image-container">
-                    <img class="dish-image" [src]="dish.image" alt="{{ dish.name }}">
+                    <img class="dish-image" [src]="dish.image" alt="{{ dish.name }}" (click)="enlargeImage($event)">
                 </div>
             </mat-cell>
         </ng-container>
@@ -46,10 +44,8 @@
         <ng-container matColumnDef="attributes">
             <mat-header-cell *matHeaderCellDef>Attributes</mat-header-cell>
             <mat-cell *matCellDef="let dish">
-                
-                    @for (attribute of  dish.attributes; track $index) {
-                    {{ attribute }}<br>}
-                
+                @for (attribute of  dish.attributes; track $index) {
+                {{ attribute }}<br>}
             </mat-cell>
         </ng-container>
         <ng-container matColumnDef="visible">
@@ -59,8 +55,8 @@
         <ng-container matColumnDef="actions">
             <mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
             <mat-cell *matCellDef="let dish">
-                <button class="button" mat-mini-fab color="primary"  (click)="editDish(dish)"><mat-icon class="mx-2" aria-hidden="false"  fontIcon="edit"></mat-icon></button>
-                <button class="button" mat-mini-fab color="warn"  (click)="deleteDish(dish.id)"><mat-icon class="mx-2" aria-hidden="false"  fontIcon="delete"></mat-icon></button>
+                <button class="button" mat-icon-button color="primary"  (click)="editDish(dish)"><mat-icon aria-hidden="false"  fontIcon="edit"></mat-icon></button>
+                <button class="button" mat-icon-button color="warn"  (click)="deleteDish(dish.id)"><mat-icon aria-hidden="false"  fontIcon="delete"></mat-icon></button>
 
             </mat-cell>
         </ng-container>
