@@ -1,43 +1,45 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { Slot } from '../models/slots-admin';
-
+import { inject } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
+import { environment } from '../../environments/environment';
+import { HttpClient } from '@angular/common/http';
 @Injectable({
   providedIn: 'root'
 })
 export class SlotsDbService {
-  private slots: Slot[] = [
-    { id: 1, time: '12:00', limit_slot: 15, actual: 2 },
-    { id: 2, time: '12:15', limit_slot: 15, actual: 2 },
-    { id: 3, time: '12:30', limit_slot: 15, actual: 2 },
-    { id: 4, time: '12:45', limit_slot: 15, actual: 2 },
-    { id: 5, time: '13:00', limit_slot: 15, actual: 2 },
-    { id: 6, time: '13:15', limit_slot: 15, actual: 2 },
-    { id: 7, time: '13:30', limit_slot: 15, actual: 2 },
-    { id: 8, time: '13:45', limit_slot: 15, actual: 2 },
-    { id: 9, time: '14:00', limit_slot: 15, actual: 2 },
-    { id: 10, time: '14:15', limit_slot: 15, actual: 2 },
-    { id: 11, time: '14:30', limit_slot: 15, actual: 2 },
-    { id: 12, time: '14:45', limit_slot: 15, actual: 2 }
-  ];
 
+  private url = environment.apiUrl + '/api/v1/slots';
+  private url2 = environment.apiUrl + '/api/v1/slot';
+
+  private http = inject(HttpClient)
+
+  private slotsApi: Slot[] = []
+
+  private slotSubject = new BehaviorSubject<Slot[]>(this.slotsApi);
+  
   getSlots(): Observable<Slot[]> {
-    return of(this.slots);
+    return this.http.get<any[]>(this.url);
   }
 
-  updateLimitSlot(slotId: number): Observable<void> {
-    const index = this.slots.findIndex(slot => slot.id === slotId);
+  updateLimitSlot(slotId: number,slot: Slot): Observable<any> {
+    console.log(slot);
+    console.log(slotId);
 
-    if (index !== -1) {
-      const newLimit = prompt('Ingrese el nuevo límite de slots:');
-      
-      if (newLimit !== null && !isNaN(Number(newLimit))) {
-        this.slots[index].limit_slot = Number(newLimit);
+    const newLimit = prompt('Ingrese el nuevo límite de slots:');
+    if (newLimit !== null) {
+      const newLimitNumber = parseInt(newLimit);
+      if (!isNaN(newLimitNumber)) {
+        slot.limitSlot = newLimitNumber;
+        console.log(slot);
+        return this.http.put(this.url2 + "/" + slotId, slot, { headers: { 'Content-Type': 'application/json' } });
       } else {
         alert('Límite de slots inválido. Por favor, ingrese un número válido.');
       }
+    } else {
+      console.log('Operación cancelada por el usuario.');
     }
-
     return of();
   }
 

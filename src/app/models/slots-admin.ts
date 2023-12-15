@@ -1,6 +1,6 @@
 export interface Slot {
     id: number;
     time: string;
-    limit_slot: number;
+    limitSlot: number;
     actual: number;
 }

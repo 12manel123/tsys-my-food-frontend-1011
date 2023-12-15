@@ -16,9 +16,10 @@
 .content {
   flex: 1;
   padding: 10px;
-  margin-left: 220px;
+  margin-left: 200px;
+  background: rgba(255, 255, 255, 0.7) url('../../../assets/img/fondo.png');
+  background-blend-mode: lighten;
 }
-
 .items{
   margin-top: 20px;
   font-weight: bold;

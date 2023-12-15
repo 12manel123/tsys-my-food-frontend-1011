@@ -10,7 +10,8 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { JsonPipe } from '@angular/common';
 import { UserDTO } from '../../../models/user';
-
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-table-users',
   standalone: true,
@@ -21,7 +22,8 @@ import { UserDTO } from '../../../models/user';
     MatMenuModule,
     MatTableModule,
     MatPaginatorModule,
-    JsonPipe
+    JsonPipe,
+    MatTooltipModule,
   ],
   templateUrl: './table-users.component.html',
   styleUrl: './table-users.component.css'
@@ -40,7 +42,7 @@ export class TableUsersComponent {
   totalEntities: number = 0;
   public selectedPageSize: number = 10;
 
-  constructor(public userDbService: UserDbService) {}
+  constructor(public userDbService: UserDbService,private snackBar: MatSnackBar) {}
 
   ngOnInit(): void {
     this.loadUsers();
@@ -89,5 +91,22 @@ export class TableUsersComponent {
 
   getTotalUsersCount():any{
     return this.userDbService.getTotalUsersCount();
+  }
+
+  copyToClipboard(content: string): void {
+    const el = document.createElement('textarea');
+    el.value = content;
+    document.body.appendChild(el);
+    el.select();
+    document.execCommand('copy');
+    document.body.removeChild(el);
+    this.showCopiedMessage();
+  }
+
+  showCopiedMessage(): void {
+    this.snackBar.open('Copied', 'Close', {
+      duration: 2000,
+      panelClass: ['copied-snackbar'],
+    });
   }
 }

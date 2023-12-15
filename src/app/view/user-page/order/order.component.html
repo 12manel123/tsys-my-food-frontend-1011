@@ -19,7 +19,7 @@
                     <h3>Slots Disponibles:</h3>
                     <select class="form-select" [(ngModel)]="selectedSlotId">
                         @for (slot of availableSlots; track $index) {
-                            <option [value]="slot.id">{{ slot.time }} - Actual: {{ slot.actual }} / Límite: {{ slot.limit_slot }}</option>}
+                            <option [value]="slot.id">{{ slot.time }} - Actual: {{ slot.actual }} / Límite: {{ slot.limitSlot }}</option>}
                     </select>
                     <button class="btn btn-primary mt-2" (click)="onEditOrder()">
                         <i class="fas fa-check"></i> Confirmar Orden
