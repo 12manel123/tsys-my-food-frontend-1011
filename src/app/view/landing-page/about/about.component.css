@@ -21,8 +21,9 @@
 
 .card {
   background-color: rgba(255, 255, 255, 0.466)!important;
+  border-color:deeppink!important;
   }
-  
+
 .body {
   position: relative;
   width: 100%;
