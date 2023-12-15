@@ -7,20 +7,7 @@ import { Observable, of } from 'rxjs';
   providedIn: 'root'
 })
 export class OrderUserService {
-  private slots: Slot[] = [
-    { id: 1, time: '12:00', limit_slot: 15, actual: 1 },
-    { id: 2, time: '12:15', limit_slot: 15, actual: 16 },
-    { id: 3, time: '12:30', limit_slot: 15, actual: 2 },
-    { id: 4, time: '12:45', limit_slot: 15, actual: 0 },
-    { id: 5, time: '13:00', limit_slot: 15, actual: 15 },
-    { id: 6, time: '13:15', limit_slot: 15, actual: 2 },
-    { id: 7, time: '13:30', limit_slot: 15, actual: 2 },
-    { id: 8, time: '13:45', limit_slot: 15, actual: 2 },
-    { id: 9, time: '14:00', limit_slot: 15, actual: 2 },
-    { id: 10, time: '14:15', limit_slot: 15, actual: 2 },
-    { id: 11, time: '14:30', limit_slot: 15, actual: 2 },
-    { id: 12, time: '14:45', limit_slot: 15, actual: 2 }
-  ];
+  private slots: Slot[] = [];
   private orders: Order[] = [
     {
       id: 1,
@@ -121,7 +108,7 @@ export class OrderUserService {
   
 
   getAvailableSlots(): Observable<Slot[]> {
-    const availableSlots = this.slots.filter(slot => slot.actual < slot.limit_slot);
+    const availableSlots = this.slots.filter(slot => slot.actual < slot.limitSlot);
     return of(availableSlots);
   }
   

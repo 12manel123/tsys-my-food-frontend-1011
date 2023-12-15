@@ -13,7 +13,7 @@ export class OrdersDbService {
     {
       id: 1,
       maked: false,
-      slot: { id: 4, time: '12:45', limit_slot: 15, actual: 2 },
+      slot: { id: 4, time: '12:45', limitSlot: 15, actual: 2 },
       price: 25.99,
       datetime: new Date(),
       dishes: [
@@ -42,7 +42,7 @@ export class OrdersDbService {
     {
       id: 2,
       maked: false,
-      slot: { id: 2, time: '12:15', limit_slot: 15, actual: 2 },
+      slot: { id: 2, time: '12:15', limitSlot: 15, actual: 2 },
       price: 25.99,
       datetime: new Date(),
       dishes: [
@@ -71,7 +71,7 @@ export class OrdersDbService {
     {
       id: 3,
       maked: true,
-      slot: { id: 1, time: '12:00', limit_slot: 15, actual: 2 },
+      slot: { id: 1, time: '12:00', limitSlot: 15, actual: 2 },
       price: 30.5,
       datetime: new Date(),
       dishes: [

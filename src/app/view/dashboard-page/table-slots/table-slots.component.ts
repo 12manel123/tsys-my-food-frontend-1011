@@ -41,8 +41,8 @@ export class TableSlotsComponent {
     });
   }
 
-  editLimitSlot(slotId: number): void {
-    this.slotsDbService.updateLimitSlot(slotId).subscribe(() => {
+  editLimitSlot(slotId: number,slot: Slot): void {
+    this.slotsDbService.updateLimitSlot(slotId,slot).subscribe(() => {
       this.loadSlots();
       this.selectedSlotId = slotId;
     });

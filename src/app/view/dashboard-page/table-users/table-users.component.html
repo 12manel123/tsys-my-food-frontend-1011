@@ -1,9 +1,5 @@
-<div>
-  <div class="row">
-    <div class="col">
+<div class="user-dasboard">
       <h2 class="mt-3">Users List</h2>
-    </div>
-    <div class="col">
       <mat-paginator
       [pageSize]="selectedPageSize"
       [pageIndex]="currentPage - 1"
@@ -12,35 +8,41 @@
       aria-label="Select page"
       (page)="onChange($event)"
     ></mat-paginator>
-    </div>
-  </div>
 
 
-    <mat-table [dataSource]="users" class="mat-elevation-z8" style="margin-right: 50px!important; margin-bottom: 50px;">
+    <mat-table [dataSource]="users" class="mat-elevation-z8">
       <ng-container matColumnDef="id">
-        <mat-header-cell *matHeaderCellDef>ID</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef class="mat-column-id">ID</mat-header-cell>
         <mat-cell *matCellDef="let user">{{ user.id }}</mat-cell>
       </ng-container>
   
       <ng-container matColumnDef="username">
-        <mat-header-cell *matHeaderCellDef>Username</mat-header-cell>
-        <mat-cell *matCellDef="let user">{{ user.username }}</mat-cell>
+        <mat-header-cell *matHeaderCellDef class="mat-column-username">Username</mat-header-cell>
+        <mat-cell *matCellDef="let user" (click)="copyToClipboard(user.username)">
+          <div matTooltip="{{ user.username }}">
+            {{ user.username }}
+          </div></mat-cell>
       </ng-container>
   
       <ng-container matColumnDef="email">
-        <mat-header-cell *matHeaderCellDef>Email</mat-header-cell>
-        <mat-cell *matCellDef="let user">{{ user.email }}</mat-cell>
+        <mat-header-cell *matHeaderCellDef class="mat-column-email">Email</mat-header-cell>
+        <mat-cell *matCellDef="let user" (click)="copyToClipboard(user.email)">
+          <div matTooltip="{{ user.email }}">
+            {{ user.email }}
+          </div>
+        </mat-cell>
       </ng-container>
+      
   
       <ng-container matColumnDef="role">
-        <mat-header-cell *matHeaderCellDef>Role</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef class="mat-column-role">Role</mat-header-cell>
         <mat-cell *matCellDef="let user">
           {{ user.role.name }}
         </mat-cell>
       </ng-container>
   
       <ng-container matColumnDef="actions">
-        <mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef class="mat-column-actions">Actions</mat-header-cell>
         <mat-cell *matCellDef="let user">
           <button class="button" mat-icon-button color="primary" (click)="updateRole(user.id,user)"><mat-icon aria-hidden="false"  fontIcon="manage_accounts"></mat-icon></button>
           <button mat-icon-button color="warn" (click)="deleteUser(user.id)"><mat-icon aria-hidden="false"  fontIcon="person_remove"></mat-icon></button>

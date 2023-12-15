@@ -1,5 +1,33 @@
 .mdc-data-table__table{
-    max-width: 99% !important;
-    min-width: 99% !important;
-    margin-bottom: 50px;
+    min-width: 40%;
+    width: 80px;
+    max-width: 80px;
+}
+
+.mat-column-id {
+    width: 80px;
+    max-width: 80px;
+    min-width: 80px;
+    justify-content: center;
+}
+.mat-column-time,
+.mat-column-actual,
+.mat-column-limit_slot {
+    justify-content: center;
+
+}
+
+.slot_dashboard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.slot_dashboard h2 {
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+mat-header-cell{
+    font-weight: bold;
 }
