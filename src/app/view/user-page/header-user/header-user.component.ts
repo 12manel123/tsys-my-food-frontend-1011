@@ -13,11 +13,19 @@ import { TokenStorageService } from '../../../services/token-storage.service';
   styleUrl: './header-user.component.css'
 })
 export class HeaderUserComponent implements OnInit {
+
+  tokerServ = inject(TokenStorageService);
+
+  singOut() {
+
+    this.tokerServ.singOut();
+    window.location.reload();
+
+}
+
+
   ngOnInit(): void {
-
     this.username = this.tokenStServ.getUser(); ;
-
-     console.log(this.username);
   }
 
   private tokenStServ = inject(TokenStorageService);

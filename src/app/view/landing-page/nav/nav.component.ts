@@ -12,13 +12,5 @@ import { TokenStorageService } from '../../../services/token-storage.service';
 })
 export class NavComponent {
 
-  tokerServ = inject(TokenStorageService);
-
-  singOut() {
-
-    this.tokerServ.singOut();
-    window.location.reload();
-
-}
 
 }

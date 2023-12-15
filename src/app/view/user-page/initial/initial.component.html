@@ -1,138 +1,166 @@
-<div class="container marketing mt-4">
+<main class="body"><br>
 
-  <!-- Three columns of text below the carousel -->
-  <div class="row">
-    <div class="col-lg-3 menu">
-      <img class="w-50" src="../../../../assets/img/no-foto.png" alt="no-foto">
+  <div class="container card marketing p-4"><br>
 
-      <h2 class="">Aperitivo</h2>
-      <p>Some representative placeholder content for the three columns of text below the carousel. This is the first
-        column.</p>
-
-    </div><!-- /.col-lg-4 -->
-    <div class="col-lg-3 menu">
-      <img class="w-50" src="../../../../assets/img/no-foto.png" alt="no-foto">
-
-
-      <h2>Primer Plato</h2>
-      <p>Another exciting bit of representative placeholder content. This time, we've moved on to the second column.</p>
-
-    </div><!-- /.col-lg-4 -->
-    <div class="col-lg-3 menu">
-      <img class="w-50" src="../../../../assets/img/no-foto.png" alt="no-foto">
-      <h2>Segundo Plato</h2>
-      <p>And lastly this, the third column of representative placeholder content.</p>
-
-    </div><!-- /.col-lg-4 -->
-    <div class="col-lg-3 menu">
-      <img class="w-50" src="../../../../assets/img/no-foto.png" alt="no-foto">
-      <h2>Postre</h2>
-      <p>Some representative placeholder content for the three columns of text below the carousel. This is the first
-        column.</p>
-
-    </div><!-- /.col-lg-4 -->
-  </div><!-- /.row -->
-  <div class="row">
-    <button mat-raised-button color="primary mx-auto w-50" (click)="addMenu(menu)"><b>Tu menú por solo
-        8.90€</b></button>
-  </div>
-
-
-  <hr class="featurette-divider">
-
-  <mat-toolbar>
+    <h2 class="text-center text-primary"><b>MENU DEL DIA </b></h2>
     <div class="row">
-      <div class="col-10">
-        <span>{{ totalPrice | currency:'EUR' }}</span>
-      </div>
-      <div class="col-2">
 
-        <button mat-raised-button color="accent mx-1" (click)="fliterForApptizer()">Aperitivos</button>
-        <button mat-raised-button color="accent mx-" (click)="fliterForFirsts()">Primeros</button>
-        <button mat-raised-button color="accent mx-1" (click)="fliterForSeconds()">Segundos</button>
-        <button mat-raised-button color="accent mx-1" (click)="fliterForDesserts()">Postres</button>
-
-        <button mat-button [matMenuTriggerFor]="menu">Especiales para...</button>
-        <mat-menu #menu="matMenu">
-          <button mat-menu-item>Veganos</button>
-          <button mat-menu-item>Vegetearianos</button>
-          <button mat-menu-item>Apto para celiacos</button>
-          <button mat-menu-item>Sin Lactosa</button>
-          <button mat-menu-item>Sin Frutos Secos</button>
-        </mat-menu>
-
+      <!-- /.col-lg-3 -->
+      <div class="col-lg-3 menu">
+        <img  mat-card-md-image src="{{menus.appetizer.image}}" class="menu-img img-fluid rounded-circle shadow  mb-2" alt="{{menus.appetizer.name}}">
+        <h2 class="">{{menus.appetizer.name}}</h2>
+        <p>{{menus.appetizer.description}}</p>
+        <p>{{menus.first.category}}</p>
       </div>
 
-    </div>
-    <!-- dimamco -->
+      <!-- /.col-lg-3 -->
+      <div class="col-lg-3 menu">
+        <img mat-card-md-image src="{{menus.first.image}}" class="menu-img img-fluid rounded-circle shadow mb-2" alt="{{menus.first.name}}">
+        <h2>{{menus.first.name}}</h2>
+        <p>{{menus.first.description}}</p>
+        <p>{{menus.first.category}}</p>
+      </div>
 
-  </mat-toolbar>
-  <div class="row">
-    @for(dish of listDishes; track $index){
-    <div class="col-lg-3">
+      <!-- /.col-lg-3 -->
+      <div class="col-lg-3 menu">
+        <img mat-card-md-image src="{{menus.second.image}}" class="menu-img img-fluid rounded-circle shadow  mb-2"alt="{{menus.second.name}}">
+        <h2>{{menus.second.name}}</h2>
+        <p>{{menus.second.description}}</p>
+        <p>{{menus.second.category}}</p>
+      </div>
 
-      <mat-card class="example-card mt-3">
-        <mat-card-header>
-          <mat-card-title-group>
-            <mat-card-title>{{dish.name}}</mat-card-title>
-            <mat-card-subtitle>{{dish.price | currency:'EUR' }}</mat-card-subtitle>
-            <img mat-card-md-image src="{{dish.image}}}" alt="Image of a Shiba Inu">
-          </mat-card-title-group>
-        </mat-card-header>
-        <mat-card-content class="mt-2">
-          {{dish.description}}
-          <div class="row mt-2">
+      <!-- /.col-lg-3 -->
+      <div class="col-lg-3 menu">
+        <img mat-card-md-image src="{{menus.dessert.image}}" class="menu-img img-fluid rounded-circle shadow  mb-2" alt="{{menus.dessert.name}}">
+        <h2>{{menus.dessert.name}}</h2>
+        <p>{{menus.dessert.description}}</p>
+        <p>{{menus.dessert.category}}</p>
+      </div>
 
-            <div class="col-4 text-start">
-              {{dish.attributes}}
-            </div>
-            <div class="col-4 text-center">
-              {{dish.category | uppercase }}
-            </div>
-            <div class="col-4 text-end">
-              <button mat-mini-fab color="accent" aria-label="Example icon button with a plus one icon"
-                (click)="addCard(dish)" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling"
-                aria-controls="offcanvasScrolling"> <mat-icon class="mx-2" aria-hidden="false"
-                  fontIcon="shopping_cart"></mat-icon></button>
-            </div>
-          </div>
-
-        </mat-card-content>
-      </mat-card>
 
     </div>
-    }
-
-  </div>
-
-  <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1"
-    id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
-    <div class="offcanvas-header">
-      <h5 class="offcanvas-title" id="offcanvasScrollingLabel">Tu peidido</h5>
-      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    <!-- /.row -->
+    <div class="row">
+      <button mat-raised-button color="primary mx-auto w-50" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling"  (click)="addMenu(menus)"><b>PEDIR MENU</b></button>
     </div>
-    <div class="offcanvas-body">
-      <p class="text-center fs-4 mb-4 text-primary">{{totalPrice | currency:'EUR' }}</p>
-      <ul class="list-group">
 
-        @for (item of listDishesOrder; track $index) {
+    <hr class="featurette-divider">
 
-        <li class="list-group-item">
-          <div class="col">
-            <b> {{item.name}}</b>
-          </div>
-          <div class="col">
-            {{item.price | currency:'EUR' }}
-          </div>
-        </li>
+    <!-- bar of ships and filters -->
+
+      <div class="navbar row bg-light">
+        <!-- /.col-lg-4 -->
+        <div class="col-lg-4 mt-3 ">
+          <button mat-raised-button color="accent mx-1" (click)="allDishes()">Todos</button>
+          <button mat-button [matMenuTriggerFor]="menu" color="accent mx-1" >Especiales para...</button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="fliterForAtrttibute('VEGAN')">Veganos</button>
+            <button mat-menu-item (click)="fliterForAtrttibute('VEGETARIAN')">Vegetearianos</button>
+            <button mat-menu-item (click)="fliterForAtrttibute('CELIAC')">Apto para celiacos</button>
+            <button mat-menu-item (click)="fliterForAtrttibute('LACTOSE')">Sin Lactosa</button>
+            <button mat-menu-item (click)="fliterForAtrttibute('NUTS')">Sin Frutos Secos</button>
+          </mat-menu>
+
+        </div>
+          <!-- /.col-lg-8 -->
+        <div class="col-lg-8 text-end mt-2">
+
+          <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
+            <mat-button-toggle (click)="fliterForApptizer()" value="bold">Aperitivos</mat-button-toggle >
+            <mat-button-toggle (click)="fliterForFirsts()" value="italic">Primeros</mat-button-toggle>
+            <mat-button-toggle (click)="fliterForSeconds()" value="underline">Segundos</mat-button-toggle>
+            <mat-button-toggle (click)="fliterForDesserts()" value="underline">Postres</mat-button-toggle>
+          </mat-button-toggle-group>
+        </div>
+      </div>
+
+    <!-- /.row -->
+
+      @if(listDishes.length != 0){
+
+       <div class="row mt-4">
+
+         <!-- dish cards -->
+      @for(dish of listDishes; track $index){
+        <div class="col-lg-3 mt-3">
+          <mat-card class="example-card">
+            <mat-card-header>
+              <mat-card-title-group>
+                <mat-card-title>{{dish.name}}</mat-card-title>
+                <mat-card-subtitle>{{dish.price | currency:'EUR' }}</mat-card-subtitle>
+                <img mat-card-md-image src="{{dish.image}}}" alt="Image of a Shiba Inu" class="img-fluid rounded-circle">
+              </mat-card-title-group>
+            </mat-card-header>
+            <mat-card-content class="mt-2">
+              {{dish.description}}
+              <div class="row mt-2">
+                <div class="col-4 text-start">
+                  {{dish.attributes}}
+                </div>
+                <div class="col-4 text-center">
+                  {{dish.category | uppercase }}
+                </div>
+                <div class="col-4 text-end">
+                  <button mat-mini-fab color="accent" aria-label="Example icon button with a plus one icon"
+                    (click)="addCard(dish)" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling"
+                    aria-controls="offcanvasScrolling"> <mat-icon class="mx-2" aria-hidden="false"
+                      fontIcon="shopping_cart"></mat-icon></button>
+                </div>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </div>
         }
-      </ul>
-      <div class="row mt-4">
+      </div>
+      }
+      @else {
+        <div class="row mt-4">
+          <div class="col-lg-12 mt-2">
+            <h2 class="text-center text-primary"><b>NO HAY PLATOS DISPONIBLES</b></h2>
+          </div>
+        </div>
+      }
+
+
+
+    <!-- order bar -->
+    <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1"
+      id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasScrollingLabel">Tu peidido</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+    <div class="offcanvas-body">
+
+        <p class="text-center fs-4 mb-4 text-primary">{{totalPrice | currency:'EUR' }}</p>
+        <ol class="list-group">
+
+          @for (item of listDishesOrder; track $index) {
+          <li class="list-group-item d-flex justify-content-between align-items-start">
+            <div class="ms-2 me-auto">
+              <div class="fw-bold">{{item.name}}</div>
+               {{item.price | currency:'EUR' }}
+                <span class=""></span>
+              </div>
+              <span>
+                <button mat-icon-button color="accent text-end" aria-label="Example icon button with a plus one icon"
+                (click)="removeCard($index)"> <mat-icon aria-hidden="false"
+                  fontIcon="remove_shopping_cart"></mat-icon></button>
+              </span>
+          </li>
+          }
+        </ol>
+        <div class="row mt-4">
         <div class="col-6">
-          <button mat-raised-button color="primary mx-auto w-100" (click)="aceptarOrden()"><b>Confirmar</b></button>
+            <button mat-raised-button color="primary mx-auto w-100" (click)="aceptarOrden()"><b>Confirmar</b></button>
         </div>
         <div class="col-6">
-          <button mat-raised-button color="warn mx-auto w-100" (click)="cancelPedido()"><b>Cancelar</b></button>
+            <button mat-raised-button color="warn mx-auto w-100" (click)="cancelPedido()"><b>Cancelar</b></button>
         </div>
-    </div>
+      </div>
+     </div>
   </div>
+
+  </div>
+</main>
+
