@@ -1,13 +1,16 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
 import { DishAdmin } from '../models/dish-admin';
+import { inject } from '@angular/core';
+import { environment } from '../../environments/environment';
+import { HttpClient } from '@angular/common/http';
 
 
 @Injectable({
   providedIn: 'root',
 })
 export class DishesDbService {
-  private dishes: DishAdmin[] = [
+  /*private dishes: DishAdmin[] = [
     {
       id: 1,
       name: 'Caesar Salad',
@@ -118,33 +121,45 @@ export class DishesDbService {
       attributes: ['vegan', 'vegetarian'],
       visible: true
     },
-  ];
+  ];*/
+  /*private dishesSubject = new BehaviorSubject<DishAdmin[]>(this.dishes);*/
+
+  private url = environment.apiUrl + '/api/v1/dishes';
+  private url2 = environment.apiUrl + '/api/v1/dish';
+
+  private http = inject(HttpClient)
+
+  private dishes: DishAdmin[] = []
+
   private dishesSubject = new BehaviorSubject<DishAdmin[]>(this.dishes);
+
   private lastId = this.dishes.length > 0 ? Math.max(...this.dishes.map((dish) => dish.id)) : 0;
 
-  getDishes() {
+  getDishesFromApi(num1:number, num2:number) {
+    return this.http.get<any[]>(this.url+"?page="+num1+"&size="+num2);
+   }
+
+
+
+  getDishes() {//TODO quitar esta funcion
     return this.dishesSubject.asObservable();
   }
 
 
+  deleteDish(dishId: number) {
+    return this.http.delete<any[]>(this.url2+"/"+dishId);
+  }
+
   addDish(dish: DishAdmin) {
-    dish.id = ++this.lastId;
-    this.dishes.push(dish);
-    this.dishesSubject.next([...this.dishes]);
+    return this.http.post(this.url2,dish, { headers: { 'Content-Type': 'application/json' } });
+
   }
 
   updateDish(updatedDish: DishAdmin) {
-    const index = this.dishes.findIndex((dish) => dish.id === updatedDish.id);
-    if (index !== -1) {
-      this.dishes[index] = { ...updatedDish };
-      this.dishesSubject.next([...this.dishes]);
-    }
+    return this.http.put(this.url2+"/"+updatedDish.id,updatedDish, { headers: { 'Content-Type': 'application/json' } });
   }
 
-  deleteDish(dishId: number) {
-    this.dishes = this.dishes.filter((dish) => dish.id !== dishId);
-    this.dishesSubject.next([...this.dishes]);
-  }
+
   getDishNameById(dishId: number): Observable<string> {
     const dish = this.dishes.find((d) => d.id === dishId);
     return dish ? of(dish.name) : of('Plato no encontrado');
