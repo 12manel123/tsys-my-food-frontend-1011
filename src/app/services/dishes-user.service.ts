@@ -39,7 +39,7 @@ export class DishesUserService {
       Swal.fire({
         icon: 'error',
         title: 'Oops... 🤷',
-        text: 'No tenemos platos pata mostras!',
+        text: "We don't have plates for samples!",
       })
       return of(result as T);
     }

@@ -2,7 +2,7 @@
 
   <div class="container card marketing p-4"><br>
 
-    <h2 class="text-center text-primary"><b>MENU DEL DIA </b></h2>
+    <h2 class="text-center text-primary"><b> TODAY'S MENU </b></h2>
     <div class="row">
 
       <!-- /.col-lg-3 -->
@@ -41,7 +41,7 @@
     </div>
     <!-- /.row -->
     <div class="row">
-      <button mat-raised-button color="primary mx-auto w-50" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling"  (click)="addMenu(menus)"><b>PEDIR MENU</b></button>
+      <button mat-raised-button color="primary mx-auto w-50" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling"  (click)="addMenu(menus)"><b>REQUEST MENU</b></button>
     </div>
 
     <hr class="featurette-divider">
@@ -51,13 +51,13 @@
       <div class="navbar row bg-light">
         <!-- /.col-lg-4 -->
         <div class="col-lg-4 mt-3 ">
-          <button mat-raised-button color="accent mx-1" (click)="allDishes()">Todos</button>
-          <button mat-button [matMenuTriggerFor]="menu" color="accent mx-1" >Especiales para...</button>
+          <button mat-raised-button color="accent mx-1" (click)="allDishes()">All</button>
+          <button mat-button [matMenuTriggerFor]="menu" color="accent mx-1" >Specials for....</button>
           <mat-menu #menu="matMenu">
-            <button mat-menu-item (click)="fliterForAtrttibute('VEGAN')">Veganos</button>
-            <button mat-menu-item (click)="fliterForAtrttibute('VEGETARIAN')">Vegetearianos</button>
-            <button mat-menu-item (click)="fliterForAtrttibute('CELIAC')">Apto para celiacos</button>
-            <button mat-menu-item (click)="fliterForAtrttibute('LACTOSE')">Sin Lactosa</button>
+            <button mat-menu-item (click)="fliterForAtrttibute('VEGAN')">Vegan</button>
+            <button mat-menu-item (click)="fliterForAtrttibute('VEGETARIAN')">Vegeterian</button>
+            <button mat-menu-item (click)="fliterForAtrttibute('CELIAC')">Suitable for celiacs</button>
+            <button mat-menu-item (click)="fliterForAtrttibute('LACTOSE')">Without lactose</button>
             <button mat-menu-item (click)="fliterForAtrttibute('NUTS')">Sin Frutos Secos</button>
           </mat-menu>
 
@@ -66,10 +66,10 @@
         <div class="col-lg-8 text-end mt-2">
 
           <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
-            <mat-button-toggle (click)="fliterForApptizer()" value="bold">Aperitivos</mat-button-toggle >
-            <mat-button-toggle (click)="fliterForFirsts()" value="italic">Primeros</mat-button-toggle>
-            <mat-button-toggle (click)="fliterForSeconds()" value="underline">Segundos</mat-button-toggle>
-            <mat-button-toggle (click)="fliterForDesserts()" value="underline">Postres</mat-button-toggle>
+            <mat-button-toggle (click)="fliterForApptizer()" value="bold">Appetizer</mat-button-toggle >
+            <mat-button-toggle (click)="fliterForFirsts()" value="italic">Firts</mat-button-toggle>
+            <mat-button-toggle (click)="fliterForSeconds()" value="underline">Seconds</mat-button-toggle>
+            <mat-button-toggle (click)="fliterForDesserts()" value="underline">Desserts</mat-button-toggle>
           </mat-button-toggle-group>
         </div>
       </div>
@@ -116,7 +116,7 @@
       @else {
         <div class="row mt-4">
           <div class="col-lg-12 mt-2">
-            <h2 class="text-center text-primary"><b>NO HAY PLATOS DISPONIBLES</b></h2>
+            <h2 class="text-center text-primary"><b>NO DISHES AVAILABLE</b></h2>
           </div>
         </div>
       }
@@ -127,7 +127,7 @@
     <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1"
       id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
       <div class="offcanvas-header">
-        <h5 class="offcanvas-title" id="offcanvasScrollingLabel">Tu peidido</h5>
+        <h5 class="offcanvas-title" id="offcanvasScrollingLabel">Yuor Order</h5>
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
       </div>
     <div class="offcanvas-body">
@@ -152,10 +152,10 @@
         </ol>
         <div class="row mt-4">
         <div class="col-6">
-            <button mat-raised-button color="primary mx-auto w-100" (click)="aceptarOrden()"><b>Confirmar</b></button>
+            <button mat-raised-button color="primary mx-auto w-100" (click)="aceptarOrden()"><b>Confirm</b></button>
         </div>
         <div class="col-6">
-            <button mat-raised-button color="warn mx-auto w-100" (click)="cancelPedido()"><b>Cancelar</b></button>
+            <button mat-raised-button color="warn mx-auto w-100" (click)="cancelPedido()"><b>Cancel</b></button>
         </div>
       </div>
      </div>

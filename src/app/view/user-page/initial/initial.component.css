@@ -73,14 +73,11 @@ main{
     margin-top: 0;
     background-color: rgba(226, 226, 226, 0.822);
     overflow-x: hidden;
-    
-
-
   }
+  
   br {
     display: none;
   }
-
 
 }
 

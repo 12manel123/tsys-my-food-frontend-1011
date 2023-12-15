@@ -4,7 +4,6 @@ import { LogoCardComponent } from '../../../shared/logo-card/logo-card.component
 import { AuthService } from '../../../services/auth.service';
 import { TokenStorageService } from '../../../services/token-storage.service';
 
-
 @Component({
   selector: 'app-header-user',
   standalone: true,
