@@ -8,6 +8,9 @@ import { DishesUserService } from '../../../services/dishes-user.service';
 import { CurrencyPipe, UpperCasePipe } from '@angular/common';
 import { DishAdmin } from '../../../models/dish-admin';
 import { Router } from '@angular/router';
+import { MenuUser } from '../../../models/menu-admin';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
 
 
 @Component({
@@ -21,28 +24,30 @@ import { Router } from '@angular/router';
     MatMenuModule,
     UpperCasePipe,
     CurrencyPipe,
+    MatSidenavModule,
+    MatButtonToggleModule,
   ],
   templateUrl: './initial.component.html',
   styleUrl: './initial.component.css',
 })
 export class InitialComponent {
 
-  private router = inject(Router)
+
+  private serverDishes = inject(DishesUserService);
+  private router = inject(Router);
 
   listDishes: any[] = [];
-
+  menus: MenuUser = {} as MenuUser;
   listDishesOrder: any[] = [];
-
   totalPrice = 0;
 
-  serverDishes = inject(DishesUserService);
+  showFiller = false;
 
   ngOnInit(): void {
 
-    //LOCAL DATA
-    // this.serverDishes.getDishes().subscribe((dishes) => {
-    //   this.listDishes = dishes;
-    // });
+    this.serverDishes.getMenusFromApi().subscribe((dishes: any) => {
+      this.menus = dishes[0];
+    });
 
 
     this.serverDishes.getDishesFromApi().subscribe((dishes: any) => {
@@ -51,27 +56,49 @@ export class InitialComponent {
     });
   }
 
+  fliterForAtrttibute(attribute: string) {
+    this.serverDishes.getDishesByAttributeFromApi(attribute).subscribe((dishes: any) => {
+      const { content } = dishes;
+      this.listDishes = content;
+    });
+  }
+
   fliterForDesserts() {
-    alert('falta implemtar el fitro por desserts');
+    this.serverDishes.getDishesByCategoryFromApi('DESSERT').subscribe((dishes: any) => {
+      const { content } = dishes;
+      this.listDishes = content;
+     });
   }
   fliterForSeconds() {
-    alert('falta implemtar el fitro por seconds');
+    this.serverDishes.getDishesByCategoryFromApi('SECOND').subscribe((dishes: any) => {
+      const { content } = dishes;
+      this.listDishes = content;
+     });
   }
   fliterForFirsts() {
-    alert('falta implemtar el fitro porfirsts');
+    this.serverDishes.getDishesByCategoryFromApi('FIRST').subscribe((dishes: any) => {
+      const { content } = dishes;
+      this.listDishes = content;
+     });
   }
   fliterForApptizer() {
-    alert('falta implemtar el fitro porapptizer');
+    this.serverDishes.getDishesByCategoryFromApi('APPETIZER').subscribe((dishes: any) => {
+      const { content } = dishes;
+      console.log(content);
+      this.listDishes = content;
+     });
   }
 
   addTotlaPrice(price: number) {
     this.totalPrice += price;
   }
 
-  addMenu(_t34: MatMenu) {
-
-    this.addTotlaPrice(8.90)
+  addMenu(menus: MenuUser) {
+    if (menus) {
+      this.addTotlaPrice(8.90)
     }
+
+  }
 
   addCard(dihs: DishAdmin) {
     this.addTotlaPrice(dihs.price )
@@ -85,8 +112,23 @@ export class InitialComponent {
   }
 
   aceptarOrden() {
-    alert('falta implemtar el aceptar orden');
     this.router.navigate(['user/order']);
 
+  }
+
+
+  removeCard(index: number) {
+    const { price } = this.listDishesOrder[index];
+    this.totalPrice -= price;
+    this.listDishesOrder.splice(index, 1);
+  }
+
+  allDishes() {
+    this.serverDishes.getDishesFromApi().subscribe((dishes: any) => {
+      const { content } = dishes;
+      this.listDishes = content;
+     });
     }
+
+
 }

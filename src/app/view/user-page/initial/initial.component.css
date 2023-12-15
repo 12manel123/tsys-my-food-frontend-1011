@@ -1,6 +1,21 @@
+main{
+  background-image: url('../../../../assets/img/fondo.png');
+  padding: 0;
+  margin: 0;
+}
 
 .container{
+
   padding-bottom: 20%;
+  padding: 10px;
+  background-color: rgba(255, 255, 255, 0.842);
+  overflow-x: hidden;
+}
+
+.menu-img{
+  width: 10rem;
+  height: 10rem;
+  margin-top: 2%;
 }
 
 .menu{
@@ -50,3 +65,22 @@
     margin-top: 7rem;
   }
 }
+
+@media only screen and (max-width: 767px) {
+  .container{
+
+    padding: 0;
+    margin-top: 0;
+    background-color: rgba(226, 226, 226, 0.822);
+    overflow-x: hidden;
+    
+
+
+  }
+  br {
+    display: none;
+  }
+
+
+}
+

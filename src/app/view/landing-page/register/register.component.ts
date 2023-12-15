@@ -1,11 +1,11 @@
 import { Component, inject } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {  FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { UserReg } from '../../../models/user';
 import { LogoComponent } from '../../../shared/logo/logo.component';
 import { Router} from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
 import { TokenStorageService } from '../../../services/token-storage.service';
-
+import Swal from 'sweetalert2'
 
 @Component({
   selector: 'app-register',
@@ -64,7 +64,10 @@ export class RegisterComponent {
 
 
     if (!this.passwordMatchValidator()) {
-      alert('Las contraseñas no coinciden');
+      Swal.fire({
+        icon: 'error',
+        text: 'Las contraseñas no coinciden!',
+      })
       return;
     }
 
@@ -91,7 +94,12 @@ export class RegisterComponent {
           }
         })
       } else {
-        alert('Error al registrar usuario\n Por favor intente nuevamente con otro nombre de usuario o correo electrónico');
+
+        Swal.fire({
+          icon: 'error',
+          title: 'Los datos ya existen! 🫣',
+          text: 'Revise los datos introducidos!',
+        })
       }
     })
 
