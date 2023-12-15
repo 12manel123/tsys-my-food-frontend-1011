@@ -3,7 +3,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatMenu, MatMenuModule } from '@angular/material/menu';
+import { MatMenuModule } from '@angular/material/menu';
 import { DishesUserService } from '../../../services/dishes-user.service';
 import { CurrencyPipe, UpperCasePipe } from '@angular/common';
 import { DishAdmin } from '../../../models/dish-admin';

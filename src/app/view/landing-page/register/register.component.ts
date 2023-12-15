@@ -66,7 +66,7 @@ export class RegisterComponent {
     if (!this.passwordMatchValidator()) {
       Swal.fire({
         icon: 'error',
-        text: 'Las contraseñas no coinciden!',
+        text: 'Passwords do not match!',
       })
       return;
     }
@@ -97,8 +97,8 @@ export class RegisterComponent {
 
         Swal.fire({
           icon: 'error',
-          title: 'Los datos ya existen! 🫣',
-          text: 'Revise los datos introducidos!',
+          title: 'The data already exists! 🫣',
+          text: 'Review the data entered!',
         })
       }
     })

@@ -1,60 +1,60 @@
- 
- <div class="container">
-  <div class="card shadow col-md-3 m-auto mt-3 p-3">
-    <div class="col-12 mx-auto mb-3">
-      <app-logo></app-logo>
-    </div>
-    <form [formGroup]="registerForm" (submit)="login()" class="row g-3">
-      <div class="col-md-12">
-        <label for="Imputname" class="form-label">Nombre</label>
-        <input
-          type="text"
-          formControlName="username"
-          class="form-control"
-          id="name"
-          placeholder="Campo obligatorio"
-          autofocus
-          required
-        />
-        @if (registerForm.get('username')?.valid) {
-          <div id="fullnameHelp" class="form-text text-success">✅ nombre valido</div>
-          }
-
-        <div class="col-md-12 mt-3">
-          <label for="inputPassword" class="form-label">Password</label>
+ <div class="body">
+  <div class="container">
+    <div class="card shadow col-md-3 m-auto mt-3 p-3">
+      <div class="col-12 mx-auto mb-3">
+        <app-logo></app-logo>
+      </div>
+      <form [formGroup]="registerForm" (submit)="login()" class="row g-3">
+        <div class="col-md-12">
+          <label for="Imputname" class="form-label">Name</label>
           <input
-            type="password"
-            formControlName="password"
-            id="password"
+            type="text"
+            formControlName="username"
             class="form-control"
-            aria-describedby="passwordHelpBlock"
-            placeholder="Campo obligatorio"
-            minlength="8"
-            maxlength="20"
+            id="name"
+            autofocus
             required
           />
-          <div id="passwordHelpBlock" class="form-text">
-            Debe tener 8-20 caracteres y minimo de1 mayuscula .
-          </div>
-
-          @if (registerForm.get('password')?.valid) {
-            <div class="form-text text-success">✅ password valido</div>
+          @if (registerForm.get('username')?.valid) {
+            <div id="fullnameHelp" class="form-text text-success">✅ valid name</div>
             }
 
+          <div class="col-md-12 mt-3">
+            <label for="inputPassword" class="form-label">Password</label>
+            <input
+              type="password"
+              formControlName="password"
+              id="password"
+              class="form-control"
+              aria-describedby="passwordHelpBlock"
 
-          <div class="col-12">
-           <button
-              [disabled]="registerForm.invalid"
-              class="btn btn-sm mt-2"
-              [class.btn-success]="registerForm.valid"
-              [class.btn-secondary]="!registerForm.valid"
-              type="submit"
-            >
-              Enviar
-            </button>
+              minlength="8"
+              maxlength="20"
+              required
+            />
+            <div id="passwordHelpBlock" class="form-text">
+              It must be 8-20 characters and a minimum of 1 capital letter.
+            </div>
+
+            @if (registerForm.get('password')?.valid) {
+              <div class="form-text text-success">✅ valid password </div>
+              }
+
+
+            <div class="col-12">
+             <button
+                [disabled]="registerForm.invalid"
+                class="btn btn-sm mt-2"
+                [class.btn-success]="registerForm.valid"
+                [class.btn-secondary]="!registerForm.valid"
+                type="submit"
+              >
+                Send
+              </button>
+            </div>
           </div>
         </div>
-      </div>
-    </form>
+      </form>
+    </div>
   </div>
-</div>
+ </div>
