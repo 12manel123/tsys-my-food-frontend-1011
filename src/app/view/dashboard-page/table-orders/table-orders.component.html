@@ -1,24 +1,19 @@
-<div>
-    <div class="row">
-        <div class="col">
-            <h2 class="mt-3">Orders List</h2>
-        </div>
-        <div class="col">
-            <mat-paginator
-            [pageSize]="itemsPerPage"
-            [pageIndex]="currentPage - 1"
-            [length]="ordersDbService.getTotalOrdersCount()"
-            [pageSizeOptions]="[2, 5, 10]"
-            aria-label="Select page"
-            (page)="onChange($event)">
-            </mat-paginator>
-        </div>
-    </div>
+<div class="order-dasboard">
+    <h2 class="mt-3">Orders List</h2>
+    <mat-paginator
+        [pageSize]="selectedPageSize"
+        [pageIndex]="currentPage - 1"
+        [length]="totalEntities"
+        [pageSizeOptions]="[1, 5, 10]"
+        aria-label="Select page"
+        (page)="onChange($event)">
+        </mat-paginator>
+
     
     <mat-table [dataSource]="orders" class="mat-elevation-z8">
         <ng-container matColumnDef="id">
             <mat-header-cell *matHeaderCellDef class="mat-column-id">ID</mat-header-cell>
-            <mat-cell *matCellDef="let order" class="mat-column-id">{{ order.id }}</mat-cell>
+            <mat-cell *matCellDef="let order" class="mat-column-id">{{ order.orderId }}</mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="maked">
@@ -33,34 +28,28 @@
 
         <ng-container matColumnDef="price">
             <mat-header-cell *matHeaderCellDef class="mat-column-price">Price</mat-header-cell>
-            <mat-cell *matCellDef="let order" class="mat-column-price">{{ order.price }}</mat-cell>
+            <mat-cell *matCellDef="let order" class="mat-column-price">{{ order.totalPrice }}</mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="datetime">
             <mat-header-cell *matHeaderCellDef class="mat-column-date">Date and Time</mat-header-cell>
-            <mat-cell *matCellDef="let order" class="mat-column-date">{{ order.datetime | date }}</mat-cell>
+            <mat-cell *matCellDef="let order" class="mat-column-date">{{ order.actualDate | date }}</mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="dishes">
             <mat-header-cell *matHeaderCellDef>Dishes</mat-header-cell>
             <mat-cell *matCellDef="let order">
-                <ul style="list-style: none; padding: 0;">
-                    @for (dish of order.dishes; track $index) {
-                    <li style="display: flex; align-items: center;">
-                        {{ dish.name }}
-                        <mat-icon aria-hidden="false" fontIcon="delete" (click)="removeDishFromOrder(order.id, dish.id)"></mat-icon>
-                    </li>}
-                </ul>
+                    <select  class="form-select" matNativeControl>
+                        @for (dish of order.dishes; track $index) {
+                        <option value="{{ dish.name }}">{{ dish.name }}</option>}
+                    </select>
             </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="actions">
             <mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
             <mat-cell *matCellDef="let order">
-                <button class="button" mat-mini-fab color="primary" (click)="addDishToOrderWithAlert(order.id)">
-                    <mat-icon aria-hidden="false" fontIcon="add"></mat-icon>
-                </button>
-                <button class="button" mat-mini-fab color="warn" (click)="removeOrder(order.id)">
+                <button class="button"  mat-icon-button color="warn" (click)="removeOrder(order.orderId)">
                     <mat-icon aria-hidden="false" fontIcon="delete"></mat-icon>
                 </button>
             </mat-cell>
