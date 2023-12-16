@@ -11,7 +11,6 @@
         (page)="onChange($event)"
         ></mat-paginator>
     
-    
     <mat-table [dataSource]="dishes" class="mat-elevation-z8">
         <ng-container matColumnDef="id">
             <mat-header-cell *matHeaderCellDef>ID</mat-header-cell>
@@ -19,43 +18,58 @@
         </ng-container>
         <ng-container matColumnDef="name">
             <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
-            <mat-cell *matCellDef="let dish">{{ dish.name }}</mat-cell>
-        </ng-container>
-        <ng-container matColumnDef="description">
+            <mat-cell *matCellDef="let dish" (click)="editName(dish)">{{ dish.name }}</mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="description">
             <mat-header-cell *matHeaderCellDef>Description</mat-header-cell>
-            <mat-cell *matCellDef="let dish">{{ dish.description }}</mat-cell>
-        </ng-container>
-        <ng-container matColumnDef="image">
+            <mat-cell *matCellDef="let dish" (click)="editDescription(dish)">{{ dish.description }}</mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="image">
             <mat-header-cell *matHeaderCellDef>Image</mat-header-cell>
-            <mat-cell *matCellDef="let dish">
-                <div class="image-container">
-                    <img class="dish-image" [src]="dish.image" alt="{{ dish.name }}" (click)="enlargeImage($event)">
-                </div>
+            <mat-cell *matCellDef="let dish" 
+                     (mouseenter)="enlargeImage(dish)" 
+                     (mouseleave)="resetImageSize()" 
+                     (click)="editImage(dish)">
+              <div [ngStyle]="{ 'cursor': 'pointer' }">
+                <img class="dish-image" [src]="dish.image" alt="{{ dish.name }}" id="dish-image-{{ dish.id }}">
+              </div>
             </mat-cell>
-        </ng-container>
+          </ng-container>
+          
         <ng-container matColumnDef="price">
             <mat-header-cell *matHeaderCellDef>Price</mat-header-cell>
-            <mat-cell *matCellDef="let dish">{{ dish.price }}</mat-cell>
-        </ng-container>
-        <ng-container matColumnDef="category">
+            <mat-cell *matCellDef="let dish" (click)="editPrice(dish)">{{ dish.price }}</mat-cell>
+          </ng-container>
+          
+          <ng-container matColumnDef="category">
             <mat-header-cell *matHeaderCellDef>Category</mat-header-cell>
-            <mat-cell *matCellDef="let dish">{{ dish.category }}</mat-cell>
-        </ng-container>
-        <ng-container matColumnDef="attributes">
+            <mat-cell *matCellDef="let dish" (click)="editCategory(dish)">{{ dish.category }}</mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="attributes">
             <mat-header-cell *matHeaderCellDef>Attributes</mat-header-cell>
             <mat-cell *matCellDef="let dish">
-                @for (attribute of  dish.attributes; track $index) {
-                {{ attribute }}<br>}
+                <div class="attribute-list">
+                    @for (attribute of dish.attributes; track $index) {
+                    <div>
+                        {{ attribute }}
+                        <button (click)="deleteAttribute(attribute, dish.id)">-</button>
+                    </div>
+                }
+                <button (click)="addAttribute(dish.id)">+</button>
+                </div>
             </mat-cell>
-        </ng-container>
+        </ng-container>        
         <ng-container matColumnDef="visible">
             <mat-header-cell *matHeaderCellDef>Visible</mat-header-cell>
-            <mat-cell *matCellDef="let dish">{{ dish.visible }}</mat-cell>
-        </ng-container>
+            <mat-cell *matCellDef="let dish">
+              <button mat-icon-button (click)="toggleVisibility(dish)">
+                <mat-icon>{{ dish.visible  ? 'visibility' : 'visibility_off' }}</mat-icon>
+              </button>
+            </mat-cell>
+          </ng-container>
         <ng-container matColumnDef="actions">
             <mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
             <mat-cell *matCellDef="let dish">
-                <button class="button" mat-icon-button color="primary"  (click)="editDish(dish)"><mat-icon aria-hidden="false"  fontIcon="edit"></mat-icon></button>
                 <button class="button" mat-icon-button color="warn"  (click)="deleteDish(dish.id)"><mat-icon aria-hidden="false"  fontIcon="delete"></mat-icon></button>
 
             </mat-cell>
