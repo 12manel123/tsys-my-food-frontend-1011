@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { TokenStorageService } from '../../../services/token-storage.service';
 
 
+
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -98,7 +99,12 @@ export class LoginComponent {
          this.router.navigate(['/user/initial'])
          break;
       }
+  }
 
-   }
+  sendPageRegiter() {
+    this.router.navigate(['/register'])
+    }
+
+
 
 }

@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 import { MenuUser } from '../../../models/menu-admin';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 
 @Component({
@@ -26,6 +27,7 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
     CurrencyPipe,
     MatSidenavModule,
     MatButtonToggleModule,
+    MatProgressSpinnerModule
   ],
   templateUrl: './initial.component.html',
   styleUrl: './initial.component.css',
@@ -48,7 +50,7 @@ export class InitialComponent {
     this.serverDishes.getMenusFromApi().subscribe((dishes: any) => {
       if (dishes.length > 0) {
         this.menus = dishes[0];
-      //  this.menus = null;
+       // this.menus = null;
       } else {
         this.menus = null;
       }
@@ -99,7 +101,16 @@ export class InitialComponent {
   }
 
   addMenu(menus: MenuUser) {
+    console.log(menus);
     if (menus) {
+      menus.appetizer.price = 0;
+      menus.first.price = 0;
+      menus.second.price = 0;
+      menus.dessert.price = 0;
+       this.listDishesOrder.push(menus.appetizer);
+       this.listDishesOrder.push(menus.first);
+       this.listDishesOrder.push(menus.second);
+       this.listDishesOrder.push(menus.dessert);
       this.addTotlaPrice(8.90)
     }
 
@@ -126,6 +137,13 @@ export class InitialComponent {
     const { price } = this.listDishesOrder[index];
     this.totalPrice -= price;
     this.listDishesOrder.splice(index, 1);
+
+    if (this.listDishesOrder.length === 0) {
+      this.totalPrice = 0;
+    }
+    if (this.listDishesOrder.length === 1) {
+      this.totalPrice = this.listDishesOrder[0].price;
+    }
   }
 
   allDishes() {
@@ -134,6 +152,5 @@ export class InitialComponent {
       this.listDishes = content;
      });
     }
-
 
 }

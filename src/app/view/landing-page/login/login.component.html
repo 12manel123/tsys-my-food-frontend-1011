@@ -39,7 +39,9 @@
             @if (registerForm.get('password')?.valid) {
               <div class="form-text text-success">✅ valid password </div>
               }
-
+              <div class="col-12 text-center">
+                  <a class="link" (click)="sendPageRegiter()">I am not registered</a>
+              </div>
 
             <div class="col-12">
              <button
