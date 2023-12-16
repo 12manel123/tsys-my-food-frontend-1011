@@ -37,7 +37,7 @@ export class InitialComponent {
   private router = inject(Router);
 
   listDishes: any[] = [];
-  menus: MenuUser = {} as MenuUser;
+  menus: MenuUser | null = {} as MenuUser;
   listDishesOrder: any[] = [];
   totalPrice = 0;
 
@@ -46,7 +46,12 @@ export class InitialComponent {
   ngOnInit(): void {
 
     this.serverDishes.getMenusFromApi().subscribe((dishes: any) => {
-      this.menus = dishes[0];
+      if (dishes.length > 0) {
+        this.menus = dishes[0];
+      //  this.menus = null;
+      } else {
+        this.menus = null;
+      }
     });
 
 
