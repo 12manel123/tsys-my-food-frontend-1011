@@ -1,7 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { Card } from '../../models/dish-chef';
-import { ChefService } from '../../services/chef.service';
 import { TokenStorageService } from '../../services/token-storage.service';
 import { Order } from '../../models/orders-admin';
 import { DishAdmin } from '../../models/dish-admin';
@@ -32,7 +31,7 @@ export class ChefPageComponent implements OnInit{
   currentPage: number = 1;
   totalPages: number = 1;
 
-  constructor(private chefService: ChefService,private router: Router,public ordersDbService: OrdersDbService,private snackBar: MatSnackBar) {}
+  constructor(private router: Router,public ordersDbService: OrdersDbService,private snackBar: MatSnackBar) {}
 
   loadOrders(): void {
     const startIndex = this.currentPage - 1;
