@@ -8,7 +8,7 @@ main{
 
   padding-bottom: 20%;
   padding: 10px;
-  background-color: rgba(255, 255, 255, 0.842);
+  background-color: rgba(255, 255, 255, 0.637);
   overflow-x: hidden;
 }
 
@@ -74,7 +74,7 @@ main{
     background-color: rgba(226, 226, 226, 0.822);
     overflow-x: hidden;
   }
-  
+
   br {
     display: none;
   }
