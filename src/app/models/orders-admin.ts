@@ -1,7 +1,7 @@
 import {DishAdmin} from "./dish-admin";
 import { Slot } from "./slots-admin";
 export interface Order {
-    id: number;
+    orderId: number;
     maked: boolean;
     slot?: Slot; 
     price: number;

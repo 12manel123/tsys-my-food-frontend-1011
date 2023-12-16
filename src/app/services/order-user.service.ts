@@ -10,7 +10,7 @@ export class OrderUserService {
   private slots: Slot[] = [];
   private orders: Order[] = [
     {
-      id: 1,
+      orderId: 1,
       maked: false,
       price: 25.99,
       datetime: new Date(),
@@ -38,7 +38,7 @@ export class OrderUserService {
       ]
     },
     {
-      id: 2,
+      orderId: 2,
       maked: false,
       price: 25.99,
       datetime: new Date(),
@@ -66,7 +66,7 @@ export class OrderUserService {
       ]
     },
     {
-      id: 3,
+      orderId: 3,
       maked: true,
       price: 30.5,
       datetime: new Date(),
@@ -98,7 +98,7 @@ export class OrderUserService {
   constructor() { }
 
   getOrderById(orderId: number): Observable<Order> {
-    const order = this.orders.find(o => o.id === orderId);
+    const order = this.orders.find(o => o.orderId === orderId);
     if (order) {
       return of(order);
     } else {

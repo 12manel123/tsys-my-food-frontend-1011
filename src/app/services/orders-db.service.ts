@@ -29,4 +29,12 @@ export class OrdersDbService {
   removeOrder(orderId: number):  Observable<any> {
     return this.http.delete<any[]>(this.url2+"/"+orderId);
   }
+
+  getOrdersApiChef(num1:number,num2:number): Observable<Order[]> {
+    return this.http.get<any[]>(this.url+"/chef?page="+num1+"&size="+num2);
+  }
+
+  removeOrderChef(orderId: number):  Observable<any> {
+    return this.http.put(this.url2+"/markAsMaked/"+orderId, { headers: { 'Content-Type': 'application/json' } });
+  }
 }
