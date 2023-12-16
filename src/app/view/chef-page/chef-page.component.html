@@ -1,23 +1,25 @@
-<div class="card-container">
-    @for (card of cards; track $index) {
+<div class="chef">
+    <div class="card-container">
+    @for (order of orders; track $index) {
     <div class="card">
         
-        <div class="card-header">
-            @if (card.id==0) {
-                <span class="header-item">ㅤ</span>}
-            @else{
-                <span class="header-item"><i class="fas fa-utensils" style="margin-right: 10px;"></i>ID: {{ card.id }}</span>
-                <span class="header-item"> <i class="fas fa-clock"></i> {{ card.time }}</span>}
+        <div class="card-header"  [class.past-time]="isPastTime(order.slot?.time)">
+                <span class="header-item"><i class="fas fa-utensils" style="margin-right: 10px;"></i>ID: {{ order.orderId }}</span>
+                <span class="header-item"> <i class="fas fa-clock"></i> {{ order.slot?.time }}</span>
         </div>
         <div class="card-content">
             <ul class="dish-list">
-                @for (dish of card.dishes; track $index) {
-            <li>{{ dish.name }}</li>}
+                @for (dish of order.dishes; track $index) {
+                    <li class="dish">{{ dish.name }}</li>}
             </ul>
         </div>
-        @if (card.id!=0) {<div class="delete-button" (click)="deleteOrder(card.id)"><i class="fas fa-check"></i></div>}
+        <div class="delete-button" (click)="deleteOrder(order.orderId)"(click)="copyToClipboard(order.orderId)"><i class="fas fa-check"></i></div>
     </div>}
+    <div class="else">
+    
+    </div>
 </div>
+
 <footer>
     <div class="pagination">
         <button class="btn" (click)="previousPage()">Anterior</button>
@@ -36,3 +38,4 @@
         </button>
     </div>
 </footer>
+</div>

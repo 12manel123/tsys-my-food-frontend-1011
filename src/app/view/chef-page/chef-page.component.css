@@ -26,11 +26,19 @@ footer {
     font-size: 30px;
     font-weight: bold;
 }
+.chef{
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    background: rgba(255, 255, 255, 0.7) url('../../../assets/img/fondo.png');
+    background-blend-mode: lighten;
+}
 
 .card-container {
     display: grid;
     grid-template-columns: repeat(4, 25vw);
     gap: 10px;
+
 }
 
 .card {
@@ -108,4 +116,27 @@ footer {
 
 .delete-button:hover {
     background-color: #c10060;
+}
+
+.dish{
+    user-select: none;
+}
+
+.dish:active, .dish:focus {
+    color: red;
+    user-select: none;
+  }
+  .toggleCheckbox:checked + .dish {
+    color: red;
+  }
+  .card-header.past-time {
+    animation: shake 0.5s 1;
+    background-color: red;
+}
+@keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-5px) rotate(-5deg); }
+    50% { transform: translateX(5px) rotate(5deg); }
+    75% { transform: translateX(-5px) rotate(-5deg); }
+    100% { transform: translateX(0); }
 }
