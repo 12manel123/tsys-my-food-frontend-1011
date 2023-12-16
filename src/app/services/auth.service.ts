@@ -3,7 +3,7 @@ import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { User, UserReg } from '../models/user';
 import { Observable, catchError, of } from 'rxjs';
-
+import Swal from 'sweetalert2'
 
 
 @Injectable({
@@ -24,7 +24,8 @@ export class AuthService {
 
   register(user : UserReg ): Observable<any>{
     return this.http.post(this.urlRegister, user, { headers: { 'Content-Type': 'application/json' } })
-      .pipe(catchError(this.handleError<any>('register')));
+    .pipe(catchError(this.handleError<any>('login')));
+
   }
 
 
@@ -35,7 +36,12 @@ export class AuthService {
 
 
   private handleError<T>(operation = 'opearation',result?:T){
-    return (error:any):Observable<T>=>{
+    return (error: any): Observable<T > => {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...😕',
+        text: error.error.message,
+      })
       console.log(`${operation} failed: ${error.message}`);
       return of(result as T);
     }

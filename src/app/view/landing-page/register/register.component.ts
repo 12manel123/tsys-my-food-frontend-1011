@@ -71,6 +71,31 @@ export class RegisterComponent {
       return;
     }
 
+    let timerInterval: any
+    Swal.fire({
+      title: ' Loading data!',
+      html: 'I will close in <b></b> milliseconds.',
+      timer: 1200,
+      timerProgressBar: true,
+      didOpen: () => {
+        Swal.showLoading()
+        const b = Swal.getHtmlContainer()?.querySelector('b')
+        timerInterval = setInterval(() => {
+          if (b) {
+            b.textContent = String(Swal.getTimerLeft());
+          }
+        }, 100)
+      },
+      willClose: () => {
+        clearInterval(timerInterval)
+      }
+    }).then((result) => {
+      /* Read more about handling dismissals below */
+      if (result.dismiss === Swal.DismissReason.timer) {
+        console.log('I was closed by the timer')
+      }
+    })
+
     const { username, email, password } = this.registerForm.getRawValue();
     this.registerForm.reset();
 
@@ -90,15 +115,9 @@ export class RegisterComponent {
             this.tokenStServ.saveUser(Object.values(rta)[2]);
             this.tokenStServ.saveRole(Object.values(rta)[4]);
 
+
             this.router.navigate(['/user/initial'])
           }
-        })
-      } else {
-
-        Swal.fire({
-          icon: 'error',
-          title: 'The data already exists! 🫣',
-          text: 'Review the data entered!',
         })
       }
     })
