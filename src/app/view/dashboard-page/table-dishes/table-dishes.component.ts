@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { DishesDbService } from '../../../services/dishes-db.service';
 import { DishAdmin } from '../../../models/dish-admin';
 import { MatCardModule } from '@angular/material/card';
@@ -9,20 +9,26 @@ import {MatMenuModule} from '@angular/material/menu';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { CommonModule } from '@angular/common';
+import { Subject, takeUntil } from 'rxjs';
+
 @Component({
   selector: 'app-table-dishes',
   standalone: true,
   imports: [MatCardModule,
+    CommonModule,
     MatIconModule,
     MatButtonModule,
     MatToolbarModule,
     MatMenuModule,
     MatTableModule,
     MatPaginatorModule],
-  templateUrl: './table-dishes.component.html',
-  styleUrl: './table-dishes.component.css'
+    templateUrl: './table-dishes.component.html',  
+    styleUrl: './table-dishes.component.css'
 })
-export class TableDishesComponent implements OnInit {
+export class TableDishesComponent implements OnInit ,OnDestroy {
+
+
   dishes: DishAdmin[] = [];
   newDish: DishAdmin = { id: 0, name: '', description: '', image: '', price: 0, category: '', attributes: [],visible: false};
   currentPage: number = 1;
@@ -31,11 +37,19 @@ export class TableDishesComponent implements OnInit {
   dataSource: MatTableDataSource<DishAdmin> = new MatTableDataSource<DishAdmin>([]);
   public selectedPageSize: number = 10;
   totalEntities: number = 0;
+  editingImageId: number | null = null;
+  private ngUnsubscribe = new Subject();
+
+
 
   constructor(public dishesService: DishesDbService) {}
+  ngOnDestroy(): void {
+    throw new Error('Method not implemented.');
+  }
 
   ngOnInit(): void {
     this.loadDishes();
+    // this.subscribeToVisibilityChanges();
   }
 
   loadDishes(): void {
@@ -47,8 +61,20 @@ export class TableDishesComponent implements OnInit {
       this.totalEntities=totalElements;
       this.selectedPageSize=size
       this.dishes = content;
+      this.dataSource.data = this.dishes;
     });
   }
+
+  // subscribeToVisibilityChanges(): void {
+  //   this.dishesService.getDishVisibilityChanges()
+  //     .pipe(takeUntil(this.ngUnsubscribe))
+  //     .subscribe((changedDishId: number) => {
+  //       const changedDish = this.dishes.find((dish) => dish.id === changedDishId);
+  //       if (changedDish) {
+  //         changedDish.visible = !changedDish.visible;
+  //       }
+  //     });
+  // }
 
   deleteDish(dishId: number): void {
     if (confirm('¿Estás seguro de que deseas eliminar este plato con ID: '+ dishId+"?")) {
@@ -81,7 +107,7 @@ export class TableDishesComponent implements OnInit {
     ) || '';
     newDish.attributes = this.validateAttributes(attributesInput);
 
-    if (this.validateDish(newDish)) {
+    if (this.validateCategory(newDish)) {
       this.dishesService.addDish(newDish).subscribe(() => {
         this.loadDishes();
       });
@@ -92,26 +118,107 @@ export class TableDishesComponent implements OnInit {
     }
   }
 
-  editDish(dish: DishAdmin) {
-    const updatedDish = { ...dish };
-
-    updatedDish.name = prompt('Nuevo nombre', dish.name) || dish.name;
-    updatedDish.description = prompt('Nueva descripción', dish.description) || dish.description;
-    updatedDish.image = prompt('Nueva imagen', dish.image) || dish.image;
-    updatedDish.price = parseFloat(prompt('Nuevo precio', dish.price.toString()) || dish.price.toString());
-    updatedDish.category = prompt('Nueva categoría, solo (appetizer, first, second, dessert)', dish.category) || dish.category;
-    updatedDish.visible= confirm('Visible?');
-
-
-    if (this.validateDish(updatedDish)) {
-      this.dishesService.updateDish(updatedDish).subscribe(() => {
+  // editDish(dish: DishAdmin) {
+  //   const updatedDish = { ...dish };
+  //   updatedDish.name = prompt('Nuevo nombre', dish.name) || dish.name;
+  //   updatedDish.description = prompt('Nueva descripción', dish.description) || dish.description;
+  //   updatedDish.image = prompt('Nueva imagen', dish.image) || dish.image;
+  //   updatedDish.price = parseFloat(prompt('Nuevo precio', dish.price.toString()) || dish.price.toString());
+  //   updatedDish.category = prompt('Nueva categoría, solo (appetizer, first, second, dessert)', dish.category) || dish.category;
+  //   const attributesInput = prompt(
+  //     'Atributos del nuevo plato (opcional, separados por comas): celiac, nuts, vegan, vegetarian, lactose'
+  //   ) || '';
+  //   updatedDish.attributes = this.validateAttributes(attributesInput);
+  //   updatedDish.visible = confirm('Visible?');
+  
+  //   if (this.validateCategory(updatedDish)) {
+  //     this.dishesService.updateDish(updatedDish).subscribe(() => {
+  //       this.loadDishes();
+  //     });
+  //     alert('Plato actualizado exitosamente.');
+  //   } else {
+  //     alert('Por favor, complete todos los campos correctamente antes de actualizar el plato.');
+  //   }
+  // }
+  
+  editName(dish: DishAdmin): void {
+    const newName = prompt('Editar nombre', dish.name);
+    if (newName !== null && newName.trim() !== '') {
+      dish.name = newName.trim();
+      
+      this.dishesService.updateDish(dish).subscribe(() => {
         this.loadDishes();
       });
-      alert('Plato actualizado exitosamente.');
-    } else {
-      alert('Por favor, complete todos los campos correctamente antes de actualizar el plato.');
+      alert('Nombre actualizado exitosamente.');
     }
   }
+
+  editDescription(dish: DishAdmin): void {
+    const newDescription = prompt('Editar descripción', dish.description);
+    if (newDescription !== null && newDescription.trim() !== '') {
+      dish.description = newDescription.trim();
+      this.dishesService.updateDish(dish).subscribe(() => {
+        this.loadDishes();
+      });
+      alert('Descripción actualizada exitosamente.');
+    }
+  }
+
+  editImage(dish: DishAdmin): void {
+    const newImage = prompt('Editar imagen (URL)', dish.image);
+    if (newImage !== null && newImage.trim() !== '') {
+      dish.image = newImage.trim();
+      this.dishesService.updateDish(dish).subscribe(() => {
+        this.loadDishes();
+      });
+      alert('Imagen actualizada exitosamente.');
+    }
+  }
+
+  
+
+  editPrice(dish: DishAdmin): void {
+    const newPrice = prompt('Editar precio', dish.price.toString());
+  
+    if (newPrice !== null) {
+      const parsedPrice = parseFloat(newPrice);
+      if (!isNaN(parsedPrice) && parsedPrice > 0) {
+        dish.price = parsedPrice;
+        this.dishesService.updateDish(dish).subscribe(() => {
+          this.loadDishes();
+        });
+        alert('Precio actualizado exitosamente.');
+      }
+    }
+  }
+  
+
+  editCategory(dish: DishAdmin): void {
+    const allowedCategories = ['APPETIZER', 'FIRST', 'SECOND', 'DESSERT'];
+    
+    const newCategory = prompt('Editar categoría (appetizer, first, second, dessert)', dish.category);
+    
+    if (newCategory !== null && allowedCategories.includes(newCategory.toUpperCase())) {
+      dish.category = newCategory.toUpperCase();
+      this.dishesService.updateDish(dish).subscribe(() => {
+        this.loadDishes();
+      });
+      alert('Categoría actualizada exitosamente.');
+    } else {
+      alert('Por favor, ingrese una categoría válida.');
+    }
+  }
+  
+  toggleVisibility(dish: DishAdmin): void {
+    this.dishesService.changeDishVisibility(dish.id).subscribe(
+      () => {
+        this.loadDishes();
+      },
+      (error) => console.error('Error changing visibility:', error)
+    )
+    
+  }
+  
 
   private validateAttributes(attributesInput: string): string[] {
     const allowedAttributes = ['celiac', 'nuts', 'vegan', 'vegetarian', 'lactose',''];
@@ -119,26 +226,80 @@ export class TableDishesComponent implements OnInit {
     return attributes.filter((attr) => allowedAttributes.includes(attr));
   }
 
-  private validateDish(dish: DishAdmin): boolean {
+  private validateCategory(dish: DishAdmin): boolean {
     const allowedCategories = ['APPETIZER', 'FIRST', 'SECOND', 'DESSERT'];
-    return (
-      dish.name.trim() !== '' &&
-      dish.description.trim() !== '' &&
-      dish.image.trim() !== '' &&
-      dish.price > 0 &&
-      allowedCategories.includes(dish.category.trim().toUpperCase()) &&
-      dish.attributes.length > 0
-    );
+    const newCategory = prompt('Nueva categoría, solo (APPETIZER, FIRST, SECOND, DESSERT)', dish.category);
+    return allowedCategories.includes(newCategory?.trim().toUpperCase() || '');
   }
+  
 
   private resetNewDish() {
     this.newDish = { id: 0, name: '', description: '', image: '', price: 0, category: '', attributes: [],visible: false };
   }
 
-  enlargeImage(event: any): void {
-    const imageElement = event.target;
-    imageElement.classList.toggle('enlarged');
+  enlargeImage(dish: DishAdmin): void {
+    if (this.editingImageId === null || this.editingImageId !== dish.id) {
+      const imageElement = document.getElementById(`dish-image-${dish.id}`);
+      if (imageElement) {
+        imageElement.classList.add('enlarged');
+      }
+    }
   }
 
+  resetImageSize(): void {
+    const enlargedImages = document.querySelectorAll('.dish-image.enlarged');
+    enlargedImages.forEach((image) => image.classList.remove('enlarged'));
+  }
+
+
+
+
+  addAttribute(dishId: number) {
+    const attributesInput = prompt(
+      'Añade un nuevo Atributo: celiac, nuts, vegan, vegetarian, lactose');
+      console.log(attributesInput);
+      if(attributesInput != null){
+      const idAt = this.checkAttribute(attributesInput.toUpperCase());
+      if(idAt!=0){
+        this.dishesService.addRelationAttribute(idAt,dishId).subscribe(() => {
+          this.loadDishes();
+          this.totalPages = Math.ceil(this.totalEntities / this.selectedPageSize);
+        }); 
+      }
+    }
+  }
+
+  deleteAttribute(attribute: string,dishId: number) {
+    if (confirm('¿Estás seguro de que deseas eliminar este plato con ID: '+ dishId+"?")) {
+      let idAt:number=0;
+      idAt = this.checkAttribute(attribute);
+      if(idAt!=0){
+      this.dishesService.deleteRelationAttribute(idAt,dishId).subscribe(() => {
+        this.loadDishes();
+        this.totalPages = Math.ceil(this.totalEntities / this.selectedPageSize);
+      });}
+      else{
+        alert("Atributo mal selccionado")
+      }
+    }
+    this.loadDishes();    
+  }
+
+  checkAttribute(attribute: string): number {
+    switch (attribute) {
+      case 'LACTOSE':
+        return 1;
+      case 'CELIAC':
+        return 2;
+      case 'VEGAN':
+        return 3;
+      case 'VEGETARIAN':
+        return 4;
+      case 'NUTS':
+        return 5;
+      default:
+        return 0; 
+    }
+  }
 
 }

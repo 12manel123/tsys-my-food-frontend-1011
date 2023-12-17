@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, of, tap, throwError } from 'rxjs';
 import { DishAdmin } from '../models/dish-admin';
 import { inject } from '@angular/core';
 import { environment } from '../../environments/environment';
@@ -10,6 +10,7 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root',
 })
 export class DishesDbService {
+
   /*private dishes: DishAdmin[] = [
     {
       id: 1,
@@ -126,25 +127,24 @@ export class DishesDbService {
 
   private url = environment.apiUrl + '/api/v1/dishes';
   private url2 = environment.apiUrl + '/api/v1/dish';
-
-  private http = inject(HttpClient)
+  private url3 = environment.apiUrl + '/api/v1/atribut'
+  
+  // private http = inject(HttpClient)
+  constructor(private http: HttpClient) {}
 
   private dishes: DishAdmin[] = []
-
   private dishesSubject = new BehaviorSubject<DishAdmin[]>(this.dishes);
-
   private lastId = this.dishes.length > 0 ? Math.max(...this.dishes.map((dish) => dish.id)) : 0;
+  private dishVisibilityChanged = new Subject<number>();
+
 
   getDishesFromApi(num1:number, num2:number) {
     return this.http.get<any[]>(this.url+"?page="+num1+"&size="+num2);
    }
 
-
-
   getDishes() {//TODO quitar esta funcion
     return this.dishesSubject.asObservable();
   }
-
 
   deleteDish(dishId: number) {
     return this.http.delete<any[]>(this.url2+"/"+dishId);
@@ -160,11 +160,23 @@ export class DishesDbService {
   }
 
 
+  changeDishVisibility(dishId: number): Observable<any> {
+    return this.http.put(`${this.url2}/changeVisibility/${dishId}`, null)
+      .pipe(
+        tap(() => {
+          this.dishVisibilityChanged.next(dishId);
+        })
+      );
+  }
+
+  getDishVisibilityChanges(): Observable<number> {
+    return this.dishVisibilityChanged.asObservable();
+  }
+
   getDishNameById(dishId: number): Observable<string> {
     const dish = this.dishes.find((d) => d.id === dishId);
     return dish ? of(dish.name) : of('Plato no encontrado');
   }
-
 
   getDishDetailsByIds(dishIds: number[]): DishAdmin[] {
     return this.dishes.filter((dish) => dishIds.includes(dish.id));
@@ -175,13 +187,12 @@ export class DishesDbService {
     return of(dish ? [dish] : []);
   }
 
-  getTotalDishesCount(): number {
-    return this.dishes.length;
+  addRelationAttribute(idAt: number, dishId: number) {
+    return this.http.post(this.url3+"/"+idAt + "/dish/"+dishId,{ headers: { 'Content-Type': 'application/json' } });
   }
 
-
-
-
-
+  deleteRelationAttribute(idAt: number, dishId: number) {
+    return this.http.delete<any[]>(this.url3+"/"+idAt + "/dish/"+dishId);
+  }
 
 }
