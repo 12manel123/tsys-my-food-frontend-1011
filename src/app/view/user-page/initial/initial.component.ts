@@ -51,7 +51,7 @@ export class InitialComponent {
     this.servDishes.getMenusFromApi().subscribe((dishes: any) => {
       if (dishes.length > 0) {
         this.menus = dishes[0];
-       // this.menus = null;
+        // this.menus = null;
       } else {
         this.menus = null;
       }

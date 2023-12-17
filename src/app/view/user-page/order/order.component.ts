@@ -41,7 +41,7 @@ export class OrderComponent implements OnInit {
 
         Swal.fire(
           'Enjoy your food! 🍜',
-          `<b> Order number ${res.slot.id} </b> <br><br>
+          `<b> Order number ${res.id} </b> <br><br>
            Slot: ${res.slot.time}`,
           'success'
         )
