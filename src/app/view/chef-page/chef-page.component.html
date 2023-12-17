@@ -13,7 +13,7 @@
                     <li class="dish">{{ dish.name }}</li>}
             </ul>
         </div>
-        <div class="delete-button" (click)="deleteOrder(order.orderId)"(click)="copyToClipboard(order.orderId)"><i class="fas fa-check"></i></div>
+        <div class="delete-button" (click)="deleteOrder(order.orderId)"(click)="alertDelete(order.orderId)"><i class="fas fa-check"></i></div>
     </div>}
     <div class="else">
     
@@ -22,19 +22,19 @@
 
 <footer>
     <div class="pagination">
-        <button class="btn" (click)="previousPage()">Anterior</button>
-        <button class="btn" (click)="nextPage()">Siguiente</button>
+        <button mat-raised-button (click)="previousPage()">Previous</button>
+        <button mat-raised-button (click)="nextPage()">Next</button>
         <span>{{ currentPage }} / {{ totalPages }}</span>
     </div>
     <div class="current-time">
         <p>{{ currentTime }}</p>
     </div>
     <div class="actions">
-        <button class="btn" (click)="reloadPage()">
-        <i class="fa fa-refresh"></i> Recargar
+        <button mat-raised-button (click)="reloadPage()">
+        <i class="fa fa-refresh"></i> Reload
         </button>
-        <button class="btn" (click)="closePage()">
-        <i class="fa fa-times"></i>
+        <button mat-raised-button (click)="closePage()">
+        <i class="fa fa-times"></i> Logout
         </button>
     </div>
 </footer>
