@@ -140,5 +140,5 @@ export class TableDishesComponent implements OnInit {
     imageElement.classList.toggle('enlarged');
   }
 
-  
+
 }

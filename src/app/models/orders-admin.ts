@@ -3,8 +3,9 @@ import { Slot } from "./slots-admin";
 export interface Order {
     orderId: number;
     maked: boolean;
-    slot?: Slot; 
+    slot?: Slot;
     price: number;
     datetime: Date;
     dishes: DishAdmin[];
 }
+
