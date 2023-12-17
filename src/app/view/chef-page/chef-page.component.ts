@@ -43,6 +43,10 @@ export class ChefPageComponent implements OnInit{
       this.selectedPageSize=size
       this.orders = content;
     });
+    //TODO order with slot
+    /*this.orders.forEach((order) => {
+      console.log(order)
+    });*/
   }
 
   deleteOrder(orderId: number): void {
