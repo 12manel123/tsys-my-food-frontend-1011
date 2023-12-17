@@ -6,13 +6,14 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatMenuModule } from '@angular/material/menu';
 import { DishesUserService } from '../../../services/dishes-user.service';
 import { CurrencyPipe, UpperCasePipe } from '@angular/common';
-import { DishAdmin } from '../../../models/dish-admin';
 import { Router } from '@angular/router';
-import { MenuUser } from '../../../models/menu-admin';
+import { Menu } from '../../../models/menu';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-
+import { Dish } from '../../../models/dihsh';
+import { OrderUserService } from '../../../services/order-user.service';
+import { Slot } from '../../../models/slots-admin';
 
 @Component({
   selector: 'app-initial',
@@ -32,22 +33,22 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
   templateUrl: './initial.component.html',
   styleUrl: './initial.component.css',
 })
+
 export class InitialComponent {
 
-
-  private serverDishes = inject(DishesUserService);
+  private servDishes = inject(DishesUserService);
   private router = inject(Router);
+  private servOrder = inject(OrderUserService);
 
-  listDishes: any[] = [];
-  menus: MenuUser | null = {} as MenuUser;
-  listDishesOrder: any[] = [];
-  totalPrice = 0;
-
-  showFiller = false;
+  protected listDishes: Dish[] = [];
+  protected menus: Menu | null = {} as Menu;
+  protected listDishesShow: Dish[] = [];
+  protected totalPrice = 0;
+  protected slots: Slot[] = [];
 
   ngOnInit(): void {
 
-    this.serverDishes.getMenusFromApi().subscribe((dishes: any) => {
+    this.servDishes.getMenusFromApi().subscribe((dishes: any) => {
       if (dishes.length > 0) {
         this.menus = dishes[0];
        // this.menus = null;
@@ -56,42 +57,38 @@ export class InitialComponent {
       }
     });
 
+    this.allDishes();
 
-    this.serverDishes.getDishesFromApi().subscribe((dishes: any) => {
-      const { content } = dishes;
-      this.listDishes = content;
-    });
   }
 
   fliterForAtrttibute(attribute: string) {
-    this.serverDishes.getDishesByAttributeFromApi(attribute).subscribe((dishes: any) => {
+    this.servDishes.getDishesByAttributeFromApi(attribute).subscribe((dishes: any) => {
       const { content } = dishes;
       this.listDishes = content;
     });
   }
 
   fliterForDesserts() {
-    this.serverDishes.getDishesByCategoryFromApi('DESSERT').subscribe((dishes: any) => {
+    this.servDishes.getDishesByCategoryFromApi('DESSERT').subscribe((dishes: any) => {
       const { content } = dishes;
       this.listDishes = content;
      });
   }
   fliterForSeconds() {
-    this.serverDishes.getDishesByCategoryFromApi('SECOND').subscribe((dishes: any) => {
+    this.servDishes.getDishesByCategoryFromApi('SECOND').subscribe((dishes: any) => {
       const { content } = dishes;
       this.listDishes = content;
      });
   }
   fliterForFirsts() {
-    this.serverDishes.getDishesByCategoryFromApi('FIRST').subscribe((dishes: any) => {
+    this.servDishes.getDishesByCategoryFromApi('FIRST').subscribe((dishes: any) => {
       const { content } = dishes;
       this.listDishes = content;
      });
   }
   fliterForApptizer() {
-    this.serverDishes.getDishesByCategoryFromApi('APPETIZER').subscribe((dishes: any) => {
+    this.servDishes.getDishesByCategoryFromApi('APPETIZER').subscribe((dishes: any) => {
       const { content } = dishes;
-      console.log(content);
       this.listDishes = content;
      });
   }
@@ -100,57 +97,86 @@ export class InitialComponent {
     this.totalPrice += price;
   }
 
-  addMenu(menus: MenuUser) {
-    console.log(menus);
+  addMenu(menus: Menu) {
     if (menus) {
       menus.appetizer.price = 0;
       menus.first.price = 0;
       menus.second.price = 0;
       menus.dessert.price = 0;
-       this.listDishesOrder.push(menus.appetizer);
-       this.listDishesOrder.push(menus.first);
-       this.listDishesOrder.push(menus.second);
-       this.listDishesOrder.push(menus.dessert);
+       this.listDishesShow.push(menus.appetizer);
+       this.listDishesShow.push(menus.first);
+       this.listDishesShow.push(menus.second);
+       this.listDishesShow.push(menus.dessert);
       this.addTotlaPrice(8.90)
+      this.servOrder.listMenusOrders.push(menus);
     }
 
   }
 
-  addCard(dihs: DishAdmin) {
-    this.addTotlaPrice(dihs.price )
-    this.listDishesOrder.push(dihs);
-
+  addCard(dihs: Dish) {
+    this.addTotlaPrice(dihs.price)
+    this.listDishesShow.push(dihs);
+    this.servOrder.listDishesOrders.push(dihs);
   }
 
   cancelPedido() {
-    this.listDishesOrder = [];
+    this.listDishesShow = [];
     this.totalPrice = 0;
   }
 
   aceptarOrden() {
-    this.router.navigate(['user/order']);
 
+    this.servOrder.postCreateOrderApi().subscribe((order: any) => {
+      const { id } = order;
+      this.servOrder.idOrder.set(id)
+
+      this.servOrder.listDishesOrders.forEach((dish: any) => {
+        this.servOrder.postReferencesDishesApi(id, dish.id).subscribe({
+          next: data => {
+          //  console.log(data);
+          },
+          error: error => {
+            console.error('There was an error!', error);
+          }
+        });
+      });
+
+      this.servOrder.listMenusOrders.forEach((menu: any) => {
+        this.servOrder.postReferencesMenusApi(id, menu.id).subscribe({
+          next: data => {
+            console.log(data);
+          },
+          error: error => {
+            console.error('There was an error!', error);
+          }
+        });
+      });
+
+    });
+
+    this.router.navigate(['user/order']);
   }
 
 
   removeCard(index: number) {
-    const { price } = this.listDishesOrder[index];
+    const { price } = this.listDishesShow[index];
     this.totalPrice -= price;
-    this.listDishesOrder.splice(index, 1);
+    this.listDishesShow.splice(index, 1);
 
-    if (this.listDishesOrder.length === 0) {
+    if (this.listDishesShow.length === 0) {
       this.totalPrice = 0;
     }
-    if (this.listDishesOrder.length === 1) {
-      this.totalPrice = this.listDishesOrder[0].price;
+    if (this.listDishesShow.length === 1) {
+      this.totalPrice = this.listDishesShow[0].price;
     }
   }
 
   allDishes() {
-    this.serverDishes.getDishesFromApi().subscribe((dishes: any) => {
+    this.servDishes.getDishesFromApi().subscribe((dishes: any) => {
       const { content } = dishes;
       this.listDishes = content;
      });
     }
+
 
 }

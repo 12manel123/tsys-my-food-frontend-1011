@@ -20,9 +20,7 @@ export class RegisterComponent {
   private tokenStServ = inject(TokenStorageService)
   private router= inject(Router) ;
 
-  rta: string = '';
-
-  user: UserReg = {
+  protected user: UserReg = {
     username: '',
     email: '',
     password: '',
@@ -62,7 +60,7 @@ export class RegisterComponent {
 
   add() {
 
-
+    // Check if the passwords match
     if (!this.passwordMatchValidator()) {
       Swal.fire({
         icon: 'error',
@@ -71,6 +69,7 @@ export class RegisterComponent {
       return;
     }
 
+    // Check if the form is valid
     let timerInterval: any
     Swal.fire({
       title: ' Loading data!',
@@ -90,7 +89,7 @@ export class RegisterComponent {
         clearInterval(timerInterval)
       }
     }).then((result) => {
-      /* Read more about handling dismissals below */
+
       if (result.dismiss === Swal.DismissReason.timer) {
         console.log('I was closed by the timer')
       }
@@ -101,20 +100,14 @@ export class RegisterComponent {
 
     this.authService. register(new UserReg (username, email, password) ).subscribe((result: { toString: () => string; })=>{
       if (result) {
-        this.authService.login({ username, password }).subscribe((rta: { [key: string]: string }) => {
-          if (rta) {
-            this.rta = rta.toString();
-
-            // Data to save in the service
-            this.authService.token.set(Object.values(rta)[0]) ;
-            this.authService.username.set(Object.values(rta)[2]);
-            this.authService.role.set(Object.values(rta)[4])
+        this.authService.login({ username, password }).subscribe((res: { [key: string]: string }) => {
+          if (res) {
 
             // Data to save in the session storage
-            this.tokenStServ.saveToken(Object.values(rta)[0]);
-            this.tokenStServ.saveUser(Object.values(rta)[2]);
-            this.tokenStServ.saveRole(Object.values(rta)[4]);
-
+            this.tokenStServ.saveToken(Object.values(res)[0]);
+            this.tokenStServ.saveUser(Object.values(res)[2]);
+            this.tokenStServ.saveRole(Object.values(res)[4]);
+            this.tokenStServ.saveId(Object.values(res)[3]);
 
             this.router.navigate(['/user/initial'])
           }
@@ -125,8 +118,7 @@ export class RegisterComponent {
   }
 
   accept() {
-    this
-    console.log( this.registerForm.value.checkbox);
+    this.registerForm.value.checkbox = true;
   }
 }
 

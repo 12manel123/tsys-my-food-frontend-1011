@@ -251,6 +251,9 @@ export class TableDishesComponent implements OnInit ,OnDestroy {
     enlargedImages.forEach((image) => image.classList.remove('enlarged'));
   }
 
+
+
+
   addAttribute(dishId: number) {
     const attributesInput = prompt(
       'Añade un nuevo Atributo: celiac, nuts, vegan, vegetarian, lactose');
@@ -298,5 +301,5 @@ export class TableDishesComponent implements OnInit ,OnDestroy {
         return 0; 
     }
   }
-  
+
 }

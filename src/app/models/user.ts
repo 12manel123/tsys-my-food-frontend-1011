@@ -3,6 +3,7 @@ export interface User {
   password: String,
 }
 
+
 export class UserReg implements User {
 
   email: string;
@@ -18,9 +19,7 @@ export class UserReg implements User {
     this.password = password;
     this.email = email;
   }
-
 }
-
 
 export class UserDTO implements User {
 
