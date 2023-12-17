@@ -145,6 +145,10 @@ export class DishesDbService {
   getDishes() {//TODO quitar esta funcion
     return this.dishesSubject.asObservable();
   }
+  
+  getDishesCategoryFromApi(category:string,num1:number, num2:number){
+    return this.http.get<any[]>(this.url+"/byCategory/"+category+"?page="+num1+"&size="+num2);
+  }
 
   deleteDish(dishId: number) {
     return this.http.delete<any[]>(this.url2+"/"+dishId);

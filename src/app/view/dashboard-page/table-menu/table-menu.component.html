@@ -1,88 +1,98 @@
-
-<div>
-    <div class="row">
-      <div class="col">   
-        <h2 class="mt-3">Menu List<button class="buttonnav" mat-raised-button color="primary"   (click)="addMenu()"><mat-icon class="mx-2" aria-hidden="false"  fontIcon="add"></mat-icon></button></h2>
-      </div>
-      <div class="col">
-        <mat-paginator
-        [pageSize]="itemsPerPage"
-        [pageIndex]="currentPage - 1"
-        [length]="menusService.getTotalMenus()"
-        [pageSizeOptions]="[2, 5, 10]"
-        (page)="onChange($event)">
-      </mat-paginator>
-      </div>
-  </div>
-
-
-  @if (addingMenu || editingMenu) {
-    <div>
-      <h2>{{ editingMenu ? 'Edit Menu' : 'Add Menu' }}</h2>
-        <form (ngSubmit)="submitMenuForm()" #menuForm="ngForm">
-          <label for="categoryAppetizer">Appetizer:</label>
-          <select id="categoryAppetizer" name="categoryAppetizer" required [(ngModel)]="newMenu.categoryAppetizer">
-            @for (dish of (getDishesAppetizer() | async); track $index) {
-              <option [value]="dish.id">{{dish.id}}: {{ dish.name }}</option>
-            }
-          </select>
+<div class="dish-dasboard">
+  <h2 class="mt-5">Dishes List</h2>
+  <form (ngSubmit)="addMenu()" #menuForm="ngForm" class="custom-form">
+    <div class="custom-col">
+      <label class="form-label">Appetizer</label>
+      <select id="categoryAppetizer" name="categoryAppetizer" required [(ngModel)]="newMenuApi.appetizer" class="form-select">
+        @for (dish of dishesAppetizer; track $index) {
+          <option [ngValue]="dish">{{dish.name}}</option>
+        }
+      </select>
+    </div>
+    <div class="custom-col">
+      <label class="form-label">First</label>
+      <select id="categoryFirst" name="categoryFirst" required [(ngModel)]="newMenuApi.first" class="form-select">
+        @for (dish of dishesFirst; track $index) {
+          <option [ngValue]="dish">{{dish.name}}</option>
+        }
+      </select>
+    </div>
+    <div class="custom-col">
+      <label class="form-label">Second</label>
+      <select id="categorySecond" name="categorySecond" required [(ngModel)]="newMenuApi.second" class="form-select">
+        @for (dish of dishesSecond; track $index) {
+          <option [ngValue]="dish">{{dish.name}}</option>
+        }
+      </select>
+    </div>
+    <div class="custom-col">
+      <label class="form-label">Dessert</label>
+      <select id="categoryDessert" name="categoryDessert" required [(ngModel)]="newMenuApi.dessert" class="form-select">
+        @for (dish of dishesDessert; track $index) {
+          <option [ngValue]="dish">{{dish.name}}</option>
+        }
+      </select>
+    </div>
+    <div class="customm-col">
+      <button mat-raised-button color="accent mx-1">
+        <mat-icon class="mx-2" aria-hidden="false" fontIcon="add"></mat-icon>
+      </button>
+    </div>
+  </form>
   
-          <label for="categoryFirst">First:</label>
-          <select id="categoryFirst" name="categoryFirst" required [(ngModel)]="newMenu.categoryFirst">
-            @for (dish of (getDishesFirst() | async); track $index) {
-              <option [value]="dish.id">{{dish.id}}: {{ dish.name }}</option>
-            }
-          </select>
   
-          <label for="categorySecond">Second:</label>
-          <select id="categorySecond" name="categorySecond" required [(ngModel)]="newMenu.categorySecond">
-            @for (dish of (getDishesSecond() | async); track $index) {
-              <option [value]="dish.id">{{dish.id}}: {{ dish.name }}</option>
-            }
-          </select>
   
-          <label for="categoryDessert">Dessert:</label>
-          <select id="categoryDessert" name="categoryDessert" required [(ngModel)]="newMenu.categoryDessert">
-            @for (dish of (getDishesDessert() | async); track $index) {
-              <option [value]="dish.id">{{dish.id}}: {{ dish.name }}</option>
-            }
-          </select>
-          <button class="buttonnav" mat-raised-button color="primary"><mat-icon class="mx-2" aria-hidden="false"  fontIcon="{{ editingMenu ? 'edit' : 'add' }}"></mat-icon></button>
-        </form>
-    </div>}
-
-  <mat-table [dataSource]="menus" class="mat-elevation-z8">
+  <mat-paginator
+  [pageSize]="selectedPageSize"
+  [pageIndex]="currentPage - 1"
+  [length]="totalEntities"
+  [pageSizeOptions]="[2, 5, 10]"
+  aria-label="Select page"
+  (page)="onChange($event)">
+</mat-paginator>
+  <mat-table [dataSource]="menusApi" class="mat-elevation-z8">
     <ng-container matColumnDef="id">
       <mat-header-cell *matHeaderCellDef>ID</mat-header-cell>
       <mat-cell *matCellDef="let menu">{{ menu.id }}</mat-cell>
     </ng-container>
 
-    <ng-container matColumnDef="dishes">
-      <mat-header-cell *matHeaderCellDef>Dishes</mat-header-cell>
-      <mat-cell *matCellDef="let menu">
-        <ul>
-          <li>{{ menu.categoryAppetizer }} | Appetizer</li>
-          <li>{{ menu.categoryFirst }} | First</li>
-          <li>{{ menu.categorySecond }} | Second</li>
-          <li>{{ menu.categoryDessert }} | Dessert</li>
-        </ul>
-      </mat-cell>
+    <ng-container matColumnDef="appetizer">
+      <mat-header-cell *matHeaderCellDef>Appetizer</mat-header-cell>
+      <mat-cell *matCellDef="let menu" (click)="editAppetizer(menu)">{{ menu.appetizer.name }}</mat-cell>
     </ng-container>
+    
+    <ng-container matColumnDef="first">
+      <mat-header-cell *matHeaderCellDef>First</mat-header-cell>
+      <mat-cell *matCellDef="let menu">{{ menu.first.name }}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="second">
+      <mat-header-cell *matHeaderCellDef>Second</mat-header-cell>
+      <mat-cell *matCellDef="let menu">{{ menu.second.name }}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="dessert">
+      <mat-header-cell *matHeaderCellDef>Dessert</mat-header-cell>
+      <mat-cell *matCellDef="let menu">{{ menu.dessert.name }}</mat-cell>
+    </ng-container>
+
+    
     <ng-container matColumnDef="visible">
       <mat-header-cell *matHeaderCellDef>Visible</mat-header-cell>
-      <mat-cell *matCellDef="let menu">{{ menu.visible ? 'Yes' : 'No' }}</mat-cell>
+      <mat-cell *matCellDef="let menu">
+        <button mat-icon-button (click)="toggleVisibility(menu)">
+          <mat-icon>{{ menu.visible  ? 'visibility' : 'visibility_off' }}</mat-icon>
+        </button>
+      </mat-cell>
+
     </ng-container>
     <ng-container matColumnDef="actions">
       <mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
       <mat-cell *matCellDef="let menu">
-        <button class="button" mat-mini-fab color="primary"  (click)="editMenu(menu)"><mat-icon class="mx-2" aria-hidden="false"  fontIcon="edit"></mat-icon></button>
-        <button class="button" mat-mini-fab color="warn"  (click)="deleteMenu(menu.id)"><mat-icon class="mx-2" aria-hidden="false"  fontIcon="delete"></mat-icon></button>
-        <button class="button" mat-mini-fab color="primary"  (click)="toggleVisibility(menu)">
-          <mat-icon class="mx-2" aria-hidden="false"  fontIcon="{{ menu.visible ? 'visibility_off' : 'visibility' }}"></mat-icon></button>
+        <button mat-icon-button color="warn"  (click)="deleteMenu(menu.id)"><mat-icon aria-hidden="false"  fontIcon="delete"></mat-icon></button>
       </mat-cell>
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
   </mat-table>
-</div>
+  
+
