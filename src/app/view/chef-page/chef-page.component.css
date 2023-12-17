@@ -135,7 +135,7 @@ footer {
 
 .card-header.past-time {
     animation: shake 0.5s 1;
-    background-color: red;
+    background-color: grey;
 }
 
 @keyframes shake {

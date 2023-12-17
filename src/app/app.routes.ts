@@ -36,8 +36,7 @@ export const routes: Routes = [
         {path:'orders', component: TableOrdersComponent },
         {path:'dishes', component: TableDishesComponent },
         {path:'menus', component: TableMenuComponent },
-        {path:'slots', component: TableSlotsComponent },
-
+        {path:'slots', component: TableSlotsComponent }
       ]
     },
     { path: 'user', component: UserPageComponent, canActivate: [userGuard] , children: [

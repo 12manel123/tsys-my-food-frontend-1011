@@ -1,12 +1,16 @@
 <div class="dashboard-container">
     <div class="sidebar">
-        <app-logo routerLink="/user/initial"> </app-logo>
+        <app-logo> </app-logo>
         <ul class="nav flex-column">
             <button class="items" routerLink="/admin/users" mat-raised-button color="accent mx-1"><mat-icon aria-hidden="false" fontIcon="group"></mat-icon> USERS</button>
             <button class="items" routerLink="/admin/slots" mat-raised-button color="accent mx-1"><mat-icon aria-hidden="false" fontIcon="schedule"></mat-icon>SLOTS</button>
             <button class="items" routerLink="/admin/orders" mat-raised-button color="accent mx-1"><mat-icon aria-hidden="false" fontIcon="shopping_bag"></mat-icon>ORDERS</button>
             <button class="items" routerLink="/admin/dishes" mat-raised-button color="accent mx-1"><mat-icon aria-hidden="false" fontIcon="fastfood"></mat-icon>DISHES</button>
             <button class="items" routerLink="/admin/menus" mat-raised-button color="accent mx-1"><mat-icon aria-hidden="false" fontIcon="restaurant"></mat-icon>MENUS</button>
+            <div class="items" mat-raised-button color="primary mx-1"></div>
+            <button class="items" routerLink="/chef" mat-raised-button color="primary mx-1"><mat-icon aria-hidden="false" fontIcon="restaurant_menu"></mat-icon>CHEF</button>
+            <button class="items" routerLink="/user/initial" mat-raised-button color="primary mx-1"><mat-icon aria-hidden="false" fontIcon="person"></mat-icon>USER</button>
+
         </ul>
         <div class="logout">
             <button (click)="logOut()" mat-raised-button color="warn mx-1"><mat-icon class="mx-2" aria-hidden="false"  fontIcon="logout"></mat-icon> <b>LOGOUT</b></button>

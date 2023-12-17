@@ -14,10 +14,12 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { CurrencyPipe, UpperCasePipe } from '@angular/common';
+
 @Component({
   selector: 'app-table-orders',
   standalone: true,
-  imports: [DatePipe,MatCardModule,
+  imports: [DatePipe,MatCardModule,CurrencyPipe,
     MatIconModule,
     MatButtonModule,
     MatToolbarModule,
