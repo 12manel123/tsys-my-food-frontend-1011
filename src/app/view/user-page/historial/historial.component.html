@@ -1,9 +1,27 @@
 <main>
   <div class="container">
-    <h1>Historial</h1>
-    <div class="col-5 card mx-auto mt-5">
-       <p>Aqui se lolocara el historial del Usuario</p>
-       
+    <br>
+   <h1 class="text-center mt-2">Your shopping history</h1>
+    <div class="col card mx-auto mt p-3">
+
+      <table matSort (matSortChange)="sortData($event)">
+        <tr class="text-center">
+          <th mat-sort-header="name">ID</th>
+          <th mat-sort-header="calories">Date</th>
+          <th mat-sort-header="carbs">Pick up time</th>
+          <th mat-sort-header="protein">Price</th>
+        </tr>
+
+        @for ( h of historial; track h.id) {
+          <tr class="text-center">
+            <td>{{h.id}}</td>
+            <td>{{h.actualDate |  date }}</td>
+            <td>{{h.slot?.time}}</td>
+            <td>{{h.totalPrice | currency:'EUR'}}</td>
+          </tr>
+        }
+      </table>
+
   </div>
     </div>
 </main>

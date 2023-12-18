@@ -66,7 +66,7 @@ export class OrderUserService {
   * @return An Observable that emits an object of type Menu when the request is completed.
   */
   postReferencesMenusApi(idMenu: number , idDish : number): Observable<Menu> {
-    return this.http.post<Menu>(this.postReferencesMenus + idMenu+ '/' + idDish+'?itemType=dish'  , this.listMenusOrders);
+    return this.http.post<Menu>(this.postReferencesMenus + idMenu+ '/' + idDish+'?itemType=menu'  , this.listMenusOrders);
   }
 
   /**
