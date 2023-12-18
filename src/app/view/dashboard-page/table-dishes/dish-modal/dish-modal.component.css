@@ -1,0 +1,41 @@
+.attribute {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 20px;
+  text-align: center;
+}
+
+.attribute h3 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.attribute form {
+  display: flex;
+  flex-direction: column;
+}
+
+.attribute label {
+  margin-bottom: 8px;
+}
+
+.attribute input,
+.attribute textarea,
+.attribute select {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 16px;
+  box-sizing: border-box;
+}
+
+.attribute button {
+  background-color: blue;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  cursor: pointer;
+}
+
+.attribute button:hover {
+  background-color: rgb(77, 77, 248);
+}

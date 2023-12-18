@@ -11,6 +11,9 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { CommonModule } from '@angular/common';
 import { Subject, takeUntil } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { DishModalComponent } from './dish-modal/dish-modal.component'; 
+
 
 @Component({
   selector: 'app-table-dishes',
@@ -41,14 +44,17 @@ export class TableDishesComponent implements OnInit {
   private ngUnsubscribe = new Subject();
 
 
+  constructor(public dishesService: DishesDbService, public dialog: MatDialog) {}
 
-  constructor(public dishesService: DishesDbService) {}
+  // constructor(public dishesService: DishesDbService) {}
 
   ngOnInit(): void {
     this.loadDishes();
     // this.subscribeToVisibilityChanges();
   }
 
+
+  
   loadDishes(): void {
     const startIndex = this.currentPage - 1;
     const endIndex = this.selectedPageSize;
@@ -91,6 +97,18 @@ export class TableDishesComponent implements OnInit {
 
 
   addDish() {
+    
+    const dialogRef = this.dialog.open(DishModalComponent, {
+      width: '400px', 
+    })
+    dialogRef.afterClosed().subscribe(() => {
+      
+      this.loadDishes();
+    });
+  }
+
+
+  addDishes() {
     const newDish: DishAdmin = { ...this.newDish };
     newDish.name = prompt('Nombre del nuevo plato') || '';
     newDish.description = prompt('Descripción del nuevo plato') || '';
@@ -104,6 +122,7 @@ export class TableDishesComponent implements OnInit {
     newDish.attributes = this.validateAttributes(attributesInput);
 
     if (this.validateCategory(newDish)) {
+      console.log(newDish)
       this.dishesService.addDish(newDish).subscribe(() => {
         this.loadDishes();
       });
