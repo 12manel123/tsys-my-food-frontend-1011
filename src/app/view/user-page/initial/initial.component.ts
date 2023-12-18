@@ -134,6 +134,8 @@ export class InitialComponent implements OnDestroy {
 
   aceptarOrden() {
 
+    
+
     this.servOrder.postCreateOrderApi().subscribe((order: any) => {
       const { id } = order;
       this.servOrder.idOrder.set(id)
@@ -185,6 +187,7 @@ export class InitialComponent implements OnDestroy {
       this.listDishes = content;
      });
     }
+
 
 
 }
