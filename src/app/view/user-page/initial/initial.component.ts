@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnDestroy, inject } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -15,6 +15,7 @@ import { Dish } from '../../../models/dihsh';
 import { OrderUserService } from '../../../services/order-user.service';
 import { Slot } from '../../../models/slots-admin';
 
+
 @Component({
   selector: 'app-initial',
   standalone: true,
@@ -28,13 +29,15 @@ import { Slot } from '../../../models/slots-admin';
     CurrencyPipe,
     MatSidenavModule,
     MatButtonToggleModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+
   ],
   templateUrl: './initial.component.html',
   styleUrl: './initial.component.css',
 })
 
-export class InitialComponent {
+export class InitialComponent implements OnDestroy {
+
 
   private servDishes = inject(DishesUserService);
   private router = inject(Router);
@@ -60,6 +63,11 @@ export class InitialComponent {
     this.allDishes();
 
   }
+
+  ngOnDestroy(): void {
+    this.servOrder.totalPrice.set(this.totalPrice);
+  }
+
 
   fliterForAtrttibute(attribute: string) {
     this.servDishes.getDishesByAttributeFromApi(attribute).subscribe((dishes: any) => {
@@ -107,7 +115,7 @@ export class InitialComponent {
        this.listDishesShow.push(menus.first);
        this.listDishesShow.push(menus.second);
        this.listDishesShow.push(menus.dessert);
-      this.addTotlaPrice(8.90)
+      this.addTotlaPrice(9.80)
       this.servOrder.listMenusOrders.push(menus);
     }
 

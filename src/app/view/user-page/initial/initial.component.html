@@ -132,18 +132,18 @@
               <mat-card-header>
                 <mat-card-title-group>
                   <mat-card-title>{{dish.name}}</mat-card-title>
-                  <mat-card-subtitle>{{dish.price | currency:'EUR' }}</mat-card-subtitle>
+                  <mat-card-subtitle c>
+                    <small class="text-seocodary"> {{dish.category }}</small>
+                   </mat-card-subtitle>
                   <img mat-card-md-image src="{{dish.image}}}" alt="Image of a Shiba Inu" class="img-fluid rounded-circle">
                 </mat-card-title-group>
               </mat-card-header>
-              <mat-card-content class="mt-2">
+              <mat-card-content class="mt-1">
                 {{dish.description}}
                 <div class="row mt-2">
-                  <div class="col-4 text-start">
-                    {{dish.attributes}}
-                  </div>
-                  <div class="col-4 text-center">
-                    {{dish.category | uppercase }}
+                  <div class="col-8 text-start">
+                  <small class="text-success fw-bolder">{{dish.attributes}}  </small>
+                  <span class="text-primary fw-bolder"> <br> {{dish.price | currency:'EUR'}} </span>
                   </div>
                   <div class="col-4 text-end">
                     <button mat-mini-fab color="accent" aria-label="Example icon button with a plus one icon"

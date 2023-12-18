@@ -2,11 +2,11 @@ import { Injectable, inject } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Observable, catchError, of } from 'rxjs';
-import Swal from 'sweetalert2'
 import { Router } from '@angular/router';
 import { TokenStorageService } from './token-storage.service';
 import { Dish } from '../models/dihsh';
 import { Menu } from '../models/menu';
+import Swal from 'sweetalert2'
 
 @Injectable({
   providedIn: 'root'
@@ -23,6 +23,7 @@ export class DishesUserService {
   private urlMenus = environment.apiUrl + '/api/v1/allVisibleMenus';
   private urlCatagory = environment.apiUrl + '/api/v1/dishes/visibleByCategory/';
   private urlAttribute = environment.apiUrl + '/api/v1/atribut/visible/';
+
 
   /**
   * Retrieves a list of dishes from the API.

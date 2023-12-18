@@ -15,11 +15,12 @@
         }
         </select>
         <button mat-raised-button (click)="prossesOrder()" color="primary mx-auto mt-4">Process order</button>
-
-        <span class="mt-3 text-center text-secondary mt-5">Unclaimed orders beyond the pickup deadline will be donated to local community kitchens</span>
-        <small class="mt-5 mb-0 ">Committed to:</small>
-        <img src="../../../../assets/img/2030-logo.png" alt="">
-        <p class="text-success text-center mb-0"><b>ZERO</b> CARBON FOOTPRINT </p>
+        <span class="text-center mt-3" >Total</span>
+        <p class="text-center mt-1 fs-5">{{ totalPrice | currency:'EUR'}}</p>
+        <span class="mt-3 text-center text-secondary mt-2">Unclaimed orders beyond the pickup deadline will be donated to local community kitchens</span>
+        <small class="mt-3 mb-0 ">Committed to:</small>
+        <img class="mx-auto" src="../../../../assets/img/2030-logo.png" width="80%" alt="logo agenda 2030">
+        <small class="text-success text-center mb-0"><b>ZERO</b> CARBON FOOTPRINT </small>
       }
       @else{
         <p class="text-center">No orders available</p>
