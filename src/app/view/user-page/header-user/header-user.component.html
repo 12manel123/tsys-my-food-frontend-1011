@@ -1,25 +1,35 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container">
       <!-- Logo a la izquierda -->
-      <a class="navbar-brand" [routerLink]="['/']" (click)="singOut()" routerLinkActive="router-link-active">
-         <app-logo-card></app-logo-card>
-      </a>
-
-      <!-- Botón de hamburguesa para pantallas pequeñas -->
-      <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button> -->
+      <app-logo-card></app-logo-card>
 
       <!-- Elementos de la derecha -->
-      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+      <div class="justify-content-end" id="navbarNav">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link">
+            <a [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
               <img src="https://ui-avatars.com/api/{{username}}" class="rounded-circle mx-2 mb-1" style="width: 34px;"
               alt="Avatar">
-          </a>
+            </a>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item [routerLink]="['profile']">
+                <mat-icon>person</mat-icon>
+                <span>Profile</span>
+              </button>
+
+              <button mat-menu-item [routerLink]="['historial']">
+                <mat-icon>shopping_basket</mat-icon>
+                <span>Historial</span>
+              </button>
+              <button mat-menu-item [routerLink]="['/']" (click)="singOut()" routerLinkActive="router-link-active">
+                <mat-icon>logout</mat-icon>
+                <span>Log out</span>
+              </button>
+            </mat-menu>
+
           </li>
         </ul>
       </div>
     </div>
   </nav>
+
