@@ -50,8 +50,7 @@ export class OrderComponent implements OnInit {
            Slot: ${res.slot.time}`,
           'success'
         )
-        this.servSession.singOut();
-        this.routes.navigate(['/']);
+        this.routes.navigate(['/user/historial']);
 
       }
       else {
