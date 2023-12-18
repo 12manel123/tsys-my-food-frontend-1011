@@ -19,10 +19,8 @@ export class HeaderUserComponent implements OnInit {
   tokerServ = inject(TokenStorageService);
 
   singOut() {
-
     this.tokerServ.singOut();
     window.location.reload();
-
 }
 
 

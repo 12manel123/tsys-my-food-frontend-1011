@@ -14,7 +14,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { Dish } from '../../../models/dihsh';
 import { OrderUserService } from '../../../services/order-user.service';
 import { Slot } from '../../../models/slots-admin';
-
+import Swal from 'sweetalert2'
 
 @Component({
   selector: 'app-initial',
@@ -134,7 +134,10 @@ export class InitialComponent implements OnDestroy {
 
   aceptarOrden() {
 
-    
+    if (this.listDishesShow.length === 0) {
+      Swal.fire('Your shopping list is empty, treat yourself and try our desserts! 😋')
+      return;
+    }
 
     this.servOrder.postCreateOrderApi().subscribe((order: any) => {
       const { id } = order;
