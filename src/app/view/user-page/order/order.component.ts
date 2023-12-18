@@ -5,25 +5,32 @@ import {FormsModule} from '@angular/forms';
 import { LogoComponent } from '../../../shared/logo/logo.component';
 import { MatButtonModule } from '@angular/material/button';
 import Swal from 'sweetalert2'
+import { CurrencyPipe } from '@angular/common';
+import { Router } from '@angular/router';
+import { TokenStorageService } from '../../../services/token-storage.service';
+
 
 @Component({
   selector: 'app-order',
   standalone: true,
-  imports: [LogoComponent, MatButtonModule, FormsModule ],
+  imports: [LogoComponent, MatButtonModule, FormsModule,  CurrencyPipe, ],
   templateUrl: './order.component.html',
   styleUrl: './order.component.css'
 })
 export class OrderComponent implements OnInit {
 
   private servOrder = inject(OrderUserService);
+  private routes = inject(Router);
+  private servSession = inject(TokenStorageService);
 
   selectedSlotId: number = 0;
   slotAvaible: Slot[] = [];
   idUser = this.servOrder.userID;
+  totalPrice = 0;
 
   ngOnInit() {
     this.getSlotAvaible();
-
+    this.totalPrice = this.servOrder.totalPrice();
   }
 
   getSlotAvaible() {
@@ -34,18 +41,18 @@ export class OrderComponent implements OnInit {
 
   prossesOrder() {
 
-    console.log(this.selectedSlotId);
-    console.log(this.servOrder.idOrder());
     this.servOrder.putSlotsApi(this.servOrder.idOrder(),  this.selectedSlotId).subscribe((res: any) => {
       if (res) {
 
         Swal.fire(
           'Enjoy your food! 🍜',
-          `<b> Order number ${res.slot.id} </b> <br><br>
+          `<b> Order number ${res.id} </b> <br><br>
            Slot: ${res.slot.time}`,
           'success'
         )
-        console.log('Slot added' ,res);
+        this.servSession.singOut();
+        this.routes.navigate(['/']);
+
       }
       else {
         console.log('Slot not added');

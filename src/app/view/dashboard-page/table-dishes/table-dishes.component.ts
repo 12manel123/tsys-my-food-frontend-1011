@@ -90,7 +90,6 @@ export class TableDishesComponent implements OnInit {
   }
 
 
-
   addDish() {
     const newDish: DishAdmin = { ...this.newDish };
     newDish.name = prompt('Nombre del nuevo plato') || '';

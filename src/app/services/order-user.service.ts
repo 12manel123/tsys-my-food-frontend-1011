@@ -20,6 +20,7 @@ export class OrderUserService {
   private orders: Order[] = [];
 
   idOrder = signal(0);
+  totalPrice = signal(0);
 
   private servSession = inject(TokenStorageService);
   private http = inject(HttpClient);
