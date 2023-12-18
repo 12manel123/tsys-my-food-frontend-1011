@@ -1,13 +1,74 @@
-.button {
-    margin-right: 8px;
+.mdc-data-table__table{
+    min-width: 70%;
+    width: 80px;
+    max-width: 80px;
+}
+mat-paginator{
+    min-width: 70%;
+    width: 80px;
+    max-width: 80px;
+}
+.dish-dasboard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 20px;
 }
 
-.mdc-data-table__table{
-    max-width: 99% !important;
-    min-width: 99% !important;
-    margin-bottom: 50px;
+.dish-dasboard h2 {
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+mat-header-cell{
+    font-weight: bold;
 }
 
 .buttonnav{
     margin-left: 30px;
+}
+
+.mat-column-id,
+.mat-column-actions,
+.mat-column-visible
+{
+    width: 80px;
+    max-width: 80px;
+    min-width: 80px;
+    justify-content: center;
+}
+
+.mat-column-appetizer,
+.mat-column-first,
+.mat-column-second,
+.mat-column-dessert{
+    justify-content: center;
+
+}
+
+.custom-form {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+}
+
+.custom-col {
+    flex: 0 0 auto;
+    margin-right: 10px;
+}
+
+.form-label, .form-select {
+    margin-bottom: 5px;
+}
+
+.customm-col {
+    margin-top: 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end; 
+    
+}
+
+.customm-col button {
+    width: 100%;
 }

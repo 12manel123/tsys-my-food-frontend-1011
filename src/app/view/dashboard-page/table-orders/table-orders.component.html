@@ -28,7 +28,7 @@
 
         <ng-container matColumnDef="price">
             <mat-header-cell *matHeaderCellDef class="mat-column-price">Price</mat-header-cell>
-            <mat-cell *matCellDef="let order" class="mat-column-price">{{ order.totalPrice }}</mat-cell>
+            <mat-cell *matCellDef="let order" class="mat-column-price">{{ order.totalPrice | currency:'EUR' }}</mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="datetime">

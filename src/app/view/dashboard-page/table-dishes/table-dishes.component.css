@@ -10,11 +10,11 @@
 }
 
 .dish-image {
-    transition: transform 0.3s; /* Agrega un efecto de transición para suavizar el cambio de tamaño */
-  }
-  
-  .dish-image.enlarged {
-    transform: scale(1.2); /* Puedes ajustar el valor de escala según tus preferencias */
+    transition: transform 0.3s; 
+}
+
+.dish-image.enlarged {
+    transform: scale(1.2);
   }
 
 .image-container {
@@ -41,6 +41,7 @@ mat-paginator{
     flex-direction: column;
     align-items: center;
     text-align: center;
+    margin-bottom: 20px;
 }
 
 .dish-dasboard h2 {
@@ -92,10 +93,7 @@ mat-header-cell{
 .attribute-list {
     display: flex;
     flex-direction: column;
-    align-items: center;  
-    text-align: center;   
+    align-items: left;  
+    text-align: left;   
 }
 
-.attribute-list div {
-    margin-bottom: 5px; 
-}

@@ -26,7 +26,7 @@ import { Subject, takeUntil } from 'rxjs';
     templateUrl: './table-dishes.component.html',  
     styleUrl: './table-dishes.component.css'
 })
-export class TableDishesComponent implements OnInit ,OnDestroy {
+export class TableDishesComponent implements OnInit {
 
 
   dishes: DishAdmin[] = [];
@@ -43,9 +43,6 @@ export class TableDishesComponent implements OnInit ,OnDestroy {
 
 
   constructor(public dishesService: DishesDbService) {}
-  ngOnDestroy(): void {
-    throw new Error('Method not implemented.');
-  }
 
   ngOnInit(): void {
     this.loadDishes();

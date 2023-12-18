@@ -27,9 +27,9 @@
           <ng-container matColumnDef="image">
             <mat-header-cell *matHeaderCellDef>Image</mat-header-cell>
             <mat-cell *matCellDef="let dish" 
-                     (mouseenter)="enlargeImage(dish)" 
-                     (mouseleave)="resetImageSize()" 
-                     (click)="editImage(dish)">
+                    (mouseenter)="enlargeImage(dish)" 
+                    (mouseleave)="resetImageSize()" 
+                    (click)="editImage(dish)">
               <div [ngStyle]="{ 'cursor': 'pointer' }">
                 <img class="dish-image" [src]="dish.image" alt="{{ dish.name }}" id="dish-image-{{ dish.id }}">
               </div>
@@ -48,14 +48,21 @@
           <ng-container matColumnDef="attributes">
             <mat-header-cell *matHeaderCellDef>Attributes</mat-header-cell>
             <mat-cell *matCellDef="let dish">
-                <div class="attribute-list">
+                <div class="attribute-list text-end">
                     @for (attribute of dish.attributes; track $index) {
-                    <div>
-                        {{ attribute }}
-                        <button (click)="deleteAttribute(attribute, dish.id)">-</button>
-                    </div>
+                      <div style="display: flex; justify-content: space-between;">
+                        <div style="margin-right: 5px;">
+                          {{ attribute }}
+                        </div>
+                        <div>
+                          <i style="color: red; margin-left: auto; margin-right: 3px;" (click)="deleteAttribute(attribute, dish.id)" class="fa-solid fa-delete-left"></i>
+                        </div>
+                      </div>
+                      
+                      
+                      
                 }
-                <button (click)="addAttribute(dish.id)">+</button>
+                <button mat-icon-button color="primary"(click)="addAttribute(dish.id)">+</button>
                 </div>
             </mat-cell>
         </ng-container>        
@@ -70,7 +77,7 @@
         <ng-container matColumnDef="actions">
             <mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
             <mat-cell *matCellDef="let dish">
-                <button class="button" mat-icon-button color="warn"  (click)="deleteDish(dish.id)"><mat-icon aria-hidden="false"  fontIcon="delete"></mat-icon></button>
+                <button class="buttondeletedish" mat-icon-button color="warn"  (click)="deleteDish(dish.id)"><mat-icon aria-hidden="false"  fontIcon="delete"></mat-icon></button>
 
             </mat-cell>
         </ng-container>

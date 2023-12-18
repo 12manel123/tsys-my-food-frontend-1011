@@ -5,7 +5,7 @@ import { DishAdmin } from '../../../models/dish-admin';
 import { AsyncPipe,SlicePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Observable, map } from 'rxjs';
-import { Menu } from '../../../models/menu-admin';
+import { Menu, MenuUser, MenuUserNew } from '../../../models/menu-admin';
 import { MatCardModule } from '@angular/material/card';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
@@ -16,13 +16,18 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatOptionModule } from '@angular/material/core';
+import { JsonPipe } from '@angular/common';
+import { MatDialogModule } from '@angular/material/dialog';
+
+
 @Component({
   selector: 'app-table-menu',
   standalone: true,
   imports: [FormsModule,AsyncPipe,SlicePipe,MatCardModule,
-    MatIconModule,
+    MatIconModule,JsonPipe,
     MatButtonModule,
     MatToolbarModule,
+    MatDialogModule,
     MatMenuModule,
     MatTableModule,
     MatPaginatorModule,MatFormFieldModule,MatOptionModule],
@@ -30,7 +35,20 @@ import { MatOptionModule } from '@angular/material/core';
   styleUrl: './table-menu.component.css'
 })
 export class TableMenuComponent {
+
   menus: Menu[] = [];
+  menusApi: MenuUser[] = [];
+  dishesAppetizer: DishAdmin[] = [];
+  dishesFirst: DishAdmin[] = [];
+  dishesSecond: DishAdmin[] = [];
+  dishesDessert: DishAdmin[] = [];
+  newMenuApi:MenuUserNew={
+    appetizer:{ id:0, name:'', description:'', image:'', price: 0, category:'', visible: true},
+    first:{ id:0, name:'', description:'', image:'', price: 0, category:'', visible: true},
+    second:{ id:0, name:'', description:'', image:'', price: 0, category:'', visible: true},
+    dessert:{ id:0, name:'', description:'', image:'', price: 0, category:'', visible: true},
+    visible:true
+  }
   newMenu: Menu = { id: 0, categoryAppetizer: 0, categoryFirst: 0, categorySecond: 0, categoryDessert: 0, visible: true };
   dishes: DishAdmin[] = [];
   dishNames: { [key: number]: string } = {};
@@ -38,17 +56,22 @@ export class TableMenuComponent {
   addingMenu: boolean = false;
   editingMenuId: number | null = null;
   editingMenu: Menu | null = null;
-  dataSource: MatTableDataSource<Menu> = new MatTableDataSource<Menu>([]);
-  displayedColumns: string[] = ['id', 'dishes', 'visible', 'actions'];
-
+  //dataSource: MatTableDataSource<Menu> = new MatTableDataSource<Menu>([]);
+  displayedColumns: string[] = ['id','appetizer','first','second','dessert','visible', 'actions'];
   currentPage: number = 1;
   itemsPerPage: number = 2;
   totalPages: number = 0;
+  dataSource: MatTableDataSource<MenuUser> = new MatTableDataSource<MenuUser>([]);
+  public selectedPageSize: number = 10;
+  totalEntities: number = 0;
+  dataSourceDish: MatTableDataSource<DishAdmin> = new MatTableDataSource<DishAdmin>([]);
 
   constructor(public menusService: MenusDbService, private dishesService: DishesDbService) {}
 
   ngOnInit() {
     this.loadMenus();
+    this.loadMenusApi();
+    this.loadDishesCategoryApi();
   }
 
   loadMenus(): void {
@@ -56,11 +79,47 @@ export class TableMenuComponent {
     const endIndex = this.currentPage * this.itemsPerPage;
     this.menusService.getMenus().subscribe((menus) => {
       this.menus = menus.slice(startIndex, endIndex);
-      this.loadDishNames();
       this.totalPages = Math.ceil(this.menusService.getTotalMenus() / this.itemsPerPage);
     });
     this.dishesService.getDishes().subscribe((dishes) => {
       this.dishes = dishes;
+    });
+  }
+
+  loadDishesCategoryApi(): void {
+    this.dishesService.getDishesCategoryFromApi("APPETIZER",0,100).subscribe((dishes:any) => {
+      const {content}=dishes;
+      this.dishesAppetizer = content;
+      this.dataSourceDish.data = this.dishes;
+    });
+    this.dishesService.getDishesCategoryFromApi("FIRST",0,100).subscribe((dishes:any) => {
+      const {content}=dishes;
+      this.dishesFirst = content;
+      this.dataSourceDish.data = this.dishes;
+    });
+    this.dishesService.getDishesCategoryFromApi("SECOND",0,100).subscribe((dishes:any) => {
+      const {content}=dishes;
+      this.dishesSecond = content;
+      this.dataSourceDish.data = this.dishes;
+    });
+    this.dishesService.getDishesCategoryFromApi("DESSERT",0,100).subscribe((dishes:any) => {
+      const {content}=dishes;
+      this.dishesDessert = content;
+      this.dataSourceDish.data = this.dishes;
+    });
+  }
+
+
+  loadMenusApi(): void {
+    const startIndex = this.currentPage - 1;
+    const endIndex = this.selectedPageSize;
+    this.menusService.getMenusFromApi(startIndex,endIndex).subscribe((menus:any) => {
+      const {totalElements,totalPages,content,size}=menus;
+      this.totalPages = totalPages;
+      this.totalEntities=totalElements;
+      this.selectedPageSize=size
+      this.menusApi = content;
+      this.dataSource.data = this.menusApi;
     });
   }
 
@@ -86,14 +145,26 @@ export class TableMenuComponent {
   }
 
   deleteMenu(menuId: number) {
+    if (confirm('¿Estás seguro de que deseas eliminar este menú con ID: '+ menuId+"?")) {
+      this.menusService.deleteMenu(menuId).subscribe(() => {
+        this.loadMenusApi();
+        this.totalPages = Math.ceil(this.totalEntities / this.selectedPageSize);
+      });
+    }
+    this.loadMenusApi();
     this.menusService.deleteMenu(menuId);
   }
 
   addMenu() {
-    this.addingMenu = true;
+    console.log(this.newMenuApi)
+    this.menusService.addMenu(this.newMenuApi).subscribe(() => {
+      this.loadMenusApi();
+    });
+    this.loadMenusApi()
   }
 
   submitMenuForm() {
+    console.log(this.newMenuApi)
     if (this.validateNewMenu()) {
       if (this.editingMenu) {
         this.editingMenu.categoryAppetizer = this.newMenu.categoryAppetizer;
@@ -111,7 +182,7 @@ export class TableMenuComponent {
           visible: true,
         };
 
-        this.menusService.addMenu(newMenu);
+        //this.menusService.addMenu(newMenu);
       }
       this.resetNewMenu();
       this.addingMenu = false;
@@ -136,9 +207,20 @@ export class TableMenuComponent {
     this.newMenu = { id: 0, categoryAppetizer: 0, categoryFirst: 0, categorySecond: 0, categoryDessert: 0, visible: true };
   }
 
-  toggleVisibility(menu: Menu) {
+  /*toggleVisibility(menu: Menu) {
     menu.visible = !menu.visible;
     this.menusService.updateMenu(menu);
+  }*/
+
+
+  toggleVisibility(menu: MenuUser): void {
+    this.menusService.changeMenuVisibility(menu.id).subscribe(
+      () => {
+        this.loadMenusApi();
+      },
+      (error) => console.error('Error changing visibility:', error)
+    )
+    this.loadMenusApi();
   }
 
   onChange(event: any): void {
@@ -149,66 +231,16 @@ export class TableMenuComponent {
     this.loadMenus();
   }
 
-
-  //For search the name of menu:
-
-  getMenuItemsDetails(itemIds: number[]): DishAdmin[] {
-    return this.dishesService.getDishDetailsByIds(itemIds);
-  }
-
-  getDishesAppetizer(): Observable<DishAdmin[]> {
-    return this.getDishesCategory("appetizer");
-  }
-
-  getDishesFirst(): Observable<DishAdmin[]> {
-    return this.getDishesCategory("first");
-  }
-
-  getDishesSecond(): Observable<DishAdmin[]> {
-    return this.getDishesCategory("second");
-  }
-
-  getDishesDessert(): Observable<DishAdmin[]> {
-    return this.getDishesCategory("dessert");
-  }
-
-  getDishesCategory(categoryType: string): Observable<DishAdmin[]> {
-    return this.dishesService.getDishes().pipe(
-      map(dishes => dishes.filter(dish => dish.category === categoryType))
-    );
-  }
-
-  getDishName(dishId: number): string {
-    return this.dishNames[dishId] || 'Nombre no encontrado';
-  }
-
-  loadDishNames() {
-    for (const menu of this.menus) {
-      this.getDishNameById(menu.categoryAppetizer).subscribe(name => {
-        this.dishNames[menu.categoryAppetizer] = name;
+  editAppetizer(menu: MenuUser): void {
+    const newName = prompt('Editar nombre', menu.appetizer.name);
+    if (newName !== null && newName.trim() !== '') {
+      menu.appetizer.name = newName.trim();
+      this.menusService.updateAppetizer(menu).subscribe(() => {
+        this.loadMenusApi();
       });
-
-      this.getDishNameById(menu.categoryFirst).subscribe(name => {
-        this.dishNames[menu.categoryFirst] = name;
-      });
-
-      this.getDishNameById(menu.categorySecond).subscribe(name => {
-        this.dishNames[menu.categorySecond] = name;
-      });
-
-      this.getDishNameById(menu.categoryDessert).subscribe(name => {
-        this.dishNames[menu.categoryDessert] = name;
-      });
+      alert('Nombre actualizado exitosamente.');
     }
   }
-
-  getDishNameById(dishId: number): Observable<string> {
-    return this.dishesService.getDishNameById(dishId);
-  }
-
-
-  getDishDetailsByIds(dishId: number): Observable<DishAdmin[]> {
-    console.log(dishId);
-    return this.dishesService.getDishById(dishId);
-  }
+  
+  
 }
