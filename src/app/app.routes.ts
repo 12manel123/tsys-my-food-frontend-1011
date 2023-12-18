@@ -20,6 +20,8 @@ import { OrderComponent } from './view/user-page/order/order.component';
 import { userGuard } from './controllers/user.guard';
 import { adminGuard } from './controllers/admin.guard';
 import { chefGuard } from './controllers/chef.guard';
+import { ProfileComponent } from './view/user-page/profile/profile.component';
+import { HistorialComponent } from './view/user-page/historial/historial.component';
 
 
 export const routes: Routes = [
@@ -41,7 +43,9 @@ export const routes: Routes = [
     },
     { path: 'user', component: UserPageComponent, canActivate: [userGuard] , children: [
       {path:'initial', component: InitialComponent  },
-      {path:'order', component: OrderComponent },
+      { path: 'order', component: OrderComponent },
+      { path: 'profile', component: ProfileComponent},
+      { path: 'historial', component: HistorialComponent }
       ]
     },
 
