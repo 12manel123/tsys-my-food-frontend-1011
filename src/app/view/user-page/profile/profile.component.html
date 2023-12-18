@@ -1,0 +1,51 @@
+<main>
+  <div class="container">
+    <br>
+   <h1 class="text-center mt-2">Profile</h1>
+    <div class="col-5 card mx-auto mt p-3">
+    @if (user){
+      <div class="row">
+        <div class="col-12 mt-5">
+          <img src="https://ui-avatars.com/api/{{user.username || 'X'}}" class="rounded-circle mx-auto d-block" style="width: 150px;" alt="Avatar">
+        </div>
+        <div class="col-12 mt-5 ">
+
+            <h3 class="text-center">{{user.username || 'Nameless'}}</h3>
+            <p class="text-center">Email : {{user.email || 'No mail' }}</p>
+
+            <p class="text-center">{{user && user.role && user.role.name ? user.role.name : 'Role not available'}} since: {{user.createdAt | date }}</p>
+
+          <div  class="text-center">
+             <!-- <button class="" mat-raised-button color="primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@fat">Edit</button> -->
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+</div>
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="modal-body">
+        <form [formGroup]="eamilForm">
+          <div class="mb-3">
+            <label for="message-email" class="col-form-label">email:</label>
+            <input type="email" formControlName="email" class="form-control" id="message-email">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="submit" (click)="uddateUser()" data-bs-dismiss="modal" class="btn btn-primary">Send </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+</main>
+
+
