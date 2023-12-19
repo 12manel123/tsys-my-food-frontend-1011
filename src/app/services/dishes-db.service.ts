@@ -140,7 +140,7 @@ export class DishesDbService {
 
   getDishesFromApi(num1:number, num2:number) {
     return this.http.get<any[]>(this.url+"?page="+num1+"&size="+num2);
-   }
+  }
 
   getDishes() {//TODO quitar esta funcion
     return this.dishesSubject.asObservable();
