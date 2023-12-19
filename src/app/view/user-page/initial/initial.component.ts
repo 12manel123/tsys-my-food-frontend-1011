@@ -51,14 +51,7 @@ export class InitialComponent implements OnDestroy {
 
   ngOnInit(): void {
 
-    this.servDishes.getMenusFromApi().subscribe((dishes: any) => {
-      if (dishes.length > 0) {
-        this.menus = dishes[0];
-        // this.menus = null;
-      } else {
-        this.menus = null;
-      }
-    });
+    this.getMenus();
 
     this.allDishes();
 
@@ -191,6 +184,17 @@ export class InitialComponent implements OnDestroy {
      });
     }
 
+    getMenus() {
+      this.servDishes.getMenusFromApi().subscribe(
+        (dishes: any) => {
+          this.menus = dishes[0];
+        },
+        (error: any) => {
+          console.error("Error al obtener menús:", error);
+          this.menus = null;
+        }
+      );
+    }
 
 
 }
