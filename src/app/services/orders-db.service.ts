@@ -32,14 +32,14 @@ export class OrdersDbService {
           return this.http.get<any[]>(this.url+"?page="+page+"&size="+size);
         }
         else{
-          return this.http.get<any[]>(this.url+"/date?year="+year+"&page="+page+"&size="+size);
+          return this.http.get<any[]>(this.url+"/date?year="+year+"&size=100");
         }
       }
       else{
-        return this.http.get<any[]>(this.url+"/date?year="+year+"&month="+month+"&page="+page+"&size="+size);
+        return this.http.get<any[]>(this.url+"/date?year="+year+"&month="+month+"&size=100");
       }
     }
-    return this.http.get<any[]>(this.url+"/date?year="+year+"&month="+month+"&day="+day+"&page="+page+"&size="+size);
+    return this.http.get<any[]>(this.url+"/date?year="+year+"&month="+month+"&day="+day+"&size=100");
   }
 
   removeOrder(orderId: number):  Observable<any> {

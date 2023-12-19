@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { OrdersDbService } from '../../../services/orders-db.service';
-import { Order } from '../../../models/orders-admin';
+import { Order, OrderDate } from '../../../models/orders-admin';
 import { DishAdmin } from '../../../models/dish-admin';
 import { DatePipe } from '@angular/common';
 import { DishesDbService } from '../../../services/dishes-db.service';
@@ -32,7 +32,7 @@ import Swal from 'sweetalert2';
 })
 export class TableOrdersComponent implements OnInit {
   orders: Order[] = [];
-  ordersDate: Order[] = [];
+  ordersDate: OrderDate[] = [];
   currentPage: number = 1;
   itemsPerPage: number = 2;
   totalPages: number = 0;
@@ -60,6 +60,7 @@ export class TableOrdersComponent implements OnInit {
       this.totalEntities=totalElements;
       this.selectedPageSize=size
       this.orders = content;
+      this.ordersDate=[];
     });
   }
 
@@ -92,7 +93,8 @@ export class TableOrdersComponent implements OnInit {
         this.totalEntities = totalElements;
         this.selectedPageSize = size;
         this.orders = content;
-        this.ordersDate = content;
+        this.ordersDate=content;
+
       });
   }
     

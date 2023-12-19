@@ -8,4 +8,10 @@ export interface Order {
     datetime: Date;
     dishes: DishAdmin[];
 }
-
+export interface OrderDate {
+    orderId: number;
+    maked: boolean;
+    slot?: Slot;
+    price: number;
+    datetime: Date;
+}
