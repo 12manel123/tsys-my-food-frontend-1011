@@ -3,24 +3,42 @@
     <br>
    <h1 class="text-center mt-2">Profile</h1>
     <div class="col-5 card mx-auto mt p-3">
-    @if (user){
-      <div class="row">
-        <div class="col-12 mt-5">
-          <img src="https://ui-avatars.com/api/{{user.username || 'X'}}" class="rounded-circle mx-auto d-block" style="width: 150px;" alt="Avatar">
-        </div>
-        <div class="col-12 mt-5 ">
 
-            <h3 class="text-center">{{user.username || 'Nameless'}}</h3>
-            <p class="text-center">Email : {{user.email || 'No mail' }}</p>
 
-            <p class="text-center">{{user && user.role && user.role.name ? user.role.name : 'Role not available'}} since: {{user.createdAt | date }}</p>
+      @defer {
 
-          <div  class="text-center">
-             <!-- <button class="" mat-raised-button color="primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@fat">Edit</button> -->
+
+        @if (user){
+          <div class="row">
+            <div class="col-12 mt-5">
+              @if(user.username){
+                <img src="https://ui-avatars.com/api/{{user.username}}" class="rounded-circle mx-auto d-block" style="width: 150px;" alt="Avatar">
+              } @else {
+                <img src="https://ui-avatars.com/api/{{'X'}}" class="rounded-circle mx-auto d-block" style="width: 150px;" alt="Avatar">
+              }
+            </div>
+            <div class="col-12 mt-5 ">
+
+                <h3 class="text-center">{{user.username || 'Nameless'}}</h3>
+                <p class="text-center">Email : {{user.email || 'No mail' }}</p>
+
+                <p class="text-center">{{user && user.role && user.role.name ? user.role.name : 'Role not available'}} since: {{user.createdAt | date }}</p>
+
+              <div  class="text-center">
+                 <!-- <button class="" mat-raised-button color="primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@fat">Edit</button> -->
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-    }
+        }
+
+
+      } @placeholder (minimum 500ms) {
+        <div class="col mx-auto mt5">
+          <mat-spinner class="mt-5"></mat-spinner>
+       </div>
+      }
+
+
   </div>
 </div>
 
