@@ -33,4 +33,9 @@ export class HeaderUserComponent implements OnInit {
   username: string | null = '';
 
 
+  isAdmin(): boolean {
+    return 'ROLE_ADMIN' === this.tokenStServ.getRole();
+  }
+
+
 }

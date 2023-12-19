@@ -5,11 +5,12 @@ import { TokenStorageService } from '../../../services/token-storage.service';
 import { DatePipe } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [DatePipe, MatButtonModule , ReactiveFormsModule],
+  imports: [DatePipe, MatButtonModule , ReactiveFormsModule , MatProgressSpinnerModule],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css'
 })
