@@ -25,6 +25,22 @@ export class OrdersDbService {
   getOrdersApi(num1:number,num2:number): Observable<Order[]> {
     return this.http.get<any[]>(this.url+"?page="+num1+"&size="+num2);
   }
+  getOrdersDateApi(page:number,size:number,year:number,month:number,day:number): Observable<Order[]> {
+    if(day == 0){
+      if(month == 0){
+        if(year==0){
+          return this.http.get<any[]>(this.url+"?page="+page+"&size="+size);
+        }
+        else{
+          return this.http.get<any[]>(this.url+"/date?year="+year+"&page="+page+"&size="+size);
+        }
+      }
+      else{
+        return this.http.get<any[]>(this.url+"/date?year="+year+"&month="+month+"&page="+page+"&size="+size);
+      }
+    }
+    return this.http.get<any[]>(this.url+"/date?year="+year+"&month="+month+"&day="+day+"&page="+page+"&size="+size);
+  }
 
   removeOrder(orderId: number):  Observable<any> {
     return this.http.delete<any[]>(this.url2+"/"+orderId);

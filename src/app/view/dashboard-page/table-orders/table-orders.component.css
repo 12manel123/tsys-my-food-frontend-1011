@@ -4,7 +4,9 @@
     max-width: 80px;
 }
 
-
+.buttonnav{
+    margin-left: 30px;
+}
 mat-paginator{
     min-width: 50%;
     width: 80px;
@@ -42,5 +44,9 @@ mat-header-cell{
     width: 150px;
     max-width: 150px;
     min-width: 150px;
+    justify-content: center;
+}
+
+.mat-column-dishes {
     justify-content: center;
 }

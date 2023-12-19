@@ -9,11 +9,10 @@
         (page)="onChange($event)">
         </mat-paginator>
 
-    
     <mat-table [dataSource]="orders" class="mat-elevation-z8">
         <ng-container matColumnDef="id">
             <mat-header-cell *matHeaderCellDef class="mat-column-id">ID</mat-header-cell>
-            <mat-cell *matCellDef="let order" class="mat-column-id">{{ order.orderId }}</mat-cell>
+            <mat-cell *matCellDef="let order" class="mat-column-id">{{ order.orderId }}{{ order.id }}</mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="maked">
@@ -32,17 +31,18 @@
         </ng-container>
 
         <ng-container matColumnDef="datetime">
-            <mat-header-cell *matHeaderCellDef class="mat-column-date">Date and Time</mat-header-cell>
+            <mat-header-cell *matHeaderCellDef class="mat-column-date" (click)="loadOrdersDate()">Date and Time</mat-header-cell>
             <mat-cell *matCellDef="let order" class="mat-column-date">{{ order.actualDate | date }}</mat-cell>
         </ng-container>
-
         <ng-container matColumnDef="dishes">
             <mat-header-cell *matHeaderCellDef>Dishes</mat-header-cell>
             <mat-cell *matCellDef="let order">
-                    <select  class="form-select" matNativeControl>
-                        @for (dish of order.dishes; track $index) {
-                        <option value="{{ dish.name }}">{{ dish.name }}</option>}
-                    </select>
+                @if (ordersDate[0]) {}
+
+                        <select  class="form-select" matNativeControl>
+                            @for (dish of order.dishes; track $index) {
+                            <option value="{{ dish.name }}">{{ dish.name }}</option>}
+                        </select>
             </mat-cell>
         </ng-container>
 
@@ -58,6 +58,8 @@
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
         <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
     </mat-table>
+
+    
     
     
 </div>
