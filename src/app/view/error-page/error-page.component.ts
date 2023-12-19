@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Location } from '@angular/common';
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-error-page',
   standalone: true,
@@ -9,7 +10,15 @@ import { Location } from '@angular/common';
 })
 export class ErrorPageComponent {
   constructor(private location: Location) {}
-  goBack() {
-    this.location.back();
+  ngOnInit(): void {
+    Swal.fire({
+        icon: 'error',
+        title: 'Error Route',
+        text: 'You are being redirected to the previous page.',
+        timer: 2000,
+        showConfirmButton: false,
+    }).then(() => {
+      this.location.back();
+    });
   }
 }
