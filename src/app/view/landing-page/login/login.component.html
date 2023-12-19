@@ -14,6 +14,7 @@
             id="name"
             autofocus
             required
+            autocomplete="on"
           />
           @if (registerForm.get('username')?.valid) {
             <div id="fullnameHelp" class="form-text text-success">✅ valid name</div>
@@ -27,7 +28,7 @@
               id="password"
               class="form-control"
               aria-describedby="passwordHelpBlock"
-
+              autocomplete="on"
               minlength="8"
               maxlength="20"
               required

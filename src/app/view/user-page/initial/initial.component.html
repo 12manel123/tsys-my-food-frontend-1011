@@ -7,38 +7,62 @@
         <h2 class="text-center text-primary"><b> TODAY'S MENU </b></h2>
       <div class="row">
 
+
+
         <!-- /.col-lg-3 -->
         <div class="col-lg-3 menu">
-          <img  mat-card-md-image src="{{menus.appetizer.image}}" class="menu-img img-fluid rounded-circle shadow  mb-2" alt="{{menus.appetizer.name}}">
+          @if(menus.appetizer.image){
+            <img  mat-card-md-image src="{{menus.appetizer.image}}" class="menu-img img-fluid rounded-circle shadow  mb-2" alt="{{menus.appetizer.name}}">
+          }@else {
+            <img  mat-card-md-image src="../../../../../assets/img/no-foto.png" class="menu-img img-fluid rounded-circle shadow  mb-2" alt="no-foto">
+          }
           <h2 class="">{{menus.appetizer.name}}</h2>
           <p>{{menus.appetizer.description}}</p>
           <p>{{menus.first.category}}</p>
         </div>
 
+
+
+
         <!-- /.col-lg-3 -->
         <div class="col-lg-3 menu">
-          <img mat-card-md-image src="{{menus.first.image}}" class="menu-img img-fluid rounded-circle shadow mb-2" alt="{{menus.first.name}}">
+          @if(menus.first.image){
+            <img mat-card-md-image src="{{menus.first.image}}" class="menu-img img-fluid rounded-circle shadow mb-2" alt="{{menus.first.name}}">
+          }@else {
+            <img mat-card-md-image src="../../../../../assets/img/no-foto.png" class="menu-img img-fluid rounded-circle shadow mb-2" alt="no-foto">
+          }
           <h2>{{menus.first.name}}</h2>
           <p>{{menus.first.description}}</p>
           <p>{{menus.first.category}}</p>
         </div>
 
+
+
         <!-- /.col-lg-3 -->
         <div class="col-lg-3 menu">
-          <img mat-card-md-image src="{{menus.second.image}}" class="menu-img img-fluid rounded-circle shadow  mb-2"alt="{{menus.second.name}}">
+          @if(menus.second.image){
+            <img mat-card-md-image src="{{menus.second.image}}" class="menu-img img-fluid rounded-circle shadow  mb-2"alt="{{menus.second.name}}">
+          }@else {
+            <img mat-card-md-image src="../../../../../assets/img/no-foto.png" class="menu-img img-fluid rounded-circle shadow  mb-2"alt="no-foto">
+          }
           <h2>{{menus.second.name}}</h2>
           <p>{{menus.second.description}}</p>
           <p>{{menus.second.category}}</p>
         </div>
 
+
+
         <!-- /.col-lg-3 -->
         <div class="col-lg-3 menu">
-          <img mat-card-md-image src="{{menus.dessert.image}}" class="menu-img img-fluid rounded-circle shadow  mb-2" alt="{{menus.dessert.name}}">
+          @if(menus.dessert.image){
+            <img mat-card-md-image src="{{menus.dessert.image}}" class="menu-img img-fluid rounded-circle shadow  mb-2" alt="{{menus.dessert.name}}">
+          }@else {
+            <img mat-card-md-image src="../../../../../assets/img/no-foto.png" class="menu-img img-fluid rounded-circle shadow  mb-2" alt="no-foto">
+          }
           <h2>{{menus.dessert.name}}</h2>
           <p>{{menus.dessert.description}}</p>
           <p>{{menus.dessert.category}}</p>
         </div>
-
 
       </div>
       <!-- /.row -->
@@ -55,21 +79,21 @@
         <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
           <div class="carousel-inner">
             <div class="carousel-item active">
-              <img src="../../../../assets/img/photo1.webp" class="d-block" alt="...">
+              <img src="../../../../assets/img/photo1.webp" class="d-block" alt="slider foto1">
               <div class="carousel-caption d-none d-md-block">
                 <p class="fs-1">Appetizer</p>
                 <p><b>Choose from our selection of dishes.</b></p>
               </div>
             </div>
             <div class="carousel-item">
-              <img src="../../../../assets/img/photo3.webp" class="d-block " alt="...">
+              <img src="../../../../assets/img/photo3.webp" class="d-block " alt="slider foto2">
               <div class="carousel-caption d-none d-md-block">
                 <p class="fs-1">Firts</p>
                 <p><b>With the best quality and KM O</b></p>
               </div>
             </div>
             <div class="carousel-item">
-              <img src="../../../../assets/img/photo2.webp" class="d-block" alt="...">
+              <img src="../../../../assets/img/photo2.webp" class="d-block" alt="slider foto2">
               <div class="carousel-caption d-none d-md-block">
                 <p class="fs-1">Desserts</p>
                 <p><b>Great variety of desserts.</b></p>
@@ -125,7 +149,7 @@
 
          <div class="row mt-4">
 
-           <!-- dish cards -->
+          <!-- dish cards -->
         @for(dish of listDishes; track $index){
           <div class="col-lg-3 mt-3">
             <mat-card class="example-card">
@@ -135,7 +159,12 @@
                   <mat-card-subtitle c>
                     <small class="text-seocodary"> {{dish.category }}</small>
                    </mat-card-subtitle>
-                  <img mat-card-md-image src="{{dish.image}}}" alt="Image of a Shiba Inu" class="img-fluid rounded-circle">
+                   @if(dish.image){
+                    <img mat-card-md-image src="{{dish.image}}" alt="dihs" class="img-fluid rounded-circle">
+                   }
+                  @else {
+                    <img mat-card-md-image src="../../../../../assets/img/no-foto.png" alt="dihs" class="img-fluid rounded-circle">
+                  }
                 </mat-card-title-group>
               </mat-card-header>
               <mat-card-content class="mt-1">
@@ -166,7 +195,7 @@
             <div class="col-lg-12 mt-2">
               <div class="alert alert-info" role="alert">
              <h2 class="text-center text-primary"><b>Today we do not have any available dishes</b></h2>
-             <h5 class="text-center text-primary"><b>Enjoy our selection of menus.</b></h5>
+             <h5 class="text-center text-primary"><b>Enjoy our selection of dihs.</b></h5>
               </div>
             </div>
           </div>
