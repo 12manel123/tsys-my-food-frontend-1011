@@ -78,7 +78,7 @@ export class LoginComponent {
 
     switch (role) {
       case 'ROLE_ADMIN':
-        this.router.navigate(['/admin']);
+        this.router.navigate(['/admin/chart']);
         break;
       case 'ROLE_USER':
         this.router.navigate(['/user/initial']);

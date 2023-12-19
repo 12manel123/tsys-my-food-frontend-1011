@@ -22,6 +22,7 @@ import { adminGuard } from './controllers/admin.guard';
 import { chefGuard } from './controllers/chef.guard';
 import { HistorialComponent } from './view/user-page/historial/historial.component';
 import { ProfileComponent } from './view/user-page/profile/profile.component';
+ import { BarChartComponent } from './view/dashboard-page/bar-chart/bar-chart.component';
 
 
 export const routes: Routes = [
@@ -33,7 +34,9 @@ export const routes: Routes = [
       { path: 'register', component: RegisterComponent }
     ]},
 
-    { path: 'admin', component: DashboardPageComponent, canActivate : [adminGuard]  ,children: [
+  {
+    path: 'admin', component: DashboardPageComponent, canActivate: [adminGuard], children: [
+         {path:'chart', component: BarChartComponent },
         {path:'users', component: TableUsersComponent ,   },
         {path:'orders', component: TableOrdersComponent },
         {path:'dishes', component: TableDishesComponent },

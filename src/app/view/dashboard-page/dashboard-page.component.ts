@@ -18,7 +18,7 @@ import { TokenStorageService } from '../../services/token-storage.service';
     MatButtonModule,
     MatToolbarModule,
     MatMenuModule,
-    LogoComponent
+    LogoComponent,
   ],
   templateUrl: './dashboard-page.component.html',
   styleUrl: './dashboard-page.component.css'
