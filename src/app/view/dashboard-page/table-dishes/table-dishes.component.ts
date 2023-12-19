@@ -13,6 +13,7 @@ import { CommonModule } from '@angular/common';
 import { Subject, takeUntil } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { DishModalComponent } from './dish-modal/dish-modal.component'; 
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -79,15 +80,45 @@ export class TableDishesComponent implements OnInit {
   //     });
   // }
 
+  // deleteDish(dishId: number): void {
+
+  //   if (confirm('¿Estás seguro de que deseas eliminar este plato con ID: '+ dishId+"?")) {
+  //     this.dishesService.deleteDish(dishId).subscribe(() => {
+  //       this.loadDishes();
+  //       this.totalPages = Math.ceil(this.totalEntities / this.selectedPageSize);
+  //     });
+  //   }
+  //   this.loadDishes();
+  // }
+
   deleteDish(dishId: number): void {
-    if (confirm('¿Estás seguro de que deseas eliminar este plato con ID: '+ dishId+"?")) {
-      this.dishesService.deleteDish(dishId).subscribe(() => {
-        this.loadDishes();
-        this.totalPages = Math.ceil(this.totalEntities / this.selectedPageSize);
-      });
-    }
-    this.loadDishes();
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'You won\'t be able to revert this!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it',
+      cancelButtonText: 'Cancel'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.dishesService.deleteDish(dishId).subscribe(() => {
+          Swal.fire(
+            'Deleted!',
+            'The dish has been deleted.',
+            'success'
+          ).then(() => {
+            this.loadDishes();
+            this.totalPages = Math.ceil(this.totalEntities / this.selectedPageSize);
+          });
+        }, (error) => {
+          Swal.fire('Error', 'An error occurred while deleting the dish.', 'error');
+        });
+      }
+    });
   }
+  
 
   onChange(event: any): void {
     this.selectedPageSize = event.pageSize;
@@ -179,16 +210,53 @@ export class TableDishesComponent implements OnInit {
     }
   }
 
+  // editImage(dish: DishAdmin): void {
+  //   const newImage = prompt('Editar imagen (URL)', dish.image);
+  //   if (newImage !== null && newImage.trim() !== '') {
+  //     dish.image = newImage.trim();
+  //     this.dishesService.updateDish(dish).subscribe(() => {
+  //       this.loadDishes();
+  //     });
+  //     alert('Imagen actualizada exitosamente.');
+  //   }
+  // }
+
   editImage(dish: DishAdmin): void {
-    const newImage = prompt('Editar imagen (URL)', dish.image);
-    if (newImage !== null && newImage.trim() !== '') {
-      dish.image = newImage.trim();
-      this.dishesService.updateDish(dish).subscribe(() => {
-        this.loadDishes();
-      });
-      alert('Imagen actualizada exitosamente.');
-    }
+    Swal.fire({
+      title: 'Edit Image',
+      text: 'Current Image:',
+      imageUrl: dish.image,
+      imageWidth: 400,
+      imageHeight: 200,
+      showCancelButton: true,
+      confirmButtonText: 'Update Image',
+      cancelButtonText: 'Cancel',
+      input: 'text',
+      inputValue: dish.image,
+      inputPlaceholder: 'Enter new image URL',
+      showLoaderOnConfirm: true,
+      preConfirm: (newImageUrl) => {
+        return new Promise<void>((resolve, reject) => {
+          if (newImageUrl && newImageUrl.trim() !== '') {
+            dish.image = newImageUrl.trim();
+            this.dishesService.updateDish(dish).subscribe(() => {
+              resolve();
+            }, (error) => {
+              reject('An error occurred while updating the image.');
+            });
+          } else {
+            reject('Invalid image URL.');
+          }
+        });
+      }
+    }).then(() => {
+      this.loadDishes();
+      Swal.fire('Success!', 'Image updated successfully.', 'success');
+    }).catch((error) => {
+      Swal.fire('Error', error, 'error');
+    });
   }
+  
 
   
 
@@ -284,21 +352,56 @@ export class TableDishesComponent implements OnInit {
     }
   }
 
-  deleteAttribute(attribute: string,dishId: number) {
-    if (confirm('¿Estás seguro de que deseas eliminar este plato con ID: '+ dishId+"?")) {
-      let idAt:number=0;
-      idAt = this.checkAttribute(attribute);
-      if(idAt!=0){
-      this.dishesService.deleteRelationAttribute(idAt,dishId).subscribe(() => {
-        this.loadDishes();
-        this.totalPages = Math.ceil(this.totalEntities / this.selectedPageSize);
-      });}
-      else{
-        alert("Atributo mal selccionado")
+  // deleteAttribute(attribute: string,dishId: number) {
+
+  //   if (confirm('¿Estás seguro de que deseas eliminar este plato con ID: '+ dishId+"?")) {
+  //     let idAt:number=0;
+  //     idAt = this.checkAttribute(attribute);
+  //     if(idAt!=0){
+  //     this.dishesService.deleteRelationAttribute(idAt,dishId).subscribe(() => {
+  //       this.loadDishes();
+  //       this.totalPages = Math.ceil(this.totalEntities / this.selectedPageSize);
+  //     });}
+  //     else{
+  //       alert("Atributo mal selccionado")
+  //     }
+  //   }
+  //   this.loadDishes();    
+  // }
+
+
+  deleteAttribute(attribute: string, dishId: number): void {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'You won\'t be able to revert this!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it',
+      cancelButtonText: 'Cancel'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        let idAt: number = 0;
+        idAt = this.checkAttribute(attribute);
+        if (idAt !== 0) {
+          this.dishesService.deleteRelationAttribute(idAt, dishId).subscribe(() => {
+            Swal.fire(
+              'Deleted!',
+              'The attribute ' + attribute + ' has been deleted.',
+              'success'
+            ).then(() => {
+              this.loadDishes();
+              this.totalPages = Math.ceil(this.totalEntities / this.selectedPageSize);
+            });
+          });
+        } else {
+          Swal.fire('Error', 'Incorrectly selected attribute', 'error');
+        }
       }
-    }
-    this.loadDishes();    
+    });
   }
+  
 
   checkAttribute(attribute: string): number {
     switch (attribute) {

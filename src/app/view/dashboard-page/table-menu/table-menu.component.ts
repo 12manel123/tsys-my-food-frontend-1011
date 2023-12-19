@@ -18,6 +18,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatOptionModule } from '@angular/material/core';
 import { JsonPipe } from '@angular/common';
 import { MatDialogModule } from '@angular/material/dialog';
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -144,16 +145,45 @@ export class TableMenuComponent {
     this.addingMenu = true;
   }
 
-  deleteMenu(menuId: number) {
-    if (confirm('¿Estás seguro de que deseas eliminar este menú con ID: '+ menuId+"?")) {
-      this.menusService.deleteMenu(menuId).subscribe(() => {
-        this.loadMenusApi();
-        this.totalPages = Math.ceil(this.totalEntities / this.selectedPageSize);
-      });
-    }
-    this.loadMenusApi();
-    this.menusService.deleteMenu(menuId);
+
+  deleteMenu(menuId: number): void {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'You won\'t be able to revert this!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it',
+      cancelButtonText: 'Cancel'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.menusService.deleteMenu(menuId).subscribe(() => {
+          Swal.fire(
+            'Deleted!',
+            'The menu with ID ' + menuId + ' has been deleted.',
+            'success'
+          ).then(() => {
+            this.loadMenusApi();
+            this.totalPages = Math.ceil(this.totalEntities / this.selectedPageSize);
+          });
+        }, (error) => {
+          Swal.fire('Error', 'An error occurred while deleting the menu.', 'error');
+        });
+      }
+    });
   }
+
+  // deleteMenu(menuId: number) {
+  //   if (confirm('¿Estás seguro de que deseas eliminar este menú con ID: '+ menuId+"?")) {
+  //     this.menusService.deleteMenu(menuId).subscribe(() => {
+  //       this.loadMenusApi();
+  //       this.totalPages = Math.ceil(this.totalEntities / this.selectedPageSize);
+  //     });
+  //   }
+  //   this.loadMenusApi();
+  //   this.menusService.deleteMenu(menuId);
+  // }
 
   addMenu() {
     console.log(this.newMenuApi)

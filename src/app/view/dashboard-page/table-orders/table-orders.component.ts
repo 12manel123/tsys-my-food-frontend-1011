@@ -15,6 +15,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { CurrencyPipe, UpperCasePipe } from '@angular/common';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-table-orders',
@@ -66,14 +67,43 @@ export class TableOrdersComponent implements OnInit {
     this.loadOrders();
   }
 
+  // removeOrder(orderId: number): void {
+  //   if (confirm('¿Estás seguro de que deseas eliminar este usuario con ID: '+ orderId+"?")) {
+  //     this.ordersDbService.removeOrder(orderId).subscribe(() => {
+  //       this.loadOrders();
+  //       this.totalPages = Math.ceil(this.totalEntities / this.selectedPageSize);
+  //     });
+  //   }
+  //   this.loadOrders();
+  // }
+
   removeOrder(orderId: number): void {
-    if (confirm('¿Estás seguro de que deseas eliminar este usuario con ID: '+ orderId+"?")) {
-      this.ordersDbService.removeOrder(orderId).subscribe(() => {
-        this.loadOrders();
-        this.totalPages = Math.ceil(this.totalEntities / this.selectedPageSize);
-      });
-    }
-    this.loadOrders();
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'You won\'t be able to revert this!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it',
+      cancelButtonText: 'Cancel'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.ordersDbService.removeOrder(orderId).subscribe(() => {
+          Swal.fire(
+            'Deleted!',
+            'The user with ID ' + orderId + ' has been deleted.',
+            'success'
+          ).then(() => {
+            this.loadOrders();
+            this.totalPages = Math.ceil(this.totalEntities / this.selectedPageSize);
+          });
+        }, (error) => {
+          Swal.fire('Error', 'An error occurred while deleting the user.', 'error');
+        });
+      }
+    });
   }
+  
 
 }
