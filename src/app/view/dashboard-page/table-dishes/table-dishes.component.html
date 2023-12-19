@@ -37,7 +37,7 @@
           
         <ng-container matColumnDef="price">
             <mat-header-cell *matHeaderCellDef>Price</mat-header-cell>
-            <mat-cell *matCellDef="let dish" (click)="editPrice(dish)">{{ dish.price }}</mat-cell>
+            <mat-cell *matCellDef="let dish" (click)="editPrice(dish)">{{ dish.price | currency:'EUR' }}</mat-cell>
           </ng-container>
           
           <ng-container matColumnDef="category">

@@ -13,14 +13,21 @@ mat-paginator{
     max-width: 80px;
 }
 
+
 .order-dasboard {
     display: flex;
     flex-direction: column;
     align-items: center;
-    text-align: center;
+    text-align: right;
     margin-bottom: 20px;
 
 }
+
+.order-dasboard .header-container {
+    display: flex;
+    justify-content: space-between;
+}
+
 
 .order-dasboard h2 {
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
