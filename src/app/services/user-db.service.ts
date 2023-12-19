@@ -1,8 +1,9 @@
 import { Injectable, inject } from '@angular/core';
-import { BehaviorSubject, Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable, catchError, of } from 'rxjs';
 import { environment } from '../../environments/environment';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { UserDTO } from '../models/user';
+import Swal from 'sweetalert2';
 
 export interface UserforAdmin {
   id: number;
@@ -15,14 +16,18 @@ export interface UserforAdmin {
 })
 export class UserDbService {
   
+   
+
   private url = environment.apiUrl + '/api/v1/users';
   private url2 = environment.apiUrl + '/api/v1/user';
-  private http = inject(HttpClient)
+  // private http = inject(HttpClient)
 
   private usersApi: UserforAdmin[] = []
 
   private userSubject = new BehaviorSubject<UserforAdmin[]>(this.usersApi);
   
+  constructor(private http: HttpClient) { }
+
   getUsers(num1:number,num2:number): Observable<UserforAdmin[]> {
     return this.http.get<any[]>(this.url+"?page="+num1+"&size="+num2);
   }
@@ -32,31 +37,90 @@ export class UserDbService {
 
   }
 
-  updateUser(userId: number,user: UserDTO): Observable<any> {
-    let roleId:number=1;
-    const newRole = prompt('Ingrese el nuevo rol (user, admin, chef):');
-      if (newRole && ['USER', 'ADMIN', 'CHEF'].includes(newRole.toLocaleUpperCase())) {
-        if(newRole.toLocaleUpperCase() == 'USER') {
-          roleId =3;
+  // updateUser(userId: number,user: UserDTO): Observable<any> {
+  //   let roleId:number=1;
+  //   const newRole = prompt('Ingrese el nuevo rol (user, admin, chef):');
+  //     if (newRole && ['USER', 'ADMIN', 'CHEF'].includes(newRole.toLocaleUpperCase())) {
+  //       if(newRole.toLocaleUpperCase() == 'USER') {
+  //         roleId =3;
+  //       }
+  //       else if(newRole.toLocaleUpperCase() == 'CHEF'){
+  //         roleId=2;
+  //       }
+  //       else if(newRole.toLocaleUpperCase() == 'ADMIN'){
+  //         roleId=1;
+  //       }
+  //       user.role.name=newRole.toLocaleUpperCase();
+  //       user.role.id=roleId;
+  //       return this.http.put(this.url2+"/"+userId,user, { headers: { 'Content-Type': 'application/json' } });
+  //     } else {
+  //       alert('Rol inválido. Se requiere "user", "admin" o "chef".');
+  //       return of();
+  //     }
+  // }
+
+  updateUser(userId: number, user: UserDTO): Observable<any> {
+    return new Observable((observer) => {
+      const inputOptions = {
+        "admin": "Admin",
+        "chef": "Chef",
+        "user": "User"
+      };
+  
+      Swal.fire({
+        title: "Select role",
+        input: "select",
+        inputOptions,
+        inputPlaceholder: "Select a role",
+        showCancelButton: true,
+        inputValidator: (value) => {
+          return new Promise((resolve) => {
+            if (value && ['admin', 'chef', 'user'].includes(value)) {
+              resolve();
+            } else {
+              resolve("Invalid role. Please select a valid role.");
+            }
+          });
         }
-        else if(newRole.toLocaleUpperCase() == 'CHEF'){
-          roleId=2;
+      }).then((result) => {
+        if (result.isConfirmed) {
+          const selectedRole = result.value;
+          let roleId: number;
+  
+          switch (selectedRole) {
+            case 'user':
+              roleId = 3;
+              break;
+            case 'chef':
+              roleId = 2;
+              break;
+            case 'admin':
+              roleId = 1;
+              break;
+            default:
+              roleId = 1;
+          }
+  
+          user.role.name = selectedRole.toUpperCase();
+          user.role.id = roleId;
+  
+          this.http.put(this.url2 + "/" + userId, user, { headers: { 'Content-Type': 'application/json' } })
+            .subscribe(
+              () => {
+                observer.next();
+                observer.complete();
+              },
+              (error) => observer.error(error)
+            );
+        } else {
+          observer.complete();
         }
-        else if(newRole.toLocaleUpperCase() == 'ADMIN'){
-          roleId=1;
-        }
-        user.role.name=newRole.toLocaleUpperCase();
-        user.role.id=roleId;
-        return this.http.put(this.url2+"/"+userId,user, { headers: { 'Content-Type': 'application/json' } });
-      } else {
-        alert('Rol inválido. Se requiere "user", "admin" o "chef".');
-        return of();
-      }
+      });
+    });
   }
 
   getTotalUsersCount(): number {
     return this.usersApi.length;
   }
 
-  constructor() { }
 }
