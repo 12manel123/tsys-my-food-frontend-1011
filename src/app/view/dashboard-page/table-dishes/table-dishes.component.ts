@@ -10,7 +10,7 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { CommonModule } from '@angular/common';
-import { Subject, takeUntil } from 'rxjs';
+import { Observable, Subject, takeUntil } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { DishModalComponent } from './dish-modal/dish-modal.component'; 
 import Swal from 'sweetalert2';
@@ -187,29 +187,101 @@ export class TableDishesComponent implements OnInit {
   //   }
   // }
   
-  editName(dish: DishAdmin): void {
-    const newName = prompt('Editar nombre', dish.name);
-    if (newName !== null && newName.trim() !== '') {
-      dish.name = newName.trim();
+  // editName(dish: DishAdmin): void {
+  //   const newName = prompt('Editar nombre', dish.name);
+  //   if (newName !== null && newName.trim() !== '') {
+  //     dish.name = newName.trim();
       
-      this.dishesService.updateDish(dish).subscribe(() => {
-        this.loadDishes();
-      });
-      alert('Nombre actualizado exitosamente.');
-    }
+  //     this.dishesService.updateDish(dish).subscribe(() => {
+  //       this.loadDishes();
+  //     });
+  //     alert('Nombre actualizado exitosamente.');
+  //   }
+  // }
+
+  editName(dish: DishAdmin): void {
+    Swal.fire({
+      title: "Edit name",
+      input: "text",
+      inputValue: dish.name,
+      showCancelButton: true,
+      inputValidator: (value) => {
+        if (!value || value.trim() === '') {
+          return "You need to enter a valid name!";
+        } else {
+          return null;
+        }
+      },
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const newName = result.value.trim();
+        dish.name = newName;
+  
+        this.dishesService.updateDish(dish).subscribe(
+          () => {
+            this.loadDishes();
+  
+            Swal.fire({
+              position: 'center',
+              icon: 'success',
+              title: 'Your change has been saved',
+              showConfirmButton: false,
+              timer: 1000
+            });
+          },
+          (error) => console.error(error)
+        );
+      } else {
+        console.log('Operation canceled by the user.');
+      }
+    });
   }
+
+  // editDescription(dish: DishAdmin): void {
+  //   const newDescription = prompt('Editar descripción', dish.description);
+  //   if (newDescription !== null && newDescription.trim() !== '') {
+  //     dish.description = newDescription.trim();
+  //     this.dishesService.updateDish(dish).subscribe(() => {
+  //       this.loadDishes();
+  //     });
+  //     alert('Descripción actualizada exitosamente.');
+  //   }
+  // }
 
   editDescription(dish: DishAdmin): void {
-    const newDescription = prompt('Editar descripción', dish.description);
-    if (newDescription !== null && newDescription.trim() !== '') {
-      dish.description = newDescription.trim();
-      this.dishesService.updateDish(dish).subscribe(() => {
-        this.loadDishes();
-      });
-      alert('Descripción actualizada exitosamente.');
-    }
+    Swal.fire({
+      title: "Edit description",
+      input: "text",
+      inputValue: dish.description,
+      showCancelButton: true,
+      inputValidator: (value) => {
+        if (!value || value.trim() === '') {
+          return "You need to enter a valid description!";
+        } else {
+          return null;
+        }
+      },
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const newDescription = result.value.trim();
+        dish.description = newDescription;
+  
+        this.dishesService.updateDish(dish).subscribe(() => {
+          this.loadDishes();
+  
+          Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Your change has been saved',
+            showConfirmButton: false,
+            timer: 1000
+          });
+        });
+      } else {
+        console.log('Operation canceled by the user.');
+      }
+    });
   }
-
   // editImage(dish: DishAdmin): void {
   //   const newImage = prompt('Editar imagen (URL)', dish.image);
   //   if (newImage !== null && newImage.trim() !== '') {
@@ -239,19 +311,33 @@ export class TableDishesComponent implements OnInit {
         return new Promise<void>((resolve, reject) => {
           if (newImageUrl && newImageUrl.trim() !== '') {
             dish.image = newImageUrl.trim();
-            this.dishesService.updateDish(dish).subscribe(() => {
-              resolve();
-            }, (error) => {
-              reject('An error occurred while updating the image.');
-            });
+            this.dishesService.updateDish(dish).subscribe(
+              () => {
+                resolve();
+              },
+              (error) => {
+                reject('An error occurred while updating the image.');
+              }
+            );
           } else {
             reject('Invalid image URL.');
           }
         });
       }
-    }).then(() => {
-      this.loadDishes();
-      Swal.fire('Success!', 'Image updated successfully.', 'success');
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.loadDishes();
+  
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: 'Your change has been saved',
+          showConfirmButton: false,
+          timer: 1000
+        });
+      } else if (result.isDismissed && result.dismiss === Swal.DismissReason.cancel) {
+        console.log('Operation canceled by the user.');
+      }
     }).catch((error) => {
       Swal.fire('Error', error, 'error');
     });
@@ -260,44 +346,121 @@ export class TableDishesComponent implements OnInit {
 
   
 
-  editPrice(dish: DishAdmin): void {
-    const newPrice = prompt('Editar precio', dish.price.toString());
+  // editPrice(dish: DishAdmin): void {
+  //   const newPrice = prompt('Editar precio', dish.price.toString());
   
-    if (newPrice !== null) {
-      const parsedPrice = parseFloat(newPrice);
-      if (!isNaN(parsedPrice) && parsedPrice > 0) {
-        dish.price = parsedPrice;
+  //   if (newPrice !== null) {
+  //     const parsedPrice = parseFloat(newPrice);
+  //     if (!isNaN(parsedPrice) && parsedPrice > 0) {
+  //       dish.price = parsedPrice;
+  //       this.dishesService.updateDish(dish).subscribe(() => {
+  //         this.loadDishes();
+  //       });
+  //       alert('Precio actualizado exitosamente.');
+  //     }
+  //   }
+  // }
+
+  editPrice(dish: DishAdmin): void {
+    Swal.fire({
+      title: "Edit price",
+      input: "text",
+      inputValue: dish.price.toString(),
+      showCancelButton: true,
+      inputValidator: (value) => {
+        const parsedPrice = parseFloat(value);
+        if (isNaN(parsedPrice) || parsedPrice <= 0) {
+          return "You need to enter a valid positive price!";
+        }
+        return null;
+      },
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const newPrice = parseFloat(result.value.trim());
+        dish.price = newPrice;
+  
         this.dishesService.updateDish(dish).subscribe(() => {
           this.loadDishes();
+          
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Your change has been saved",
+            showConfirmButton: false,
+            timer: 1000
+          });
         });
-        alert('Precio actualizado exitosamente.');
+      } else {
+        console.log('Operation canceled by the user.');
       }
-    }
+    });
   }
   
 
+  // editCategory(dish: DishAdmin): void {
+  //   const allowedCategories = ['APPETIZER', 'FIRST', 'SECOND', 'DESSERT'];
+    
+  //   const newCategory = prompt('Editar categoría (appetizer, first, second, dessert)', dish.category);
+    
+  //   if (newCategory !== null && allowedCategories.includes(newCategory.toUpperCase())) {
+  //     dish.category = newCategory.toUpperCase();
+  //     this.dishesService.updateDish(dish).subscribe(() => {
+  //       this.loadDishes();
+  //     });
+  //     alert('Categoría actualizada exitosamente.');
+  //   } else {
+  //     alert('Por favor, ingrese una categoría válida.');
+  //   }
+  // }
+
   editCategory(dish: DishAdmin): void {
     const allowedCategories = ['APPETIZER', 'FIRST', 'SECOND', 'DESSERT'];
-    
-    const newCategory = prompt('Editar categoría (appetizer, first, second, dessert)', dish.category);
-    
-    if (newCategory !== null && allowedCategories.includes(newCategory.toUpperCase())) {
-      dish.category = newCategory.toUpperCase();
-      this.dishesService.updateDish(dish).subscribe(() => {
-        this.loadDishes();
-      });
-      alert('Categoría actualizada exitosamente.');
-    } else {
-      alert('Por favor, ingrese una categoría válida.');
-    }
+  
+    Swal.fire({
+      title: "Edit category",
+      input: "select",
+      inputOptions: {
+        'APPETIZER': 'APPETIZER',
+        'FIRST': 'FIRST',
+        'SECOND': 'SECOND',
+        'DESSERT': 'DESSERT'
+      },
+      inputValue: dish.category.toUpperCase(),
+      showCancelButton: true,
+      inputValidator: (value) => {
+        if (!value || !allowedCategories.includes(value.toUpperCase())) {
+          return "Please select a valid category!";
+        }
+        return null;
+      },
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const newCategory = result.value.toUpperCase();
+        dish.category = newCategory;
+  
+        this.dishesService.updateDish(dish).subscribe(() => {
+          this.loadDishes();
+  
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Your change has been saved",
+            showConfirmButton: false,
+            timer: 1000
+          });
+        });
+      } else {
+        console.log('Operation canceled by the user.');
+      }
+    });
   }
   
   toggleVisibility(dish: DishAdmin): void {
     this.dishesService.changeDishVisibility(dish.id).subscribe(
       () => {
         this.loadDishes();
-      },
-      (error) => console.error('Error changing visibility:', error)
+      }
+    
     )
     
   }
@@ -337,19 +500,68 @@ export class TableDishesComponent implements OnInit {
 
 
 
-  addAttribute(dishId: number) {
-    const attributesInput = prompt(
-      'Añade un nuevo Atributo: celiac, nuts, vegan, vegetarian, lactose');
-      console.log(attributesInput);
-      if(attributesInput != null){
-      const idAt = this.checkAttribute(attributesInput.toUpperCase());
-      if(idAt!=0){
-        this.dishesService.addRelationAttribute(idAt,dishId).subscribe(() => {
-          this.loadDishes();
-          this.totalPages = Math.ceil(this.totalEntities / this.selectedPageSize);
-        }); 
+  // addAttribute(dishId: number) {
+  //   const attributesInput = prompt(
+  //     'Añade un nuevo Atributo: celiac, nuts, vegan, vegetarian, lactose');
+  //     console.log(attributesInput);
+  //     if(attributesInput != null){
+  //     const idAt = this.checkAttribute(attributesInput.toUpperCase());
+  //     if(idAt!=0){
+  //       this.dishesService.addRelationAttribute(idAt,dishId).subscribe(() => {
+  //         this.loadDishes();
+  //         this.totalPages = Math.ceil(this.totalEntities / this.selectedPageSize);
+  //       }); 
+  //     }
+  //   }
+  // }
+
+  addAttribute(dishId: number): void {
+    const allowedAttributes = ['CELIAC', 'NUTS', 'VEGAN', 'VEGETARIAN', 'LACTOSE'];
+  
+    Swal.fire({
+      title: 'Add Attribute',
+      input: 'select',
+      inputOptions: {
+        'CELIAC': 'CELIAC',
+        'NUTS': 'NUTS',
+        'VEGAN': 'VEGAN',
+        'VEGETARIAN': 'VEGETARIAN',
+        'LACTOSE': 'LACTOSE'
+      },
+      showCancelButton: true,
+      inputValidator: (value) => {
+        if (!value || !allowedAttributes.includes(value.toUpperCase())) {
+          return 'Please select a valid attribute!';
+        }
+        return null;
+      },
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const newAttribute = result.value.toUpperCase();
+        const idAt = this.checkAttribute(newAttribute);
+        
+        if (idAt !== 0) {
+          this.dishesService.addRelationAttribute(idAt, dishId).subscribe(
+            () => {
+              this.loadDishes();
+  
+              Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: 'Your change has been saved',
+                showConfirmButton: false,
+                timer: 1000
+              });
+  
+              this.totalPages = Math.ceil(this.totalEntities / this.selectedPageSize);
+            }
+            
+          );
+        }
+      } else {
+        console.log('Operation canceled by the user.');
       }
-    }
+    });
   }
 
   // deleteAttribute(attribute: string,dishId: number) {
