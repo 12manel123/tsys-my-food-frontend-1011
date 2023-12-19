@@ -24,19 +24,22 @@ import { CurrencyPipe, UpperCasePipe } from '@angular/common';
     MatButtonModule,
     MatToolbarModule,
     MatMenuModule,
-    MatTableModule,
+    MatTableModule,JsonPipe,
     MatPaginatorModule,MatFormFieldModule],
   templateUrl: './table-orders.component.html',
   styleUrl: './table-orders.component.css'
 })
 export class TableOrdersComponent implements OnInit {
   orders: Order[] = [];
+  ordersDate: Order[] = [];
   currentPage: number = 1;
   itemsPerPage: number = 2;
   totalPages: number = 0;
   availableDishes: DishAdmin[] = [];
   selectedOrderId: number | null = null;
   displayedColumns: string[] = ['id', 'maked', 'slot', 'price', 'datetime', 'dishes', 'actions'];
+  displayedColumnsDate: string[] = ['id', 'maked', 'slot', 'price', 'datetime', 'actions'];
+
   dataSource: MatTableDataSource<Order> = new MatTableDataSource<Order>([]);
   totalEntities: number = 0;
   public selectedPageSize: number = 10;
@@ -56,10 +59,42 @@ export class TableOrdersComponent implements OnInit {
       this.totalEntities=totalElements;
       this.selectedPageSize=size
       this.orders = content;
-      console.log(content)
     });
   }
+
+  loadOrdersDate(): void {
+    const startIndex = this.currentPage - 1;
+    const endIndex = this.selectedPageSize;
+    
+    let year = prompt('Ingrese el año (presione Enter para no filtrar): ');
+    let month = prompt('Ingrese el mes (presione Enter para no filtrar): ');
+    let day = prompt('Ingrese el día (presione Enter para no filtrar): ');
   
+    let numericYear = year !== null ? parseInt(year, 10) : 0;
+    let numericMonth = month !== null ? parseInt(month, 10) : 0;
+    let numericDay = day !== null ? parseInt(day, 10) : 0;
+
+    if (isNaN(numericYear)) {
+      numericYear = 0;
+    }
+    if (isNaN(numericMonth)) {
+      numericMonth = 0;
+    }
+    if (isNaN(numericDay)) {
+      numericDay = 0;
+    }
+
+    this.ordersDbService.getOrdersDateApi(startIndex, endIndex, numericYear, numericMonth, numericDay)
+      .subscribe((orders: any) => {
+        const { totalElements, totalPages, content, size } = orders;
+        this.totalPages = totalPages;
+        this.totalEntities = totalElements;
+        this.selectedPageSize = size;
+        this.orders = content;
+        this.ordersDate = content;
+      });
+  }
+    
   onChange(event: any): void {
     this.selectedPageSize = event.pageSize;
     this.currentPage = event.pageIndex + 1;
