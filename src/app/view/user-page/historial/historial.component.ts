@@ -24,11 +24,6 @@ throw new Error('Method not implemented.');
       (data : any) => {
         const {content} = data;
         this.historial = content;
-
-        console.log(this.historial[0]);
-      },
-      (error) => {
-        console.log(error);
       }
     );
   }

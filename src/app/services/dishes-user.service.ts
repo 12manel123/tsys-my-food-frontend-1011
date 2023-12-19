@@ -19,7 +19,7 @@ export class DishesUserService {
   private servToker = inject(TokenStorageService)
 
   // Routes to the API endpoints
-  private urlDishes = environment.apiUrl + '/api/v1/dishes/visible';
+  private urlDishes = environment.apiUrl + '/api/v1/dishes/visible?size=1000';
   private urlMenus = environment.apiUrl + '/api/v1/allVisibleMenus';
   private urlCatagory = environment.apiUrl + '/api/v1/dishes/visibleByCategory/';
   private urlAttribute = environment.apiUrl + '/api/v1/atribut/visible/';
@@ -66,7 +66,7 @@ export class DishesUserService {
   * @return An Observable containing the list of dishes retrieved from the API.
   */
   getDishesByCategoryFromApi(category: string) {
-    return this.http.get<Dish[]>(this.urlCatagory + category).pipe(
+    return this.http.get<Dish[]>(this.urlCatagory + category +'?size=1000').pipe(
       catchError((error: any) => {
         Swal.fire({
           title: '<strong>Opps!</strong>',
