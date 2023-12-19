@@ -1,15 +1,20 @@
 <div class="order-dasboard">
-    <h2 class="mt-3">Orders List</h2>
-    <mat-paginator
-        [pageSize]="selectedPageSize"
-        [pageIndex]="currentPage - 1"
-        [length]="totalEntities"
-        [pageSizeOptions]="[1, 5, 10]"
-        aria-label="Select page"
-        (page)="onChange($event)">
-        </mat-paginator>
+    <div class="header-container">
+        <h2 class="mt-3">Orders List</h2>
+    </div>
 
-        @if (ordersDate.length==0) {
+    @if (ordersDate.length == 0) {
+        <div>
+            <button mat-raised-button color="primary" (click)="openDatePicker()" class="mat-small">Historial</button>
+        </div>
+            <mat-paginator
+            [pageSize]="selectedPageSize"
+            [pageIndex]="currentPage - 1"
+            [length]="totalEntities"
+            [pageSizeOptions]="[1, 5, 10]"
+            aria-label="Select page"
+            (page)="onChange($event)">
+            </mat-paginator>
             <mat-table [dataSource]="orders" class="mat-elevation-z8">
                 <ng-container matColumnDef="id">
                     <mat-header-cell *matHeaderCellDef class="mat-column-id">ID</mat-header-cell>
@@ -32,7 +37,7 @@
                 </ng-container>
 
                 <ng-container matColumnDef="datetime">
-                    <mat-header-cell *matHeaderCellDef class="mat-column-date" (click)="loadOrdersDate()">Date and Time</mat-header-cell>
+                    <mat-header-cell *matHeaderCellDef class="mat-column-date " (click)="openDatePicker()">Date and Time</mat-header-cell>
                     <mat-cell *matCellDef="let order" class="mat-column-date">{{ order.actualDate | date }}</mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="dishes">
@@ -61,6 +66,19 @@
                 }
 
         @else {
+            <div>
+                <button mat-raised-button color="primary" (click)="returnToPreviousView()" class="mat-small">Back</button>
+                <span style="margin: 0 50px;"></span>
+                <button mat-raised-button color="primary" (click)="openDatePicker()" class="mat-small">Historial</button>
+            </div>
+            <mat-paginator
+                [pageSize]="selectedPageSize"
+                [pageIndex]="currentPage - 1"
+                [length]="totalEntities"
+                [pageSizeOptions]="[1, 5, 10]"
+                aria-label="Select page"
+                (page)="onChange($event)">
+            </mat-paginator>
             <mat-table [dataSource]="ordersDate" class="mat-elevation-z8">
                 <ng-container matColumnDef="id">
                     <mat-header-cell *matHeaderCellDef class="mat-column-id">ID</mat-header-cell>
@@ -83,7 +101,7 @@
                 </ng-container>
 
                 <ng-container matColumnDef="datetime">
-                    <mat-header-cell *matHeaderCellDef class="mat-column-date" (click)="loadOrdersDate()">Date and Time</mat-header-cell>
+                    <mat-header-cell *matHeaderCellDef class="mat-column-date" (click)="openDatePicker()">Date and Time</mat-header-cell>
                     <mat-cell *matCellDef="let order" class="mat-column-date">{{ order.actualDate | date }}</mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="dishes">
@@ -105,9 +123,5 @@
                 <mat-header-row *matHeaderRowDef="displayedColumnsDate"></mat-header-row>
                 <mat-row *matRowDef="let row; columns: displayedColumnsDate"></mat-row>
             </mat-table>
-
-  }
-    
-    
-    
+}
 </div>
