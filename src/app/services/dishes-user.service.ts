@@ -40,23 +40,7 @@ export class DishesUserService {
   * @return An Observable containing the list of menus retrieved from the API.
   */
   getMenusFromApi() {
-    return this.http.get<Menu[]>(this.urlMenus, { headers: { 'Content-Type': 'application/json' } }).pipe(
-      catchError((error) => {
-        Swal.fire({
-          title: '<strong>Opps!</strong>',
-          icon: 'info',
-          html:'We have problems showing the data try later',
-          showCloseButton: true,
-
-          focusConfirm: false,
-          confirmButtonText:
-          'Try after a few minutes! <i class="fa fa-thumbs-up"></i>',
-        })
-        this.servToker.singOut();
-        this.routes.navigate(['/']);
-        return error;
-      })
-    );
+    return this.http.get<Menu[]>(this.urlMenus, { headers: { 'Content-Type': 'application/json' } })
   }
 
   /**
