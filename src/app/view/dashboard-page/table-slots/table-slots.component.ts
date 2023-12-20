@@ -8,6 +8,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import {MatMenuModule} from '@angular/material/menu';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { NgClass } from '@angular/common';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -19,7 +20,8 @@ import Swal from 'sweetalert2';
     MatToolbarModule,
     MatMenuModule,
     MatTableModule,
-    MatPaginatorModule],
+    MatPaginatorModule,
+    NgClass],
   templateUrl: './table-slots.component.html',
   styleUrl: './table-slots.component.css'
 })
@@ -55,4 +57,9 @@ export class TableSlotsComponent {
       });
     });
   }
+
+  isEven(row: any): boolean {
+    return this.slots.indexOf(row) % 2 === 0;
+  }
+
 }

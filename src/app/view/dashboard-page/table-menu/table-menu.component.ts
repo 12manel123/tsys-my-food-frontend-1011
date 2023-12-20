@@ -17,11 +17,12 @@ import { MatOptionModule } from '@angular/material/core';
 import { JsonPipe } from '@angular/common';
 import { MatDialogModule } from '@angular/material/dialog';
 import Swal from 'sweetalert2';
+import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-table-menu',
   standalone: true,
-  imports: [FormsModule,AsyncPipe,SlicePipe,MatCardModule,
+  imports: [FormsModule,AsyncPipe,SlicePipe,MatCardModule,NgClass,
     MatIconModule,JsonPipe,
     MatButtonModule,
     MatToolbarModule,
@@ -245,6 +246,9 @@ export class TableMenuComponent {
       });
       alert('Nombre actualizado exitosamente.');
     }
+  }
+  isEven(row: any): boolean {
+    return this.menusApi.indexOf(row) % 2 === 0;
   }
 
 }

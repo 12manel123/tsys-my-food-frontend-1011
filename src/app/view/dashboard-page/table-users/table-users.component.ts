@@ -12,6 +12,7 @@ import { UserDTO } from '../../../models/user';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import Swal from 'sweetalert2';
+import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-table-users',
@@ -22,7 +23,7 @@ import Swal from 'sweetalert2';
     MatToolbarModule,
     MatMenuModule,
     MatTableModule,
-    MatPaginatorModule,
+    MatPaginatorModule,NgClass,
     JsonPipe,
     MatTooltipModule,
   ],
@@ -136,4 +137,9 @@ export class TableUsersComponent {
       panelClass: ['copied-snackbar'],
     });
   }
+  
+  isEven(row: any): boolean {
+    return this.users.indexOf(row) % 2 === 0;
+  }
+
 }

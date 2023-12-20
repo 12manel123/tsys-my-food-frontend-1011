@@ -17,12 +17,11 @@
 </div>
     <div class="card-container">
     @for (order of orders; track $index) {
-    <div class="card">
+    <div class="card" [class.past-time]="isPastTime(order.slot?.time)" (click)="deleteOrder(order.orderId)">
         
 
         <div class="card-header"  [class.past-time]="isPastTime(order.slot?.time)">
                 <span class="header-item"><i class="fas fa-utensils" style="margin-right: 10px;"></i>ID: {{ order.orderId }}</span>
-                @if (isPastTime(order.slot?.time)) {      <i class="fas fa-exclamation-triangle" style="color: yellow;"></i>}
                 <span class="header-item"> <i class="fas fa-clock"></i> {{ order.slot?.time }}</span>
     
         </div>
@@ -32,7 +31,6 @@
                     <li class="dish">{{ dish.name }}</li>}
             </ul>
         </div>
-        <div class="delete-button" (click)="deleteOrder(order.orderId)"(click)="alertDelete(order.orderId)"><i class="fas fa-check"></i></div>
     </div>}
     <div class="else">
     

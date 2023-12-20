@@ -1,3 +1,19 @@
+mat-paginator{
+    background: linear-gradient(to right, #ffffff, #ff0084);
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+
+.even-row {
+    background-color: #f5f5f5;
+}
+
+.odd-row {
+    background-color: #ffffff;
+}
+mat-header-row{
+    background-color: #e7e7e7 ;
+}
 
 .mdc-data-table__table{
     min-width: 70%;
