@@ -2,16 +2,15 @@
 <div class="container mt-5">
 
   <div class="card mt-5 shadow p-3">
-
+     <h1 class="text-center">Press Ctrl + to display data</h1>
+     <span></span>
       <div class="chart-container">
-        @defer (){
-      <canvas  id="Chart" >{{ chart }}</canvas>
-        }@placeholder {
-          <div class="spinner-border text-primary" role="status">
-            <span class="sr-only">Loading...</span>
+          <canvas id="Chart" width="400" height="400">{{ chart }}</canvas>
 
-          </div>
-        }
+      <!-- <canvas  id="Chart" >{{ chart }}</canvas> -->
+
+          <!-- <div class="spinner-border text-primary" role="status"> -->
+
 
       </div>
   </div>
