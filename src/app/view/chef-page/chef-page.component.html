@@ -1,10 +1,27 @@
 <div class="chef">
+    
+<div class="header">
+    <div class="pagination">
+        <button mat-raised-button (click)="previousPage()">Previous</button>
+        <button mat-raised-button (click)="nextPage()">Next</button>
+        <span>{{ currentPage }} / {{ totalPages }}</span>
+    </div>
+    <div class="current-time">
+        <p>{{ currentTime }}</p>
+    </div>
+    <div class="actions">
+        <button mat-raised-button (click)="closePage()">
+        <i class="fa fa-times"></i> Logout
+        </button>
+    </div>
+</div>
     <div class="card-container">
     @for (order of orders; track $index) {
     <div class="card">
         
         <div class="card-header"  [class.past-time]="isPastTime(order.slot?.time)">
                 <span class="header-item"><i class="fas fa-utensils" style="margin-right: 10px;"></i>ID: {{ order.orderId }}</span>
+                @if (isPastTime(order.slot?.time)) {      <i class="fas fa-exclamation-triangle" style="color: yellow;"></i>}
                 <span class="header-item"> <i class="fas fa-clock"></i> {{ order.slot?.time }}</span>
         </div>
         <div class="card-content">
@@ -20,22 +37,4 @@
     </div>
 </div>
 
-<footer>
-    <div class="pagination">
-        <button mat-raised-button (click)="previousPage()">Previous</button>
-        <button mat-raised-button (click)="nextPage()">Next</button>
-        <span>{{ currentPage }} / {{ totalPages }}</span>
-    </div>
-    <div class="current-time">
-        <p>{{ currentTime }}</p>
-    </div>
-    <div class="actions">
-        <button mat-raised-button (click)="reloadPage()">
-        <i class="fa fa-refresh"></i> Reload
-        </button>
-        <button mat-raised-button (click)="closePage()">
-        <i class="fa fa-times"></i> Logout
-        </button>
-    </div>
-</footer>
 </div>
