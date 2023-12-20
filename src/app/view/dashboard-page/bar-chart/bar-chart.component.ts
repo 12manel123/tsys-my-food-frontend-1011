@@ -1,4 +1,4 @@
-import { Component, OnDestroy, inject } from '@angular/core';
+import { Component, ElementRef, OnDestroy, inject } from '@angular/core';
 import Chart from 'chart.js/auto';
 import { SlotsDbService } from '../../../services/slots-db.service';
 import { Slot } from '../../../models/slots';
@@ -7,7 +7,7 @@ import { Slot } from '../../../models/slots';
 @Component({
   selector: 'app-bar-chart',
   standalone: true,
-  imports: [],
+  imports: [ ],
   templateUrl: './bar-chart.component.html',
   styleUrl: './bar-chart.component.css'
 })
@@ -22,6 +22,10 @@ export class BarChartComponent implements OnDestroy{
   timeArray: string[] = [];
   limitSlotArray: number[] = [];
   actualArray: number[] = [];
+
+  constructor(private elementRef: ElementRef) {
+  }
+
 
   data = {
     labels: this.timeArray,
@@ -50,7 +54,9 @@ export class BarChartComponent implements OnDestroy{
 
   createChart() {
 
-    this.chart = new Chart("Chart", {
+    let htmlRef = this.elementRef.nativeElement.querySelector(`#Chart`);
+
+    this.chart = new Chart(htmlRef, {
       type: 'bar',
       data: this.data
     ,
@@ -58,7 +64,7 @@ export class BarChartComponent implements OnDestroy{
         plugins: {
           title: {
               display: true,
-              text: 'Ctrl +'
+              text: ``
           }
       },
         aspectRatio: 2.5,
