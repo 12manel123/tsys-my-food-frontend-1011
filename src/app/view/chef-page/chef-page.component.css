@@ -1,15 +1,37 @@
-footer {
+.card-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.card{
+    min-height: 30vh;
+    max-height: 50vh;
+}
+
+@media screen and (max-width: 768px) {
+    .card-container {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .card-container {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    }
+}
+.card-header {
     background-color: #e20074;
     color: white;
-    text-align: center;
+    padding: 8px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    font-size: 20px;
+    font-weight: bold;
+}
+
+.dish{
+    margin-top: 5px;
 }
 
 .pagination, .actions {
@@ -35,46 +57,7 @@ footer {
     background-blend-mode: lighten;
 }
 
-.card-container {
-    display: grid;
-    grid-template-columns: repeat(4, 25vw);
-    gap: 10px;
-    margin-top: 5px;
-
-}
-
-.card {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    width: 20vw;
-    max-width: 30vw;
-    max-height: 50vh;
-    height: 22vw;
-    margin: 0 2vh;
-}
-
-.card-header {
-    background-color: #e20074;
-    color: white;
-    padding: 8px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-weight: bold;
-}
-
-.header-item {
-    margin-right: 10px;
-    font-size: 16px;
-}
-
-.card-content {
-    padding: 10px;
-    font-size: 20px;
-}
-
-.footer {
+.header {
     background-color: #e20074;
     color: white;
     text-align: center;
@@ -86,16 +69,11 @@ footer {
     bottom: 0;
     width: 100%;
     position: static;
-}
-
-.dish-list {
-    max-height: 35vh;
-    overflow-y: auto;
     margin-bottom: 10px;
 }
 
-.dish-list li {
-    margin-bottom: 5px; 
+.card-container{
+    padding: 20px;
 }
 
 .delete-button {
@@ -106,14 +84,13 @@ footer {
     color: white;
     border: none;
     border-radius: 50%;
-    width: 30px;
-    height: 30px;
+    width: 20px;
+    height: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    font-size: 18px;
-    margin-right: 2.3vh;
+    font-size: 15px;
 }
 
 .delete-button:hover {
@@ -135,7 +112,6 @@ footer {
 
 .card-header.past-time {
     animation: shake 0.5s 1;
-    background-color: grey;
 }
 
 @keyframes shake {

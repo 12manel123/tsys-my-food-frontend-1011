@@ -74,8 +74,8 @@ export class OrderUserService {
   *
   * @return An Observable that emits an object of type Slot when the request is completed.
   */
-  putSlotsApi(idOrder : number , idSlot : number): Observable<Slot> {
-    return this.http.put<Slot>(this.putSlots+idOrder+'/'+idSlot, this.slots);
+  putSlotsApiPrice(idOrder : number , idSlot : number,price:number): Observable<Slot> {
+    return this.http.put<Slot>(this.putSlots+idOrder+'/'+idSlot+'/'+price, this.slots);
   }
 
   /**

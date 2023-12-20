@@ -7,7 +7,6 @@
       <h2 class="text-center text-primary"><b> TODAY'S MENU </b></h2>
       <div class="row">
 
-
         <!-- /.col-lg-3 -->
         <div class="col-lg-3 menu">
           @if(menus.appetizer.image){
@@ -21,8 +20,6 @@
         </div>
 
 
-
-
         <!-- /.col-lg-3 -->
         <div class="col-lg-3 menu">
           @if(menus.first.image){
@@ -34,7 +31,6 @@
           <p>{{menus.first.description}}</p>
           <p>{{menus.first.category}}</p>
         </div>
-
 
 
         <!-- /.col-lg-3 -->
@@ -70,7 +66,7 @@
         data-bs-toggle="offcanvas"
         data-bs-target="#staticBackdrop"
         aria-controls="staticBackdrop"
-        (click)="addMenu(menus)"><b>ADD MENU</b></button>
+        (click)="addMenu(menus)"><b>ADD MENU</b> 10% offer</button>
       </div>
 
       }

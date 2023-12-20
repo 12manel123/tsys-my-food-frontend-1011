@@ -9,7 +9,6 @@ import { JsonPipe } from '@angular/common';
 import { NgClass } from '@angular/common';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatButtonModule } from '@angular/material/button';
-
 @Component({
   selector: 'app-chef-page',
   standalone: true,
@@ -24,7 +23,7 @@ export class ChefPageComponent implements OnInit{
   displayedColumns: string[] = ['id', 'maked', 'slot', 'price', 'datetime', 'dishes', 'actions'];
   dataSource: MatTableDataSource<Order> = new MatTableDataSource<Order>([]);
   totalEntities: number = 0;
-  public selectedPageSize: number = 8;
+  public selectedPageSize: number = 10;
   servToker = inject(TokenStorageService)
   currentTime: string = '';
   currentPage: number = 1;
@@ -40,7 +39,16 @@ export class ChefPageComponent implements OnInit{
       this.totalPages = totalPages;
       this.totalEntities=totalElements;
       this.selectedPageSize=size
-      this.orders = content;
+      this.orders = content.sort((a: Order, b: Order) => {
+        const timeA = a.slot?.time ? a.slot?.time.split(':').map(Number) : [0, 0];
+        const timeB = b.slot?.time ? b.slot?.time.split(':').map(Number) : [0, 0];
+  
+        if (timeA[0] !== timeB[0]) {
+          return timeA[0] - timeB[0];
+        } else {
+          return timeA[1] - timeB[1];
+        }
+      });
     });
   }
 
@@ -94,7 +102,7 @@ export class ChefPageComponent implements OnInit{
     }
 
     alertDelete(orderId : number):void {
-      this.snackBar.open('Deleted order '+orderId, 'Close', {
+      this.snackBar.open('Order maked '+orderId, 'Close', {
         duration: 1500,
         panelClass: ['copied-snackbar'],
       });
