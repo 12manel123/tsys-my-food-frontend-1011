@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Location } from '@angular/common';
 import Swal from 'sweetalert2';
+
 @Component({
   selector: 'app-error-page',
   standalone: true,
@@ -8,6 +9,7 @@ import Swal from 'sweetalert2';
   templateUrl: './error-page.component.html',
   styleUrl: './error-page.component.css'
 })
+
 export class ErrorPageComponent {
   constructor(private location: Location) {}
   ngOnInit(): void {

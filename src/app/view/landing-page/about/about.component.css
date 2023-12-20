@@ -11,7 +11,6 @@
     max-width: 190px;
 }
 
-
 @media only screen and (min-width: 600px) {
 
   .body {
@@ -31,16 +30,12 @@
     opacity: 0.4;
     z-index: -1;
   }
-
 }
-
 
 .card {
   background-color: rgba(255, 255, 255, 0.466)!important;
   border-color:deeppink!important;
   }
-
-
 
 .box {
   width: 200px; height: 300px;
@@ -99,7 +94,6 @@
   width: 75px; height: 75px;
   text-align: right;
 }
-
 
 .ribbon2 span {
   font-size: 10px;

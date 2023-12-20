@@ -56,7 +56,7 @@
 
     <ng-container matColumnDef="appetizer">
       <mat-header-cell *matHeaderCellDef>Appetizer</mat-header-cell>
-      <mat-cell *matCellDef="let menu" (click)="editAppetizer(menu)">{{ menu.appetizer.name }}</mat-cell>
+      <mat-cell *matCellDef="let menu">{{ menu.appetizer.name }}</mat-cell>
     </ng-container>
     
     <ng-container matColumnDef="first">

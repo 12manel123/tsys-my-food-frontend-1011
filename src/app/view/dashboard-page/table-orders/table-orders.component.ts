@@ -11,10 +11,9 @@ import {MatButtonModule} from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import {MatMenuModule} from '@angular/material/menu';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { MatPaginator } from '@angular/material/paginator';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { CurrencyPipe, UpperCasePipe } from '@angular/common';
+import { CurrencyPipe } from '@angular/common';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 
@@ -68,58 +67,12 @@ export class TableOrdersComponent implements OnInit {
       this.ordersDate=[];
     });
   }
-
-  // loadOrdersDate(): void {
-  //   const startIndex = this.currentPage - 1;
-  //   const endIndex = this.selectedPageSize;
-    
-  //   let year = prompt('Ingrese el año (presione Enter para no filtrar): ');
-  //   let month = prompt('Ingrese el mes (presione Enter para no filtrar): ');
-  //   let day = prompt('Ingrese el día (presione Enter para no filtrar): ');
-  
-  //   let numericYear = year !== null ? parseInt(year, 10) : 0;
-  //   let numericMonth = month !== null ? parseInt(month, 10) : 0;
-  //   let numericDay = day !== null ? parseInt(day, 10) : 0;
-
-  //   if (isNaN(numericYear)) {
-  //     numericYear = 0;
-  //   }
-  //   if (isNaN(numericMonth)) {
-  //     numericMonth = 0;
-  //   }
-  //   if (isNaN(numericDay)) {
-  //     numericDay = 0;
-  //   }
-
-  //   this.ordersDbService.getOrdersDateApi(startIndex, endIndex, numericYear, numericMonth, numericDay)
-  //     .subscribe((orders: any) => {
-  //       const { totalElements, totalPages, content, size } = orders;
-  //       this.totalPages = totalPages;
-  //       this.totalEntities = totalElements;
-  //       this.selectedPageSize = size;
-  //       this.orders = content;
-  //       this.ordersDate=content;
-
-  //     });
-  // }
-
-  
     
   onChange(event: any): void {
     this.selectedPageSize = event.pageSize;
     this.currentPage = event.pageIndex + 1;
     this.loadOrders();
   }
-
-  // removeOrder(orderId: number): void {
-  //   if (confirm('¿Estás seguro de que deseas eliminar este usuario con ID: '+ orderId+"?")) {
-  //     this.ordersDbService.removeOrder(orderId).subscribe(() => {
-  //       this.loadOrders();
-  //       this.totalPages = Math.ceil(this.totalEntities / this.selectedPageSize);
-  //     });
-  //   }
-  //   this.loadOrders();
-  // }
 
   removeOrder(orderId: number): void {
     Swal.fire({
@@ -142,8 +95,6 @@ export class TableOrdersComponent implements OnInit {
             this.loadOrders();
             this.totalPages = Math.ceil(this.totalEntities / this.selectedPageSize);
           });
-        }, (error) => {
-          Swal.fire('Error', 'An error occurred while deleting the user.', 'error');
         });
       }
     });
@@ -161,26 +112,6 @@ export class TableOrdersComponent implements OnInit {
     });
   }
 
-  // openDatePicker(): void {
-  //   Swal.fire({
-  //     title: 'Select date',
-  //     input: 'date',
-  //     didOpen: () => {
-  //       const today = new Date().toISOString().split('T')[0];
-  //       const input = Swal.getInput();
-  //       if (input !== null) {
-  //         input.min = today;
-  //       }
-  //     },
-  //   }).then((result) => {
-  //     if (result.isConfirmed) {
-  //       const selectedDate = result.value;
-  //       // Filtrar por la fecha seleccionada
-  //       this.filterOrdersByDate(selectedDate);
-  //     }
-  //   });
-  // }
-
   openDatePicker(): void {
     const today = new Date().toISOString().split('T')[0];
   
@@ -188,33 +119,26 @@ export class TableOrdersComponent implements OnInit {
       title: 'Select date',
       input: 'date',
       inputAttributes: {
-        min: '1900-01-01', // Establecer la fecha mínima según tus necesidades
+        min: '1900-01-01', 
       },
       didOpen: () => {
         const input = Swal.getInput();
         if (input !== null) {
-          // Establecer la fecha actual como valor predeterminado
           input.value = today;
-          // Puedes ajustar la fecha mínima según tus necesidades
           input.min = '1900-01-01';
         }
       },
     }).then((result) => {
       if (result.isConfirmed) {
         const selectedDate = result.value;
-        // Filtrar por la fecha seleccionada
         this.filterOrdersByDate(selectedDate);
       }
     });
   }
-  
-  
 
   filterOrdersByDate(selectedDate: string): void {
-    // Convertir la fecha seleccionada al formato requerido por tu servicio
     const [year, month, day] = selectedDate.split('-').map(Number);
 
-    // Llamar al método para cargar las órdenes filtradas por la fecha
     this.loadOrdersDate(year, month, day);
   }
 
@@ -232,5 +156,4 @@ export class TableOrdersComponent implements OnInit {
         this.ordersDate = content;
       });
   }
-
 }

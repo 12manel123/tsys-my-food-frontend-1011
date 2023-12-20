@@ -7,8 +7,8 @@ import {MatButtonModule} from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import {MatMenuModule} from '@angular/material/menu';
 import { MatTableModule } from '@angular/material/table';
-import { MatPaginator } from '@angular/material/paginator';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-table-slots',
@@ -41,10 +41,18 @@ export class TableSlotsComponent {
     });
   }
 
-  editLimitSlot(slotId: number,slot: Slot): void {
-    this.slotsDbService.updateLimitSlot(slotId,slot).subscribe(() => {
+  editLimitSlot(slotId: number, slot: Slot): void {
+    this.slotsDbService.updateLimitSlot(slotId, slot).subscribe(() => {
       this.loadSlots();
       this.selectedSlotId = slotId;
+
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'Slot limit updated successfully',
+        showConfirmButton: false,
+        timer: 1000
+      });
     });
   }
 }

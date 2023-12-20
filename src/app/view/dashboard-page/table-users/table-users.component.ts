@@ -6,13 +6,13 @@ import {MatButtonModule} from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import {MatMenuModule} from '@angular/material/menu';
 import { MatTableModule } from '@angular/material/table';
-import { MatPaginator } from '@angular/material/paginator';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { JsonPipe } from '@angular/common';
 import { UserDTO } from '../../../models/user';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import Swal, { SweetAlertOptions, SweetAlertResult } from 'sweetalert2';
+import Swal from 'sweetalert2';
+
 @Component({
   selector: 'app-table-users',
   standalone: true,
@@ -89,17 +89,24 @@ export class TableUsersComponent {
     });
   }
   
-
   closeRoleModal(): void {
     this.showRoleModal = false;
     this.selectedUser = undefined;
     this.newRole = '';
   }
 
-  updateRole(userId: number,user: UserDTO): void {
+  updateRole(userId: number, user: UserDTO): void {
     this.selectedUserId = userId;
-    this.userDbService.updateUser(userId,user).subscribe(() => {
+    this.userDbService.updateUser(userId, user).subscribe(() => {
       this.loadUsers();
+
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'Your change has been saved',
+        showConfirmButton: false,
+        timer: 1000
+      });
     });
   }
   

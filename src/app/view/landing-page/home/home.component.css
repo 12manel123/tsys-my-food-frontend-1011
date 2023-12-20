@@ -16,7 +16,6 @@
   z-index: -1;
 }
 
-
 .rotated-div {
   transform: rotate(-15deg);
   -webkit-transform: rotate(-15deg);

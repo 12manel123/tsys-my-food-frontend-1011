@@ -11,10 +11,9 @@ main{
   -moz-background-size: cover;
   background-size: cover;
   -o-background-size: cover;
- & img{
+  & img{
     object-fit: cover;
-
- }
+}
 
 }
 .container{

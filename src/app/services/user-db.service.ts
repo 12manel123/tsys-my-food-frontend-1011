@@ -1,7 +1,7 @@
-import { Injectable, inject } from '@angular/core';
-import { BehaviorSubject, Observable, catchError, of } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { UserDTO } from '../models/user';
 import Swal from 'sweetalert2';
 
@@ -16,11 +16,9 @@ export interface UserforAdmin {
 })
 export class UserDbService {
   
-   
 
   private url = environment.apiUrl + '/api/v1/users';
   private url2 = environment.apiUrl + '/api/v1/user';
-  // private http = inject(HttpClient)
 
   private usersApi: UserforAdmin[] = []
 
@@ -36,28 +34,6 @@ export class UserDbService {
     return this.http.delete<any[]>(this.url2+"/"+userId);
 
   }
-
-  // updateUser(userId: number,user: UserDTO): Observable<any> {
-  //   let roleId:number=1;
-  //   const newRole = prompt('Ingrese el nuevo rol (user, admin, chef):');
-  //     if (newRole && ['USER', 'ADMIN', 'CHEF'].includes(newRole.toLocaleUpperCase())) {
-  //       if(newRole.toLocaleUpperCase() == 'USER') {
-  //         roleId =3;
-  //       }
-  //       else if(newRole.toLocaleUpperCase() == 'CHEF'){
-  //         roleId=2;
-  //       }
-  //       else if(newRole.toLocaleUpperCase() == 'ADMIN'){
-  //         roleId=1;
-  //       }
-  //       user.role.name=newRole.toLocaleUpperCase();
-  //       user.role.id=roleId;
-  //       return this.http.put(this.url2+"/"+userId,user, { headers: { 'Content-Type': 'application/json' } });
-  //     } else {
-  //       alert('Rol inválido. Se requiere "user", "admin" o "chef".');
-  //       return of();
-  //     }
-  // }
 
   updateUser(userId: number, user: UserDTO): Observable<any> {
     return new Observable((observer) => {
@@ -109,8 +85,7 @@ export class UserDbService {
               () => {
                 observer.next();
                 observer.complete();
-              },
-              (error) => observer.error(error)
+              }
             );
         } else {
           observer.complete();

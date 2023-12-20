@@ -3,7 +3,6 @@ import { RouterLink } from '@angular/router';
 import { LogoComponent } from '../../../shared/logo/logo.component';
 import { MatButtonModule } from '@angular/material/button';
 
-
 @Component({
   selector: 'app-home',
   standalone: true,

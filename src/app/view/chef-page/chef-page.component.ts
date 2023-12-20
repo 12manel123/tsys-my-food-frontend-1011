@@ -1,9 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { Card } from '../../models/dish-chef';
 import { TokenStorageService } from '../../services/token-storage.service';
 import { Order } from '../../models/orders-admin';
-import { DishAdmin } from '../../models/dish-admin';
 import { MatTableDataSource } from '@angular/material/table';
 import { OrdersDbService } from '../../services/orders-db.service';
 import { JsonPipe } from '@angular/common';
@@ -43,10 +41,6 @@ export class ChefPageComponent implements OnInit{
       this.selectedPageSize=size
       this.orders = content;
     });
-    //TODO order with slot
-    /*this.orders.forEach((order) => {
-      console.log(order)
-    });*/
   }
 
   deleteOrder(orderId: number): void {

@@ -5,8 +5,6 @@ import { FormsModule } from '@angular/forms';
 import { DishAdmin } from '../../../../models/dish-admin';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
-import Swal from 'sweetalert2';
-
 
 
 @Component({
@@ -20,11 +18,7 @@ import Swal from 'sweetalert2';
 
 export class DishModalComponent {
 
-
   newDish: DishAdmin = { id: 0, name: '', description: '', image: '', price: 0, category: '', attributes: [],visible: false};
-
-
-  
 
   constructor(private dialogRef: MatDialogRef<DishModalComponent>, private dishesDbService: DishesDbService) {}
 
@@ -37,9 +31,6 @@ export class DishModalComponent {
       (result) => {
         console.log('Dish added successfully:', result);
         this.dialogRef.close();
-      },
-      (error) => {
-        console.error('Error adding dish:', error);
       }
     );
   }

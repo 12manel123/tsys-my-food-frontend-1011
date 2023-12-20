@@ -43,7 +43,7 @@ export class AuthService {
   login(user : User ): Observable<any>{
     return this.http.post(this.urlLogin, user, { headers: { 'Content-Type': 'application/json' } })
       .pipe(catchError(this.handleError<any>('login')));
-   }
+  }
 
 
   /**
