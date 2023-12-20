@@ -106,8 +106,8 @@ export class InitialComponent implements OnDestroy {
       this.listDishesShow.push(menus.second);
       this.listDishesShow.push(menus.dessert);
       const totalPriceMenu = menus.appetizer.price + menus.first.price + menus.second.price + menus.dessert.price;
-
-      this.addTotlaPrice(totalPriceMenu)
+      const totalPriceWithDiscount = totalPriceMenu * 0.9;
+      this.addTotlaPrice(totalPriceWithDiscount)
       this.servOrder.listMenusOrders.push(menus);
     }
   }
