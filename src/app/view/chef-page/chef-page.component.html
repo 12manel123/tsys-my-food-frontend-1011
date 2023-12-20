@@ -3,9 +3,9 @@
     @for (order of orders; track $index) {
     <div class="card">
         
-        <div class="card-header"  [class.past-time]="isPastTime(order.slot?.time)">
-                <span class="header-item"><i class="fas fa-utensils" style="margin-right: 10px;"></i>ID: {{ order.orderId }}</span>
-                <span class="header-item"> <i class="fas fa-clock"></i> {{ order.slot?.time }}</span>
+        <div class="card-header" [class.past-time]="isPastTime(order.slot?.time)">
+            <span class="header-item"><i class="fas fa-utensils" style="margin-right: 10px;"></i>ID: {{ order.orderId }}</span>
+            <span class="header-item"> <i class="fas fa-clock"></i> {{ order.slot?.time }}</span>
         </div>
         <div class="card-content">
             <ul class="dish-list">
