@@ -4,7 +4,6 @@ import { DishesDbService } from '../../../services/dishes-db.service';
 import { DishAdmin } from '../../../models/dish-admin';
 import { AsyncPipe,SlicePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Observable, map } from 'rxjs';
 import { Menu, MenuUser, MenuUserNew } from '../../../models/menu-admin';
 import { MatCardModule } from '@angular/material/card';
 import {MatIconModule} from '@angular/material/icon';
@@ -12,14 +11,12 @@ import {MatButtonModule} from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import {MatMenuModule} from '@angular/material/menu';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { MatPaginator } from '@angular/material/paginator';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatOptionModule } from '@angular/material/core';
 import { JsonPipe } from '@angular/common';
 import { MatDialogModule } from '@angular/material/dialog';
 import Swal from 'sweetalert2';
-
 
 @Component({
   selector: 'app-table-menu',
@@ -57,7 +54,7 @@ export class TableMenuComponent {
   addingMenu: boolean = false;
   editingMenuId: number | null = null;
   editingMenu: Menu | null = null;
-  //dataSource: MatTableDataSource<Menu> = new MatTableDataSource<Menu>([]);
+
   displayedColumns: string[] = ['id','appetizer','first','second','dessert','visible', 'actions'];
   currentPage: number = 1;
   itemsPerPage: number = 2;
@@ -109,7 +106,6 @@ export class TableMenuComponent {
       this.dataSourceDish.data = this.dishes;
     });
   }
-
 
   loadMenusApi(): void {
     const startIndex = this.currentPage - 1;
@@ -167,23 +163,10 @@ export class TableMenuComponent {
             this.loadMenusApi();
             this.totalPages = Math.ceil(this.totalEntities / this.selectedPageSize);
           });
-        }, (error) => {
-          Swal.fire('Error', 'An error occurred while deleting the menu.', 'error');
         });
       }
     });
   }
-
-  // deleteMenu(menuId: number) {
-  //   if (confirm('¿Estás seguro de que deseas eliminar este menú con ID: '+ menuId+"?")) {
-  //     this.menusService.deleteMenu(menuId).subscribe(() => {
-  //       this.loadMenusApi();
-  //       this.totalPages = Math.ceil(this.totalEntities / this.selectedPageSize);
-  //     });
-  //   }
-  //   this.loadMenusApi();
-  //   this.menusService.deleteMenu(menuId);
-  // }
 
   addMenu() {
     console.log(this.newMenuApi)
@@ -212,7 +195,6 @@ export class TableMenuComponent {
           visible: true,
         };
 
-        //this.menusService.addMenu(newMenu);
       }
       this.resetNewMenu();
       this.addingMenu = false;
@@ -237,18 +219,11 @@ export class TableMenuComponent {
     this.newMenu = { id: 0, categoryAppetizer: 0, categoryFirst: 0, categorySecond: 0, categoryDessert: 0, visible: true };
   }
 
-  /*toggleVisibility(menu: Menu) {
-    menu.visible = !menu.visible;
-    this.menusService.updateMenu(menu);
-  }*/
-
-
   toggleVisibility(menu: MenuUser): void {
     this.menusService.changeMenuVisibility(menu.id).subscribe(
       () => {
         this.loadMenusApi();
-      },
-      (error) => console.error('Error changing visibility:', error)
+      }
     )
     this.loadMenusApi();
   }
@@ -271,6 +246,5 @@ export class TableMenuComponent {
       alert('Nombre actualizado exitosamente.');
     }
   }
-  
-  
+
 }

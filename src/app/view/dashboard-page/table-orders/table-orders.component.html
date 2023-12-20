@@ -1,12 +1,18 @@
 <div class="order-dasboard">
-    <div class="header-container">
-        <h2 class="mt-3">Orders List</h2>
-    </div>
+
 
     @if (ordersDate.length == 0) {
-        <div>
-            <button mat-raised-button color="primary" (click)="openDatePicker()" class="mat-small">Historial</button>
+        <div class="header-container">
+            <h2 class="mt-3" style="text-align: center;">
+                <span style="margin-left: 30px;">Orders List</span>
+                <button class="buttonnav" style="margin-left: 30px; padding: 2px 5px;" mat-raised-button color="primary" (click)="openDatePicker()" class="mat-small">Historial</button>
+            </h2>
         </div>
+        
+        
+        
+        
+   
             <mat-paginator
             [pageSize]="selectedPageSize"
             [pageIndex]="currentPage - 1"
@@ -65,12 +71,18 @@
 
                 }
 
+
         @else {
-            <div>
-                <button mat-raised-button color="primary" (click)="returnToPreviousView()" class="mat-small">Back</button>
-                <span style="margin: 0 50px;"></span>
-                <button mat-raised-button color="primary" (click)="openDatePicker()" class="mat-small">Historial</button>
+            <div class="header-container">
+                <h2 class="mt-3" style="text-align: center; margin: 0 auto;">
+                    <button class="backbutton" style="margin-right: 30px; padding: 2px 5px;" mat-raised-button color="primary" (click)="returnToPreviousView()" class="mat-small">Back</button>
+                    <span>Orders List</span>
+                    <button class="buttonnav" style="margin-left: 30px; padding: 2px 5px;" mat-raised-button color="primary" (click)="openDatePicker()" class="mat-small">Historial</button>
+                </h2>
             </div>
+            
+            
+     
             <mat-paginator
                 [pageSize]="selectedPageSize"
                 [pageIndex]="currentPage - 1"

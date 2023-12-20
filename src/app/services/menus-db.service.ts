@@ -74,14 +74,12 @@ export class MenusDbService {
     const updatedName = prompt('Editar nombre', updatedAppetizer.appetizer.name);
   
     if (updatedName !== null && updatedName.trim() !== '') {
-      // Solo envía el nombre actualizado en el cuerpo de la solicitud
       const updatedAppetizerData = { name: updatedName.trim() };
       
       const url = `${this.url2}/${appetizerId}`;
       
       return this.http.put(url, updatedAppetizerData, { headers: { 'Content-Type': 'application/json' } });
     } else {
-      // No se actualiza si el nombre es nulo o está vacío
       return EMPTY;
     }
   }

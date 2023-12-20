@@ -14,6 +14,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css'
 })
+
 export class ProfileComponent implements OnInit {
 
   servProfile = inject(ProfileUserService);
@@ -24,7 +25,6 @@ export class ProfileComponent implements OnInit {
 
   public eamilForm: FormGroup<any> = new FormGroup<any>({
 
-
     email: new FormControl('', [
       Validators.required,
       Validators.email]),
@@ -32,18 +32,12 @@ export class ProfileComponent implements OnInit {
 
 
   ngOnInit(): void {
-
     this.idUser = this.servProfile.servSession.getId()!;
     this.getUserName();
-
   }
 
-
   uddateUser() {
-
-
-
-     this.user.email = this.eamilForm.get('email')?.value,
+    this.user.email = this.eamilForm.get('email')?.value,
 
     this.eamilForm.reset();
 
@@ -61,6 +55,6 @@ export class ProfileComponent implements OnInit {
       }
     );
   }
-
+  
 }
 

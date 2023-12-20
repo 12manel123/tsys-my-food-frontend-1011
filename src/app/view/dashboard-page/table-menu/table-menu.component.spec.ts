@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { TableMenuComponent } from './table-menu.component';
 
 describe('TableMenuComponent', () => {

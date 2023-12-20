@@ -41,8 +41,8 @@ export class BarChartComponent implements OnDestroy{
 
   ngOnInit(): void {
 
-    this.loadSlots();
-   this.createChart();
+  this.loadSlots();
+  this.createChart();
 
   }
 
@@ -53,7 +53,7 @@ export class BarChartComponent implements OnDestroy{
     this.chart = new Chart("Chart", {
       type: 'bar',
       data: this.data
-     ,
+    ,
       options: {
         plugins: {
           title: {

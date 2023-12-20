@@ -23,7 +23,6 @@ export class HeaderUserComponent implements OnInit {
     window.location.reload();
 }
 
-
   ngOnInit(): void {
     this.username = this.tokenStServ.getUser(); ;
   }

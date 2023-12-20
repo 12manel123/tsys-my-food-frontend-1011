@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { DishesDbService } from '../../../services/dishes-db.service';
 import { DishAdmin } from '../../../models/dish-admin';
 import { MatCardModule } from '@angular/material/card';
@@ -7,10 +7,9 @@ import {MatButtonModule} from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import {MatMenuModule} from '@angular/material/menu';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { MatPaginator } from '@angular/material/paginator';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { CommonModule } from '@angular/common';
-import { Observable, Subject, takeUntil } from 'rxjs';
+import { Subject } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { DishModalComponent } from './dish-modal/dish-modal.component'; 
 import Swal from 'sweetalert2';
@@ -47,11 +46,9 @@ export class TableDishesComponent implements OnInit {
 
   constructor(public dishesService: DishesDbService, public dialog: MatDialog) {}
 
-  // constructor(public dishesService: DishesDbService) {}
 
   ngOnInit(): void {
     this.loadDishes();
-    // this.subscribeToVisibilityChanges();
   }
 
 
@@ -68,28 +65,6 @@ export class TableDishesComponent implements OnInit {
       this.dataSource.data = this.dishes;
     });
   }
-
-  // subscribeToVisibilityChanges(): void {
-  //   this.dishesService.getDishVisibilityChanges()
-  //     .pipe(takeUntil(this.ngUnsubscribe))
-  //     .subscribe((changedDishId: number) => {
-  //       const changedDish = this.dishes.find((dish) => dish.id === changedDishId);
-  //       if (changedDish) {
-  //         changedDish.visible = !changedDish.visible;
-  //       }
-  //     });
-  // }
-
-  // deleteDish(dishId: number): void {
-
-  //   if (confirm('¿Estás seguro de que deseas eliminar este plato con ID: '+ dishId+"?")) {
-  //     this.dishesService.deleteDish(dishId).subscribe(() => {
-  //       this.loadDishes();
-  //       this.totalPages = Math.ceil(this.totalEntities / this.selectedPageSize);
-  //     });
-  //   }
-  //   this.loadDishes();
-  // }
 
   deleteDish(dishId: number): void {
     Swal.fire({
@@ -112,8 +87,6 @@ export class TableDishesComponent implements OnInit {
             this.loadDishes();
             this.totalPages = Math.ceil(this.totalEntities / this.selectedPageSize);
           });
-        }, (error) => {
-          Swal.fire('Error', 'An error occurred while deleting the dish.', 'error');
         });
       }
     });
@@ -126,7 +99,6 @@ export class TableDishesComponent implements OnInit {
     this.loadDishes();
   }
 
-
   addDish() {
     
     const dialogRef = this.dialog.open(DishModalComponent, {
@@ -137,7 +109,6 @@ export class TableDishesComponent implements OnInit {
       this.loadDishes();
     });
   }
-
 
   addDishes() {
     const newDish: DishAdmin = { ...this.newDish };
@@ -163,41 +134,6 @@ export class TableDishesComponent implements OnInit {
       alert('Por favor, complete todos los campos correctamente antes de añadir el plato.');
     }
   }
-
-  // editDish(dish: DishAdmin) {
-  //   const updatedDish = { ...dish };
-  //   updatedDish.name = prompt('Nuevo nombre', dish.name) || dish.name;
-  //   updatedDish.description = prompt('Nueva descripción', dish.description) || dish.description;
-  //   updatedDish.image = prompt('Nueva imagen', dish.image) || dish.image;
-  //   updatedDish.price = parseFloat(prompt('Nuevo precio', dish.price.toString()) || dish.price.toString());
-  //   updatedDish.category = prompt('Nueva categoría, solo (appetizer, first, second, dessert)', dish.category) || dish.category;
-  //   const attributesInput = prompt(
-  //     'Atributos del nuevo plato (opcional, separados por comas): celiac, nuts, vegan, vegetarian, lactose'
-  //   ) || '';
-  //   updatedDish.attributes = this.validateAttributes(attributesInput);
-  //   updatedDish.visible = confirm('Visible?');
-  
-  //   if (this.validateCategory(updatedDish)) {
-  //     this.dishesService.updateDish(updatedDish).subscribe(() => {
-  //       this.loadDishes();
-  //     });
-  //     alert('Plato actualizado exitosamente.');
-  //   } else {
-  //     alert('Por favor, complete todos los campos correctamente antes de actualizar el plato.');
-  //   }
-  // }
-  
-  // editName(dish: DishAdmin): void {
-  //   const newName = prompt('Editar nombre', dish.name);
-  //   if (newName !== null && newName.trim() !== '') {
-  //     dish.name = newName.trim();
-      
-  //     this.dishesService.updateDish(dish).subscribe(() => {
-  //       this.loadDishes();
-  //     });
-  //     alert('Nombre actualizado exitosamente.');
-  //   }
-  // }
 
   editName(dish: DishAdmin): void {
     Swal.fire({
@@ -228,25 +164,13 @@ export class TableDishesComponent implements OnInit {
               showConfirmButton: false,
               timer: 1000
             });
-          },
-          (error) => console.error(error)
+          }
         );
       } else {
         console.log('Operation canceled by the user.');
       }
     });
   }
-
-  // editDescription(dish: DishAdmin): void {
-  //   const newDescription = prompt('Editar descripción', dish.description);
-  //   if (newDescription !== null && newDescription.trim() !== '') {
-  //     dish.description = newDescription.trim();
-  //     this.dishesService.updateDish(dish).subscribe(() => {
-  //       this.loadDishes();
-  //     });
-  //     alert('Descripción actualizada exitosamente.');
-  //   }
-  // }
 
   editDescription(dish: DishAdmin): void {
     Swal.fire({
@@ -282,16 +206,6 @@ export class TableDishesComponent implements OnInit {
       }
     });
   }
-  // editImage(dish: DishAdmin): void {
-  //   const newImage = prompt('Editar imagen (URL)', dish.image);
-  //   if (newImage !== null && newImage.trim() !== '') {
-  //     dish.image = newImage.trim();
-  //     this.dishesService.updateDish(dish).subscribe(() => {
-  //       this.loadDishes();
-  //     });
-  //     alert('Imagen actualizada exitosamente.');
-  //   }
-  // }
 
   editImage(dish: DishAdmin): void {
     Swal.fire({
@@ -314,9 +228,6 @@ export class TableDishesComponent implements OnInit {
             this.dishesService.updateDish(dish).subscribe(
               () => {
                 resolve();
-              },
-              (error) => {
-                reject('An error occurred while updating the image.');
               }
             );
           } else {
@@ -327,7 +238,7 @@ export class TableDishesComponent implements OnInit {
     }).then((result) => {
       if (result.isConfirmed) {
         this.loadDishes();
-  
+
         Swal.fire({
           position: 'center',
           icon: 'success',
@@ -343,23 +254,6 @@ export class TableDishesComponent implements OnInit {
     });
   }
   
-
-  
-
-  // editPrice(dish: DishAdmin): void {
-  //   const newPrice = prompt('Editar precio', dish.price.toString());
-  
-  //   if (newPrice !== null) {
-  //     const parsedPrice = parseFloat(newPrice);
-  //     if (!isNaN(parsedPrice) && parsedPrice > 0) {
-  //       dish.price = parsedPrice;
-  //       this.dishesService.updateDish(dish).subscribe(() => {
-  //         this.loadDishes();
-  //       });
-  //       alert('Precio actualizado exitosamente.');
-  //     }
-  //   }
-  // }
 
   editPrice(dish: DishAdmin): void {
     Swal.fire({
@@ -396,22 +290,6 @@ export class TableDishesComponent implements OnInit {
     });
   }
   
-
-  // editCategory(dish: DishAdmin): void {
-  //   const allowedCategories = ['APPETIZER', 'FIRST', 'SECOND', 'DESSERT'];
-    
-  //   const newCategory = prompt('Editar categoría (appetizer, first, second, dessert)', dish.category);
-    
-  //   if (newCategory !== null && allowedCategories.includes(newCategory.toUpperCase())) {
-  //     dish.category = newCategory.toUpperCase();
-  //     this.dishesService.updateDish(dish).subscribe(() => {
-  //       this.loadDishes();
-  //     });
-  //     alert('Categoría actualizada exitosamente.');
-  //   } else {
-  //     alert('Por favor, ingrese una categoría válida.');
-  //   }
-  // }
 
   editCategory(dish: DishAdmin): void {
     const allowedCategories = ['APPETIZER', 'FIRST', 'SECOND', 'DESSERT'];
@@ -459,10 +337,8 @@ export class TableDishesComponent implements OnInit {
     this.dishesService.changeDishVisibility(dish.id).subscribe(
       () => {
         this.loadDishes();
-      }
-    
+      } 
     )
-    
   }
   
 
@@ -496,24 +372,6 @@ export class TableDishesComponent implements OnInit {
     const enlargedImages = document.querySelectorAll('.dish-image.enlarged');
     enlargedImages.forEach((image) => image.classList.remove('enlarged'));
   }
-
-
-
-
-  // addAttribute(dishId: number) {
-  //   const attributesInput = prompt(
-  //     'Añade un nuevo Atributo: celiac, nuts, vegan, vegetarian, lactose');
-  //     console.log(attributesInput);
-  //     if(attributesInput != null){
-  //     const idAt = this.checkAttribute(attributesInput.toUpperCase());
-  //     if(idAt!=0){
-  //       this.dishesService.addRelationAttribute(idAt,dishId).subscribe(() => {
-  //         this.loadDishes();
-  //         this.totalPages = Math.ceil(this.totalEntities / this.selectedPageSize);
-  //       }); 
-  //     }
-  //   }
-  // }
 
   addAttribute(dishId: number): void {
     const allowedAttributes = ['CELIAC', 'NUTS', 'VEGAN', 'VEGETARIAN', 'LACTOSE'];
@@ -564,24 +422,6 @@ export class TableDishesComponent implements OnInit {
     });
   }
 
-  // deleteAttribute(attribute: string,dishId: number) {
-
-  //   if (confirm('¿Estás seguro de que deseas eliminar este plato con ID: '+ dishId+"?")) {
-  //     let idAt:number=0;
-  //     idAt = this.checkAttribute(attribute);
-  //     if(idAt!=0){
-  //     this.dishesService.deleteRelationAttribute(idAt,dishId).subscribe(() => {
-  //       this.loadDishes();
-  //       this.totalPages = Math.ceil(this.totalEntities / this.selectedPageSize);
-  //     });}
-  //     else{
-  //       alert("Atributo mal selccionado")
-  //     }
-  //   }
-  //   this.loadDishes();    
-  // }
-
-
   deleteAttribute(attribute: string, dishId: number): void {
     Swal.fire({
       title: 'Are you sure?',
@@ -614,7 +454,6 @@ export class TableDishesComponent implements OnInit {
     });
   }
   
-
   checkAttribute(attribute: string): number {
     switch (attribute) {
       case 'LACTOSE':

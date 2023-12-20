@@ -12,7 +12,9 @@ mat-paginator{
     width: 80px;
     max-width: 80px;
 }
-
+.backbutton{
+    margin-right: 10px;
+}
 
 .order-dasboard {
     display: flex;

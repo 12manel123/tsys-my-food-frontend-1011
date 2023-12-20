@@ -47,7 +47,7 @@ export class OrderComponent implements OnInit {
         Swal.fire(
           'Enjoy your food! 🍜',
           `<b> Order number ${res.id} </b> <br><br>
-           Slot: ${res.slot.time}`,
+          Slot: ${res.slot.time}`,
           'success'
         )
         this.routes.navigate(['/user/historial']);
@@ -56,8 +56,6 @@ export class OrderComponent implements OnInit {
       else {
         console.log('Slot not added');
       }
-
     });
-
   }
 }

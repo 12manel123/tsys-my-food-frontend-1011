@@ -73,45 +73,47 @@ export class InitialComponent implements OnDestroy {
     this.servDishes.getDishesByCategoryFromApi('DESSERT').subscribe((dishes: any) => {
       const { content } = dishes;
       this.listDishes = content;
-     });
+    });
   }
   fliterForSeconds() {
     this.servDishes.getDishesByCategoryFromApi('SECOND').subscribe((dishes: any) => {
       const { content } = dishes;
       this.listDishes = content;
-     });
+    });
   }
   fliterForFirsts() {
     this.servDishes.getDishesByCategoryFromApi('FIRST').subscribe((dishes: any) => {
       const { content } = dishes;
       this.listDishes = content;
-     });
+    });
   }
   fliterForApptizer() {
     this.servDishes.getDishesByCategoryFromApi('APPETIZER').subscribe((dishes: any) => {
       const { content } = dishes;
       this.listDishes = content;
-     });
+    });
   }
 
   addTotlaPrice(price: number) {
     this.totalPrice += price;
   }
 
+  //TODO
   addMenu(menus: Menu) {
     if (menus) {
       menus.appetizer.price = 0;
       menus.first.price = 0;
       menus.second.price = 0;
       menus.dessert.price = 0;
-       this.listDishesShow.push(menus.appetizer);
-       this.listDishesShow.push(menus.first);
-       this.listDishesShow.push(menus.second);
-       this.listDishesShow.push(menus.dessert);
+      this.listDishesShow.push(menus.appetizer)
+
+      this.listDishesShow.push(menus.first);
+      this.listDishesShow.push(menus.second);
+      this.listDishesShow.push(menus.dessert);
       this.addTotlaPrice(9.80)
       this.servOrder.listMenusOrders.push(menus);
     }
-
+      
   }
 
   addCard(dihs: Dish) {
@@ -139,7 +141,7 @@ export class InitialComponent implements OnDestroy {
       this.servOrder.listDishesOrders.forEach((dish: any) => {
         this.servOrder.postReferencesDishesApi(id, dish.id).subscribe({
           next: data => {
-          //  console.log(data);
+          
           },
           error: error => {
             console.error('There was an error!', error);
@@ -181,7 +183,7 @@ export class InitialComponent implements OnDestroy {
     this.servDishes.getDishesFromApi().subscribe((dishes: any) => {
       const { content } = dishes;
       this.listDishes = content;
-     });
+    });
     }
 
     getMenus() {

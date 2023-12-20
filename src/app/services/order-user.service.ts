@@ -1,7 +1,7 @@
 import { Injectable, inject, signal } from '@angular/core';
 import { Order } from '../models/orders-admin';
 import { Slot } from '../models/slots';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Dish } from '../models/dihsh';
 import { Menu } from '../models/menu';
 import { environment } from '../../environments/environment';

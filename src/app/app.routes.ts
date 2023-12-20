@@ -1,6 +1,5 @@
 import { Routes } from '@angular/router';
 
-
 import { LandingPageComponent } from './view/landing-page/landing-page.component';
 import { HomeComponent } from './view/landing-page/home/home.component';
 import { AboutComponent } from './view/landing-page/about/about.component';
@@ -22,13 +21,13 @@ import { adminGuard } from './controllers/admin.guard';
 import { chefGuard } from './controllers/chef.guard';
 import { HistorialComponent } from './view/user-page/historial/historial.component';
 import { ProfileComponent } from './view/user-page/profile/profile.component';
- import { BarChartComponent } from './view/dashboard-page/bar-chart/bar-chart.component';
+import { BarChartComponent } from './view/dashboard-page/bar-chart/bar-chart.component';
 
 
 export const routes: Routes = [
     { path: 'landing', component: LandingPageComponent },
     { path: '', component: LandingPageComponent ,children: [
-       {path:'', component: HomeComponent},
+      {path:'', component: HomeComponent},
       { path: 'about', component: AboutComponent },
       { path: 'login', component: LoginComponent },
       { path: 'register', component: RegisterComponent }
@@ -36,7 +35,7 @@ export const routes: Routes = [
 
   {
     path: 'admin', component: DashboardPageComponent, canActivate: [adminGuard], children: [
-         {path:'chart', component: BarChartComponent },
+        {path:'chart', component: BarChartComponent },
         {path:'users', component: TableUsersComponent ,   },
         {path:'orders', component: TableOrdersComponent },
         {path:'dishes', component: TableDishesComponent },
