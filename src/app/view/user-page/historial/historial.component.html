@@ -6,10 +6,10 @@
 
       <table matSort (matSortChange)="sortData($event)">
         <tr class="text-center">
-          <th mat-sort-header="name">ID</th>
-          <th mat-sort-header="calories">Date</th>
-          <th mat-sort-header="carbs">Pick up time</th>
-          <th mat-sort-header="protein">Price</th>
+          <th mat-sort-header="id">ID</th>
+          <th mat-sort-header="date">Date</th>
+          <th mat-sort-header="slot">Pick up time</th>
+          <th mat-sort-header="price">Price</th>
         </tr>
 
         @for ( h of historial; track h.id) {
@@ -17,7 +17,7 @@
             <td>{{h.id}}</td>
             <td>{{h.actualDate |  date }}</td>
             <td>{{h.slot?.time}}</td>
-            <td>{{h.totalPrice | currency:'EUR'}}</td>
+            <td>{{h.totalPrice / 2| currency:'EUR'}}</td>
           </tr>
         }
       </table>

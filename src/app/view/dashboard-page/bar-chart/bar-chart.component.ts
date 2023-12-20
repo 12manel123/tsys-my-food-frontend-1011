@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnDestroy, inject } from '@angular/core';
-import Chart from 'chart.js/auto';
+import { Chart, ChartType } from 'chart.js/auto';
 import { SlotsDbService } from '../../../services/slots-db.service';
 import { Slot } from '../../../models/slots';
 
@@ -12,9 +12,9 @@ import { Slot } from '../../../models/slots';
   styleUrl: './bar-chart.component.css'
 })
 export class BarChartComponent implements OnDestroy{
-  ngOnDestroy(): void {
-    this.chart.destroy();
-  }
+
+
+  public chart: any;
 
   slotsDbService = inject(SlotsDbService);
   slots: any[] = [];
@@ -26,13 +26,14 @@ export class BarChartComponent implements OnDestroy{
   constructor(private elementRef: ElementRef) {
   }
 
-
   data = {
+
     labels: this.timeArray,
+
     datasets: [
       {
         label: "Limit Slot",
-        data: this.limitSlotArray,
+        data: this.limitSlotArray ,
         backgroundColor: '#d21ec346'
       },
       {
@@ -45,19 +46,13 @@ export class BarChartComponent implements OnDestroy{
 
   ngOnInit(): void {
 
-  this.loadSlots();
-  this.createChart();
-
-  }
-
-  public chart: any ;
-
-  createChart() {
+    this.loadSlots();
+    this.createChart();
 
     let htmlRef = this.elementRef.nativeElement.querySelector(`#Chart`);
 
     this.chart = new Chart(htmlRef, {
-      type: 'bar',
+      type: 'bar' as  ChartType,
       data: this.data
     ,
       options: {
@@ -78,14 +73,27 @@ export class BarChartComponent implements OnDestroy{
     });
   }
 
+
+
+  createChart() {
+
+
+  }
+
   loadSlots(): void {
     this.slotsDbService.getSlots().subscribe(slots => {
       this.slots = slots;
       this.slots.forEach((slot: Slot) => {
         this.timeArray.push(slot.time);
+        console.log(slot.time);
         this.limitSlotArray.push(slot.limitSlot);
         this.actualArray.push(slot.actual);
       });
     });
   }
+
+  ngOnDestroy(): void {
+    this.chart.destroy();
+  }
+
 }
