@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import {MatIconModule} from '@angular/material/icon';
@@ -24,10 +24,13 @@ import { TokenStorageService } from '../../services/token-storage.service';
   styleUrl: './dashboard-page.component.css'
 })
 export class DashboardPageComponent {
+
   servToker = inject(TokenStorageService)
-  constructor(private router: Router) {}
+  constructor(private router: Router) { }
+
   logOut() {
     this.servToker.singOut();
     this.router.navigate(['/']);
   }
+
 }
