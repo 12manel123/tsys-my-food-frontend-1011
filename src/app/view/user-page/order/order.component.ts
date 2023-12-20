@@ -39,9 +39,8 @@ export class OrderComponent implements OnInit {
     });
   }
 
-  prossesOrder() {
-
-    this.servOrder.putSlotsApi(this.servOrder.idOrder(),  this.selectedSlotId).subscribe((res: any) => {
+  prossesOrder(price: number) {
+    this.servOrder.putSlotsApiPrice(this.servOrder.idOrder(),  this.selectedSlotId,price*2).subscribe((res: any) => {
       if (res) {
 
         Swal.fire(
