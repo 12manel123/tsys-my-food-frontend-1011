@@ -2,17 +2,19 @@
   <div class="container">
     <br>
 
-    <div class="col-4 card mx-auto mt p-3">
-      <h1 class="text-center text-primary mt-2">Profile</h1>
+    <div class="col-3 card mx-auto mt p-3">
+      <div class="ribbon"><span>{{user.role.name}}</span></div>
 
       @defer {
 
 
         @if (user){
           <div class="row">
+
             <div class="col-12 mt-3">
+
               @if(user.username){
-                <img src="https://ui-avatars.com/api/{{user.username}}" class="rounded-circle mx-auto d-block shadow" style="width: 150px;" alt="Avatar">
+                <img src="https://ui-avatars.com/api/?color=cc0099&name={{user.username}}?"class="rounded-circle mx-auto d-block shadow" style="width: 150px;" alt="Avatar">
               } @else {
                 <img src="https://ui-avatars.com/api/{{'X'}}" class="rounded-circle mx-auto d-block" style="width: 150px;" alt="Avatar">
               }
@@ -22,7 +24,7 @@
                 <h3 class="text-center text-primary fs-4"><b>{{user.username || 'Nameless'}}</b></h3>
                 <p class="text-center">{{user.email || 'No mail' }}</p>
 
-                <p class="text-center text-success"><b>{{user && user.role && user.role.name ? user.role.name : 'Role not available'}}</b>
+                <br>
 
                 <p class="text-center">User since {{user.createdAt | date }}</p>
 
