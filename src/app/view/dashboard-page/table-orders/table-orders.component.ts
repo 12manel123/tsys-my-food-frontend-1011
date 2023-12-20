@@ -16,12 +16,13 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { CurrencyPipe } from '@angular/common';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
+import { NgClass } from '@angular/common';
 
 
 @Component({
   selector: 'app-table-orders',
   standalone: true,
-  imports: [DatePipe,MatCardModule,CurrencyPipe,
+  imports: [DatePipe,MatCardModule,CurrencyPipe,NgClass,
     MatIconModule,
     MatButtonModule,
     MatToolbarModule,
@@ -89,7 +90,7 @@ export class TableOrdersComponent implements OnInit {
         this.ordersDbService.removeOrder(orderId).subscribe(() => {
           Swal.fire(
             'Deleted!',
-            'The user with ID ' + orderId + ' has been deleted.',
+            'The order with ID ' + orderId + ' has been deleted.',
             'success'
           ).then(() => {
             this.loadOrders();
@@ -156,4 +157,8 @@ export class TableOrdersComponent implements OnInit {
         this.ordersDate = content;
       });
   }
+  isEven(row: any): boolean {
+    return this.orders.indexOf(row) % 2 === 0;
+  }
+
 }

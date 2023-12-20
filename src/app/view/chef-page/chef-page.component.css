@@ -7,6 +7,7 @@
 .card{
     min-height: 30vh;
     max-height: 50vh;
+    
 }
 
 @media screen and (max-width: 768px) {
@@ -76,27 +77,6 @@
     padding: 20px;
 }
 
-.delete-button {
-    position: absolute;
-    bottom: 5px;
-    right: 5px;
-    background-color: #e20074;
-    color: white;
-    border: none;
-    border-radius: 50%;
-    width: 20px;
-    height: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    font-size: 15px;
-}
-
-.delete-button:hover {
-    background-color: #c10060;
-}
-
 .dish{
     user-select: none;
 }
@@ -112,6 +92,14 @@
 
 .card-header.past-time {
     animation: shake 0.5s 1;
+    animation: borderFlash 0.5s infinite;
+    border: 2px solid transparent;
+}
+
+.card.past-time {
+    animation: shake 0.5s 1;
+    animation: borderFlash 0.5s infinite;
+    border: 2px solid transparent;
 }
 
 @keyframes shake {
@@ -120,4 +108,12 @@
     50% { transform: translateX(5px) rotate(5deg); }
     75% { transform: translateX(-5px) rotate(-5deg); }
     100% { transform: translateX(0); }
+}
+@keyframes borderFlash {
+    0%, 100% {
+        border-color: transparent;
+    }
+    50% {
+        border-color: #e20074;
+    }
 }

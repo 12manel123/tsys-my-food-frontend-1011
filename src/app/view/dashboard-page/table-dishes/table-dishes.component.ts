@@ -470,5 +470,9 @@ export class TableDishesComponent implements OnInit {
         return 0; 
     }
   }
+  isEven(row: any): boolean {
+    return this.dishes.indexOf(row) % 2 === 0;
+  }
+
 
 }

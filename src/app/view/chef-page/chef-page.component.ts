@@ -8,6 +8,7 @@ import { JsonPipe } from '@angular/common';
 import { NgClass } from '@angular/common';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatButtonModule } from '@angular/material/button';
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-chef-page',
   standalone: true,
@@ -52,9 +53,28 @@ export class ChefPageComponent implements OnInit{
   }
 
   deleteOrder(orderId: number): void {
-    this.ordersDbService.removeOrderChef(orderId).subscribe(() => {
-      this.loadOrders();
-      this.selectedOrderId = orderId;
+    Swal.fire({
+      title: 'Delete order?',
+      text: 'You won\'t be able to revert this!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it',
+      cancelButtonText: 'Cancel'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.ordersDbService.removeOrderChef(orderId).subscribe(() => {
+          Swal.fire(
+            'Deleted!',
+            'The order with ID ' + orderId + ' has been deleted.',
+            'success'
+          ).then(() => {
+            this.loadOrders();
+            this.totalPages = Math.ceil(this.totalEntities / this.selectedPageSize);
+          });
+        });
+      }
     });
   }
 

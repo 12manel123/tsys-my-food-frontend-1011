@@ -79,6 +79,6 @@
         </ng-container>
 
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-    </mat-table>
+        <mat-row *matRowDef="let row; columns: displayedColumns" [ngClass]="{'even-row': isEven(row), 'odd-row': !isEven(row)}"></mat-row>
+      </mat-table>
 </div>
