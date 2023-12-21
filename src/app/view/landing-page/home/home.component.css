@@ -1,0 +1,27 @@
+.body {
+  position: relative;
+  width: 100%;
+  height: 90%;
+}
+
+.body::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-image: url('../../../../assets/img/fondo.png');
+  opacity: 0.4;
+  z-index: -1;
+}
+
+.rotated-div {
+  transform: rotate(-15deg);
+  -webkit-transform: rotate(-15deg);
+  -moz-transform: rotate(-15deg);
+  -ms-transform: rotate(-15deg);
+  -o-transform: rotate(-15deg);
+}
+
+

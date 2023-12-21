@@ -1,0 +1,32 @@
+<div class="slot_dashboard">
+    <h2 class="mt-3">Slots List</h2>
+    <mat-table [dataSource]="slots" class="mat-elevation-z8">
+        <ng-container matColumnDef="id">
+            <mat-header-cell *matHeaderCellDef class="mat-column-id">ID</mat-header-cell>
+            <mat-cell *matCellDef="let slot">{{ slot.id }}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="time">
+            <mat-header-cell *matHeaderCellDef class="mat-column-time">Time</mat-header-cell>
+            <mat-cell *matCellDef="let slot">{{ slot.time }}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="limit_slot">
+            <mat-header-cell *matHeaderCellDef class="mat-column-limit_slot">Limit Orders</mat-header-cell>
+            <mat-cell *matCellDef="let slot">
+                {{ slot.limitSlot }}
+                <button mat-icon-button color="primary" (click)="editLimitSlot(slot.id,slot)">
+                    <mat-icon aria-hidden="false" fontIcon="edit"></mat-icon>
+                </button>
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="actual" class="mat-column-actual">
+            <mat-header-cell *matHeaderCellDef  >Actual Orders</mat-header-cell>
+            <mat-cell *matCellDef="let slot">{{ slot.actual }}</mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns" [ngClass]="{'even-row': isEven(row), 'odd-row': !isEven(row)}"></mat-row>
+    </mat-table>
+</div>

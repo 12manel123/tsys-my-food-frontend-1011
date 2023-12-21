@@ -1,0 +1,30 @@
+<div class="attribute">
+  <h3>Add Dish</h3>
+  <form>
+
+      <label for="name">Dish Name:</label>
+      <input type="text" id="name" name="name" [(ngModel)]="newDish.name" required>
+
+      <label for="description">Description:</label>
+      <textarea id="description" name="description" [(ngModel)]="newDish.description" required></textarea>
+    
+      <label for="image">Image URL:</label>
+      <input type="url" id="image" name="image" [(ngModel)]="newDish.image" required>
+    
+      <label for="price">Price:</label>
+      <input type="number" id="price" name="price" [(ngModel)]="newDish.price" required>
+  
+      <label for="category">Category:</label>
+      <select id="category" name="category" [(ngModel)]="newDish.category" required>
+        <option value="APPETIZER">Appetizer</option>
+        <option value="FIRST">First</option>
+        <option value="SECOND">Second</option>
+        <option value="DESSERT">Dessert</option>
+      </select>
+      <div>
+        <label for="visible">Visible:</label>
+        <input type="checkbox" id="visible" name="visible" [(ngModel)]="newDish.visible">
+      </div>
+  </form>
+  <button (click)="addDish()">Add Dish</button>
+</div>

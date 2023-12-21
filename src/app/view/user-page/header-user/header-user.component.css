@@ -1,0 +1,30 @@
+img:hover{
+  color:#FF4786;
+  size: 2%;
+  text-decoration: none;
+  background-color:#FF4786;
+  border-radius: 2px;
+  padding: 2px;
+  transition: all 0.3s ease-in-out;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  -ms-border-radius: 2px;
+  -o-border-radius: 2px;
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -ms-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+}
+
+button:hover{
+  color:#FF4786;
+  text-decoration: none;
+  background-color: #FF4786;
+  border-radius: 2px;
+
+  & mat-icon{
+    color:#FF4786 !important;
+  }
+
+
+}

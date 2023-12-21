@@ -1,0 +1,73 @@
+<main>
+  <div class="container">
+    <br>
+
+    <div class="col-3 card mx-auto mt p-3">
+      <div class="ribbon"><span>{{user.role.name}}</span></div>
+
+      @defer {
+
+
+        @if (user){
+          <div class="row">
+
+            <div class="col-12 mt-3">
+
+              @if(user.username){
+                <img src="https://ui-avatars.com/api/?color=cc0099&name={{user.username}}?"class="rounded-circle mx-auto d-block shadow" style="width: 150px;" alt="Avatar">
+              } @else {
+                <img src="https://ui-avatars.com/api/{{'X'}}" class="rounded-circle mx-auto d-block" style="width: 150px;" alt="Avatar">
+              }
+            </div>
+            <div class="col-12 mt-5 ">
+
+                <h3 class="text-center text-primary fs-4"><b>{{user.username || 'Nameless'}}</b></h3>
+                <p class="text-center">{{user.email || 'No mail' }}</p>
+
+                <br>
+
+                <p class="text-center">User since {{user.createdAt | date }}</p>
+
+              <div  class="text-center">
+                <!-- <button class="" mat-raised-button color="primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@fat">Edit</button> -->
+              </div>
+            </div>
+          </div>
+        }
+
+
+      } @placeholder (minimum 500ms) {
+        <div class="col mx-auto mt5">
+          <mat-spinner class="mt-5"></mat-spinner>
+      </div>
+      }
+
+
+  </div>
+</div>
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="modal-body">
+        <form [formGroup]="eamilForm">
+          <div class="mb-3">
+            <label for="message-email" class="col-form-label">email:</label>
+            <input type="email" formControlName="email" class="form-control" id="message-email">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="submit" (click)="uddateUser()" data-bs-dismiss="modal" class="btn btn-primary">Send </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+</main>
+
+

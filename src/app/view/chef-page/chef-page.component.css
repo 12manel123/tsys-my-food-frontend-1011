@@ -1,0 +1,119 @@
+.card-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.card{
+    min-height: 30vh;
+    max-height: 50vh;
+    
+}
+
+@media screen and (max-width: 768px) {
+    .card-container {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .card-container {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    }
+}
+.card-header {
+    background-color: #e20074;
+    color: white;
+    padding: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
+}
+
+.dish{
+    margin-top: 5px;
+}
+
+.pagination, .actions {
+    display: flex;
+    align-items: center;
+}
+
+.pagination button, .actions button {
+    margin-right: 10px;
+}
+
+.current-time {
+    text-align: center;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.chef{
+    display: flex;
+    flex-direction: column;
+    height: 95vh;
+    background: rgba(255, 255, 255, 0.7) url('../../../assets/img/fondo.png');
+    background-blend-mode: lighten;
+}
+
+.header {
+    background-color: #e20074;
+    color: white;
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    position: static;
+    margin-bottom: 10px;
+}
+
+.card-container{
+    padding: 20px;
+}
+
+.dish{
+    user-select: none;
+}
+
+.dish:active, .dish:focus {
+    color: red;
+    user-select: none;
+}
+
+.toggleCheckbox:checked + .dish {
+    color: red;
+}
+
+.card-header.past-time {
+    animation: shake 0.5s 1;
+    animation: borderFlash 0.5s infinite;
+    border: 2px solid transparent;
+}
+
+.card.past-time {
+    animation: shake 0.5s 1;
+    animation: borderFlash 0.5s infinite;
+    border: 2px solid transparent;
+}
+
+@keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-5px) rotate(-5deg); }
+    50% { transform: translateX(5px) rotate(5deg); }
+    75% { transform: translateX(-5px) rotate(-5deg); }
+    100% { transform: translateX(0); }
+}
+@keyframes borderFlash {
+    0%, 100% {
+        border-color: transparent;
+    }
+    50% {
+        border-color: #e20074;
+    }
+}

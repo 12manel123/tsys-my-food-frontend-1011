@@ -1,0 +1,98 @@
+main{
+  background-image: url('../../../../assets/img/fondo.png');
+  padding: 0;
+  margin: 0;
+}
+.carousel-item{
+
+  height: 300px;
+  background: no-repeat center center scroll;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  background-size: cover;
+  -o-background-size: cover;
+  & img{
+    object-fit: cover;
+}
+
+}
+.container{
+
+  padding-bottom: 20%;
+  padding: 10px;
+  background-color: rgba(255, 255, 255, 0.637);
+  overflow-x: hidden;
+}
+
+.menu-img{
+  width: 10rem;
+  height: 10rem;
+  margin-top: 2%;
+}
+
+.menu{
+  text-align: center;
+}
+
+/* Center align the text within the three columns below the carousel */
+.marketing .col-lg-4 {
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+.marketing h2 {
+  font-weight: 400;
+}
+.marketing .col-lg-4 p {
+  margin-right: .75rem;
+  margin-left: .75rem;
+}
+
+
+/* Featurettes
+------------------------- */
+
+.featurette-divider {
+  margin: 2rem 0; /* Space out the Bootstrap <hr> more */
+}
+
+/* Thin out the marketing headings */
+.featurette-heading {
+  font-weight: 300;
+  line-height: 1;
+}
+
+
+/* RESPONSIVE CSS
+-------------------------------------------------- */
+
+@media (min-width: 40em) {
+
+  .featurette-heading {
+    font-size: 50px;
+  }
+}
+
+@media (min-width: 62em) {
+  .featurette-heading {
+    margin-top: 7rem;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .container{
+
+    padding: 0;
+    margin-top: 0;
+    background-color: rgba(226, 226, 226, 0.822);
+    overflow-x: hidden;
+  }
+  #carouselExampleAutoplaying{
+    display: none;
+  }
+
+  br {
+    display: none;
+  }
+
+}
+

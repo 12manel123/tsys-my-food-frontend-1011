@@ -1,0 +1,40 @@
+<div class="chef">
+    
+<div class="header">
+    <div class="pagination">
+        <button mat-raised-button (click)="previousPage()">Previous</button>
+        <button mat-raised-button (click)="nextPage()">Next</button>
+        <span>{{ currentPage }} / {{ totalPages }}</span>
+    </div>
+    <div class="current-time">
+        <p>{{ currentTime }}</p>
+    </div>
+    <div class="actions">
+        <button mat-raised-button (click)="closePage()">
+        <i class="fa fa-times"></i> Logout
+        </button>
+    </div>
+</div>
+    <div class="card-container">
+    @for (order of orders; track $index) {
+    <div class="card" [class.past-time]="isPastTime(order.slot?.time)" (click)="deleteOrder(order.orderId)">
+        
+
+        <div class="card-header"  [class.past-time]="isPastTime(order.slot?.time)">
+                <span class="header-item"><i class="fas fa-utensils" style="margin-right: 10px;"></i>ID: {{ order.orderId }}</span>
+                <span class="header-item"> <i class="fas fa-clock"></i> {{ order.slot?.time }}</span>
+    
+        </div>
+        <div class="card-content">
+            <ul class="dish-list">
+                @for (dish of order.dishes; track $index) {
+                    <li class="dish">{{ dish.name }}</li>}
+            </ul>
+        </div>
+    </div>}
+    <div class="else">
+    
+    </div>
+</div>
+
+</div>

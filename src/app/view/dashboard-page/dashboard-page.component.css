@@ -1,0 +1,32 @@
+.dashboard-container {
+  display: flex;
+  height: 100vh;
+}
+
+.sidebar {
+  width: 200px;
+  background-color: #f0f0f0;
+  padding: 10px;
+  position: fixed;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.content {
+  flex: 1;
+  padding: 10px;
+  margin-left: 200px;
+  background: rgba(255, 255, 255, 0.7) url('../../../assets/img/fondo.png') repeat;
+  background-blend-mode: lighten;
+  background-attachment: fixed;
+  background-repeat: repeat;
+}
+.items{
+  margin-top: 20px;
+  font-weight: bold;
+}
+.logout {
+  margin-top: auto;
+  font-weight: bold;
+}
