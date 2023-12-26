@@ -8,5 +8,10 @@ import { provideAnimations } from '@angular/platform-browser/animations';
 import { apiFoodInterceptor } from './controllers/api-food.interceptor';
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideRouter(routes), provideHttpClient(withFetch()), provideAnimations(), provideHttpClient(withInterceptors([apiFoodInterceptor]))]
+  providers: [
+    provideRouter(routes),
+    provideHttpClient(withFetch()),
+    provideAnimations(),
+    provideHttpClient(withInterceptors([apiFoodInterceptor])),
+  ]
 };

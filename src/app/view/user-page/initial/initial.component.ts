@@ -6,7 +6,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatMenuModule } from '@angular/material/menu';
 import { DishesUserService } from '../../../services/dishes-user.service';
 import { CurrencyPipe, UpperCasePipe } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router  , RouterModule} from '@angular/router';
 import { Menu } from '../../../models/menu';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
@@ -30,6 +30,7 @@ import Swal from 'sweetalert2'
     MatSidenavModule,
     MatButtonToggleModule,
     MatProgressSpinnerModule,
+    RouterModule,
 
   ],
   templateUrl: './initial.component.html',
@@ -52,7 +53,6 @@ export class InitialComponent implements OnDestroy {
   ngOnInit(): void {
 
     this.getMenus();
-
     this.allDishes();
 
   }
@@ -101,19 +101,19 @@ export class InitialComponent implements OnDestroy {
 
   addMenu(menus: Menu) {
     if (menus) {
-      this.listDishesShow.push(menus.appetizer)
+      this.listDishesShow.push(menus.appetizer);
       this.listDishesShow.push(menus.first);
       this.listDishesShow.push(menus.second);
       this.listDishesShow.push(menus.dessert);
       const totalPriceMenu = menus.appetizer.price + menus.first.price + menus.second.price + menus.dessert.price;
       const totalPriceWithDiscount = totalPriceMenu * 0.9;
-      this.addTotlaPrice(totalPriceWithDiscount)
+      this.addTotlaPrice(totalPriceWithDiscount);
       this.servOrder.listMenusOrders.push(menus);
     }
   }
 
   addCard(dihs: Dish) {
-    this.addTotlaPrice(dihs.price)
+    this.addTotlaPrice(dihs.price);
     this.listDishesShow.push(dihs);
     this.servOrder.listDishesOrders.push(dihs);
   }
@@ -126,18 +126,18 @@ export class InitialComponent implements OnDestroy {
   aceptarOrden() {
 
     if (this.listDishesShow.length === 0) {
-      Swal.fire('Your shopping list is empty, treat yourself and try our desserts! 😋')
+      Swal.fire('Your shopping list is empty, treat yourself and try our desserts! 😋');
       return;
     }
 
     this.servOrder.postCreateOrderApi().subscribe((order: any) => {
       const { id } = order;
-      this.servOrder.idOrder.set(id)
+      this.servOrder.idOrder.set(id);
 
       this.servOrder.listDishesOrders.forEach((dish: any) => {
         this.servOrder.postReferencesDishesApi(id, dish.id).subscribe({
           next: data => {
-          
+            console.log(data);
           },
           error: error => {
             console.error('There was an error!', error);
@@ -157,8 +157,7 @@ export class InitialComponent implements OnDestroy {
       });
 
     });
-
-    this.router.navigate(['user/order']);
+    this.router.navigate(['/user/order']);
   }
 
 
@@ -180,19 +179,18 @@ export class InitialComponent implements OnDestroy {
       const { content } = dishes;
       this.listDishes = content;
     });
-    }
+  }
 
-    getMenus() {
-      this.servDishes.getMenusFromApi().subscribe(
-        (dishes: any) => {
-          this.menus = dishes[0];
-        },
-        (error: any) => {
-          console.error("Error al obtener menús:", error);
-          this.menus = null;
-        }
-      );
-    }
+  getMenus() {
+    this.servDishes.getMenusFromApi().subscribe({
+      next: data => {
+        this.menus = data[0];
+      },
+      error: error => {
+        this.menus = null;
+      }
+    });
+  }
 
 
 }

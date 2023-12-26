@@ -16,13 +16,13 @@ import { RegisterComponent } from './view/landing-page/register/register.compone
 import { UserPageComponent } from './view/user-page/user-page.component';
 import { InitialComponent } from './view/user-page/initial/initial.component';
 import { OrderComponent } from './view/user-page/order/order.component';
-import { userGuard } from './controllers/user.guard';
-import { adminGuard } from './controllers/admin.guard';
-import { chefGuard } from './controllers/chef.guard';
 import { HistorialComponent } from './view/user-page/historial/historial.component';
 import { ProfileComponent } from './view/user-page/profile/profile.component';
 import { BarChartComponent } from './view/dashboard-page/bar-chart/bar-chart.component';
 
+import { userGuard } from './controllers/user.guard';
+import { adminGuard } from './controllers/admin.guard';
+import { chefGuard } from './controllers/chef.guard';
 
 export const routes: Routes = [
     { path: 'landing', component: LandingPageComponent },
@@ -44,7 +44,7 @@ export const routes: Routes = [
       ]
     },
     { path: 'user', component: UserPageComponent, canActivate: [userGuard] , children: [
-      {path:'initial', component: InitialComponent  },
+      { path: 'initial', component: InitialComponent  },
       { path: 'order', component: OrderComponent },
       { path: 'historial', component: HistorialComponent },
       { path: 'profile', component: ProfileComponent},

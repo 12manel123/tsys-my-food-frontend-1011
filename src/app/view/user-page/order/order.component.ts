@@ -49,12 +49,15 @@ export class OrderComponent implements OnInit {
           Slot: ${res.slot.time}`,
           'success'
         )
-        this.routes.navigate(['/user/historial']);
+
+        this.routes.navigateByUrl('/user/historial')
+
+        // this.routes.navigate(['/user/historial']);
 
       }
       else {
         console.log('Slot not added');
       }
-    });
+    }   );
   }
 }
