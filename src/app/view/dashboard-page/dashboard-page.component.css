@@ -17,12 +17,14 @@
   flex: 1;
   padding: 10px;
   margin-left: 200px;
-  background: rgba(255, 255, 255, 0.7) url('../../../assets/img/fondo.png') repeat;
+  background: rgba(255, 255, 255, 0.7) url("../../../assets/img/fondo.png")
+    repeat;
   background-blend-mode: lighten;
   background-attachment: fixed;
   background-repeat: repeat;
+  overflow: auto;
 }
-.items{
+.items {
   margin-top: 20px;
   font-weight: bold;
 }
