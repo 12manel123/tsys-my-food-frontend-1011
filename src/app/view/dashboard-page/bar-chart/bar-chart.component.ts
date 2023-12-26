@@ -21,6 +21,7 @@ export class BarChartComponent {
   actualArray: number[] = [];
 
   ngOnInit(): void {
+
     this.loadSlots();
 
     const data = {
@@ -40,24 +41,28 @@ export class BarChartComponent {
       ],
     };
 
-    new Chart('slotChart', {
-      type: 'bar' as ChartType,
-      data: data,
-      options: {
-        plugins: {
-          title: {
-            display: true,
-            text: ``,
+    setTimeout(() => {
+
+      new Chart('slotChart', {
+        type: 'bar' as ChartType,
+        data: data,
+        options: {
+          plugins: {
+            title: {
+              display: true,
+              text: ``,
+            },
+          },
+          aspectRatio: 2.5,
+          scales: {
+            y: {
+              beginAtZero: true,
+            },
           },
         },
-        aspectRatio: 2.5,
-        scales: {
-          y: {
-            beginAtZero: true,
-          },
-        },
-      },
-    });
+      });
+    }, 800);
+
   }
 
   loadSlots(): void {
