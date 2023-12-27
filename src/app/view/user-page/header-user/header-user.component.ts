@@ -1,5 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { RouterLink, RouterOutlet } from '@angular/router';
 import { LogoCardComponent } from '../../../shared/logo-card/logo-card.component';
 import { AuthService } from '../../../services/auth.service';
 import { TokenStorageService } from '../../../services/token-storage.service';
@@ -10,7 +10,7 @@ import { MatIconModule } from '@angular/material/icon';
 @Component({
   selector: 'app-header-user',
   standalone: true,
-  imports: [RouterLink,LogoCardComponent, MatButtonModule, MatMenuModule, MatIconModule],
+  imports: [RouterLink,LogoCardComponent, MatButtonModule, MatMenuModule, MatIconModule , RouterOutlet],
   templateUrl: './header-user.component.html',
   styleUrl: './header-user.component.css'
 })

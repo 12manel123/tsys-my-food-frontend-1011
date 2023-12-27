@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { RouterLink} from '@angular/router';
 import { LogoCardComponent } from '../../../shared/logo-card/logo-card.component';
 
 @Component({
@@ -10,6 +10,4 @@ import { LogoCardComponent } from '../../../shared/logo-card/logo-card.component
   styleUrl: './nav.component.css'
 })
 export class NavComponent {
-
-
 }

@@ -7,7 +7,7 @@
 .card{
     min-height: 30vh;
     max-height: 50vh;
-    
+
 }
 
 @media screen and (max-width: 768px) {
@@ -56,6 +56,7 @@
     height: 95vh;
     background: rgba(255, 255, 255, 0.7) url('../../../assets/img/fondo.png');
     background-blend-mode: lighten;
+    overflow: auto;
 }
 
 .header {

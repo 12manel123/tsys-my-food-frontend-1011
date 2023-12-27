@@ -1,99 +1,80 @@
-import { Component, ElementRef, OnDestroy, inject } from '@angular/core';
+import { Component, ElementRef, ViewChild, inject } from '@angular/core';
 import { Chart, ChartType } from 'chart.js/auto';
 import { SlotsDbService } from '../../../services/slots-db.service';
 import { Slot } from '../../../models/slots';
 
-
 @Component({
   selector: 'app-bar-chart',
   standalone: true,
-  imports: [ ],
+  imports: [],
   templateUrl: './bar-chart.component.html',
-  styleUrl: './bar-chart.component.css'
+  styleUrl: './bar-chart.component.css',
 })
-export class BarChartComponent implements OnDestroy{
-
-
-  public chart: any;
+export class BarChartComponent {
+  @ViewChild('slotChart') Chart: ElementRef | undefined;
 
   slotsDbService = inject(SlotsDbService);
-  slots: any[] = [];
+  slots: Slot[] = [];
 
   timeArray: string[] = [];
   limitSlotArray: number[] = [];
   actualArray: number[] = [];
 
-  constructor(private elementRef: ElementRef) {
-  }
-
-  data = {
-
-    labels: this.timeArray,
-
-    datasets: [
-      {
-        label: "Limit Slot",
-        data: this.limitSlotArray ,
-        backgroundColor: '#d21ec346'
-      },
-      {
-        label: "Atual Slot",
-        data: this.actualArray,
-        backgroundColor: '#1ed22d4f'
-      }
-    ]
-  }
-
   ngOnInit(): void {
 
     this.loadSlots();
-    this.createChart();
 
-    let htmlRef = this.elementRef.nativeElement.querySelector(`#Chart`);
+    const data = {
+      labels: this.timeArray,
 
-    this.chart = new Chart(htmlRef, {
-      type: 'bar' as  ChartType,
-      data: this.data
-    ,
-      options: {
-        plugins: {
-          title: {
+      datasets: [
+        {
+          label: 'Limit Slot',
+          data: this.limitSlotArray,
+          backgroundColor: '#d21ec346',
+        },
+        {
+          label: 'Atual Slot',
+          data: this.actualArray,
+          backgroundColor: '#1ed22d4f',
+        },
+      ],
+    };
+
+    setTimeout(() => {
+
+      new Chart('slotChart', {
+        type: 'bar' as ChartType,
+        data: data,
+        options: {
+          plugins: {
+            title: {
               display: true,
-              text: ``
-          }
-      },
-        aspectRatio: 2.5,
-        scales: {
-          y: {
-            beginAtZero: true
-          }
-        }
-      }
-
-    });
-  }
-
-
-
-  createChart() {
-
+              text: ``,
+            },
+          },
+          aspectRatio: 2.5,
+          scales: {
+            y: {
+              beginAtZero: true,
+            },
+          },
+        },
+      });
+    }, 800);
 
   }
 
   loadSlots(): void {
-    this.slotsDbService.getSlots().subscribe(slots => {
-      this.slots = slots;
-      this.slots.forEach((slot: Slot) => {
-        this.timeArray.push(slot.time);
-        console.log(slot.time);
-        this.limitSlotArray.push(slot.limitSlot);
-        this.actualArray.push(slot.actual);
-      });
+    this.slotsDbService.getSlots().subscribe({
+      next: (data) => {
+        this.slots = data;
+        this.slots.forEach((slot: Slot) => {
+          this.timeArray.push(slot.time);
+          this.limitSlotArray.push(slot.limitSlot);
+          this.actualArray.push(slot.actual);
+        });
+      },
     });
   }
-
-  ngOnDestroy(): void {
-    this.chart.destroy();
-  }
-
 }

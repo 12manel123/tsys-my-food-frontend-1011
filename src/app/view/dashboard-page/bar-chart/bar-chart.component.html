@@ -2,10 +2,11 @@
 <div class="container mt-5">
 
   <div class="card mt-5 shadow p-3">
-     <h1 class="text-center">Press Ctrl +/- to display data</h1>
+     <h1 class="text-center">Current status of time slots</h1>
      <span></span>
       <div class="chart-container">
-          <canvas id="Chart" width="400" height="400">{{ chart }}</canvas>
+           <canvas #Chart id="slotChart" width="400" height="400">{{Chart}}</canvas>
+
       </div>
   </div>
 </div>
